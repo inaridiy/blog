@@ -3,7 +3,7 @@
     <nav class="fixed top-0 z-40 w-full border-b bg-gray-800">
       <div class="container mx-auto flex-auto px-4">
         <div class="flex items-center justify-between h-16">
-          <div class="flex items-center pr-4">
+          <div class="flex items-center pr-4 font-sans">
             <NuxtLink to="/" class="flex-shrink-0 font-bold text-xl">
               <span
                 class="font-semibold text-xl sm:text-2xl tracking-tight text-white mr-6"
@@ -15,20 +15,20 @@
                 to="/about"
                 class="inline-block mt-0 text-teal-200 hover:text-white mr-4"
               >
-                about
+                About
               </NuxtLink>
 
               <NuxtLink
                 to="/about"
                 class="inline-block mt-0 text-teal-200 hover:text-white"
               >
-                note
+                Note
               </NuxtLink>
               <NuxtLink
                 to="/about"
                 class="inline-block mt-0 text-teal-200 hover:text-white mr-4"
               >
-                　project
+                　Project
               </NuxtLink>
             </div>
           </div>
@@ -40,7 +40,7 @@
                 rel="noopener noreferrer"
                 title="Twitter"
                 name="Twitter"
-                class="text-gray-200 dark:text-gray-300 hover:text-primary-500 dark-hover:text-primary-500 ml-4"
+                class="text-gray-200 ml-4"
               >
                 <IconTwitter class="w-5 h-5" />
               </a>
@@ -50,7 +50,7 @@
                 rel="noopener noreferrer"
                 title="Github"
                 name="Github"
-                class="text-gray-200 dark:text-gray-300 hover:text-primary-500 dark-hover:text-primary-500 ml-4"
+                class="text-gray-200 ml-4"
               >
                 <IconGithub class="w-5 h-5" />
               </a>
