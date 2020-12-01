@@ -52,7 +52,7 @@ export default {
     // https://go.nuxtjs.dev/eslint
     // https://go.nuxtjs.dev/tailwindcss
     '@nuxtjs/tailwindcss',
-    '@/modules/ogp.js'
+    // '@/modules/ogp.js'
   ],
   modules: [
     // https://go.nuxtjs.dev/axios
