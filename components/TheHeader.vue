@@ -4,31 +4,31 @@
       <div class="container mx-auto flex-auto px-4">
         <div class="flex items-center justify-between h-16">
           <div class="flex items-center pr-4 font-sans">
-            <NuxtLink to="/" class="flex-shrink-0 font-bold text-xl">
+            <NuxtLink to="/" class="flex-shrink-0">
               <span
-                class="font-semibold text-xl sm:text-2xl tracking-tight text-white mr-6"
+                class="font-semibold text-lg sm:text-2xl tracking-tight text-white mr-6"
                 >いなりの開発記録</span
               >
             </NuxtLink>
-            <div class="flex font-normal sm:text-xl items-center">
+            <div class="flex font-normal text-sm sm:text-base items-center">
               <NuxtLink
                 to="/about"
-                class="inline-block mt-0 text-teal-200 hover:text-white mr-4"
+                class="inline-block mt-0 text-teal-200 hover:text-white mr-2 sm:mr-4"
               >
                 About
               </NuxtLink>
 
               <NuxtLink
                 to="/about"
-                class="inline-block mt-0 text-teal-200 hover:text-white"
+                class="inline-block mt-0 text-teal-200 hover:text-white mr-2 sm:mr-4"
               >
                 Note
               </NuxtLink>
               <NuxtLink
                 to="/about"
-                class="inline-block mt-0 text-teal-200 hover:text-white mr-4"
+                class="inline-block mt-0 text-teal-200 hover:text-white mr-2 sm:mr-4"
               >
-                　Project
+                Production
               </NuxtLink>
             </div>
           </div>

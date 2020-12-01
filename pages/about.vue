@@ -1,6 +1,6 @@
 <template>
   <div
-    class="container max-w-screen-lg border m-8 p-8 mx-auto rounded text-gray-800 overflow-hidden shadow-lg"
+    class="container max-w-screen-lg border m-8 p-8 mx-auto rounded-lg text-gray-800 overflow-hidden shadow-lg"
   >
     <h1 class="font-bold text-xl">
       Hi, I'm <span class="text-4xl font-semibold">Inarizushi</span>
@@ -56,5 +56,3 @@
     </article>
   </div>
 </template>
-<style scoped>
-</style>

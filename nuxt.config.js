@@ -1,3 +1,5 @@
+require('dotenv').config();
+const { API_KEY, API_URL } = process.env;
 export default {
   // Target (https://go.nuxtjs.dev/config-target)
   target: 'static',
@@ -14,7 +16,22 @@ export default {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
-
+  /*generate: {
+    async routes() {
+      const pages = await this.$axios.$get(
+        process.env.API_URL + "inaridiy?limit=100",
+        { headers: { "X-API-KEY": process.env.API_KEY } }
+      )
+        .then((res) =>
+          res.data.contents.map((content) => ({
+            route: `/${content.id}`,
+            payload: content
+          }))
+        )
+    
+      return pages
+    }
+  },*/
   // Global CSS (https://go.nuxtjs.dev/config-css)
   css: [
     '@/assets/css/main.scss'
@@ -28,24 +45,30 @@ export default {
   components: true,
 
   // Modules for dev and build (recommended) (https://go.nuxtjs.dev/config-modules)
+
+  // Modules (https://go.nuxtjs.dev/config-modules)
+
   buildModules: [
     // https://go.nuxtjs.dev/eslint
     // https://go.nuxtjs.dev/tailwindcss
-    '@nuxtjs/tailwindcss'
+    '@nuxtjs/tailwindcss',
+    '@/modules/ogp.js'
   ],
-
-  // Modules (https://go.nuxtjs.dev/config-modules)
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa'
   ],
-
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
-  axios: {},
+  axios: { baseURL: process.env.API_URL },
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
+  },
+
+  env: {
+    API_KEY,
+    API_URL
   }
 }
