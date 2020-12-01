@@ -7,7 +7,7 @@
             <NuxtLink to="/" class="flex-shrink-0">
               <span
                 class="font-semibold text-lg sm:text-2xl tracking-tight text-white mr-6"
-                >いなり</span
+                >いなりの開発記録</span
               >
             </NuxtLink>
             <div class="flex font-normal text-sm sm:text-base items-center">
