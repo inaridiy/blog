@@ -6,6 +6,7 @@
     <img
       :src="`/ogp/${content.id}.png`"
       alt=""
+      loading="lazy"
       class="bg-gray-300 h-56 w-full rounded-lg shadow-md bg-cover bg-center"
     />
 
