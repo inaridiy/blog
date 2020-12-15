@@ -24,7 +24,7 @@ const generateOGP = function (title, filename) {
 
 }
 module.exports = function () {
-    this.nuxt.hook('build:before', async () => {
+    this.nuxt.hook('generate:before', async () => {
         // eslint-disable-next-line no-console
         console.log('OgpGenerater:start')
 
