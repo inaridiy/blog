@@ -11,7 +11,7 @@
         About
       </NuxtLink>
 
-      <NuxtLink to="/about" class="inline-block mt-0 hover:text-teal-400 mr-4">
+      <NuxtLink to="/note" class="inline-block mt-0 hover:text-teal-400 mr-4">
         Note
       </NuxtLink>
       <NuxtLink to="/about" class="inline-block mt-0 hover:text-teal-400 mr-4">
@@ -21,16 +21,6 @@
   </div>
 </template>
 
-<script>
-export default {
-  async mounted() {
-    const data = await this.$axios.$get(
-      process.env.API_URL + "inaridiy?limit=100",
-      { headers: { "X-API-KEY": process.env.API_KEY } }
-    );
-    console.log(data);
-  },
-};
-</script>
+
 
 

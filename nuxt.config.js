@@ -52,17 +52,20 @@ export default {
     // https://go.nuxtjs.dev/eslint
     // https://go.nuxtjs.dev/tailwindcss
     '@nuxtjs/tailwindcss',
-    // '@/modules/ogp.js'
+    '@/modules/ogp.js'
   ],
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
     // https://go.nuxtjs.dev/pwa
-    '@nuxtjs/pwa'
+    '@nuxtjs/pwa',
+    '@nuxtjs/markdownit'
   ],
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
   axios: { baseURL: process.env.API_URL },
-
+  markdownit: {
+    injected: true
+  },
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
   },

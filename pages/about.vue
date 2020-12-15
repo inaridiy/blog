@@ -28,7 +28,7 @@
         <IconGithub class="w-6 h-6" />
       </a>
     </div>
-    <article class="main my-4">
+    <article class="content my-4">
       <h2 class="text-2xl font-bold my-4">Who am I</h2>
       <div class="text-lg font-medium">
         大阪在住の中学3年生なプログラマーです。<br />
