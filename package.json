@@ -13,10 +13,12 @@
   "dependencies": {
     "@nuxtjs/axios": "^5.12.2",
     "@nuxtjs/dotenv": "^1.4.1",
+    "@nuxtjs/google-fonts": "^1.2.0",
     "@nuxtjs/markdownit": "^1.2.10",
     "@nuxtjs/pwa": "^3.0.2",
     "@tailwindcss/typography": "^0.2.0",
     "axios": "^0.21.0",
+    "cheerio": "^1.0.0-rc.3",
     "core-js": "^3.6.5",
     "node-sass": "^5.0.0",
     "nuxt": "^2.14.6",

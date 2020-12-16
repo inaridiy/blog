@@ -7,7 +7,7 @@
       :src="`/ogp/${content.id}.png`"
       alt=""
       loading="lazy"
-      class="bg-gray-300 h-56 w-full rounded-lg shadow-md bg-cover bg-center"
+      class="bg-gray-300 h-56 w-full border-2 border-gray-400 rounded-lg shadow-md bg-cover bg-center"
     />
 
     <div class="w-70 bg-white -mt-10 shadow-lg rounded-lg overflow-hidden p-5">
@@ -32,7 +32,9 @@ export default {
   props: ["content"],
   computed: {
     date: function () {
-      const date = new Date(this.content.updatedAt).toLocaleDateString("ja-jp");
+      const date = new Date(this.content.publishedAt).toLocaleDateString(
+        "ja-jp"
+      );
       return date;
     },
   },

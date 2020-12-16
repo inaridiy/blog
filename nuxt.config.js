@@ -53,7 +53,8 @@ export default {
     // https://go.nuxtjs.dev/eslint
     // https://go.nuxtjs.dev/tailwindcss
     '@nuxtjs/tailwindcss',
-    '@/modules/ogp.js'
+    '@/modules/ogp.js',
+    '@nuxtjs/google-fonts'
   ],
   modules: [
     // https://go.nuxtjs.dev/axios
@@ -66,6 +67,12 @@ export default {
   axios: { baseURL: process.env.API_URL },
   markdownit: {
     injected: true
+  },
+  googleFonts: {
+    families: {
+      'DM+Sans': true,
+      'DM+Mono': true
+    }
   },
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {

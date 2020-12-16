@@ -1,6 +1,6 @@
 <template>
   <div
-    class="container max-w-screen-sm border m-8 mx-auto rounded-lg text-gray-800 overflow-hidden shadow-lg"
+    class="container border m-8 mx-auto rounded-lg text-gray-800 overflow-hidden shadow-lg"
   >
     <h1 class="text-2xl md:text-5xl text-center font-semibold title">
       いなりの開発記録
@@ -10,7 +10,6 @@
       <NuxtLink to="/about" class="inline-block mt-0 hover:text-teal-400 mr-4">
         About
       </NuxtLink>
-
       <NuxtLink to="/note" class="inline-block mt-0 hover:text-teal-400 mr-4">
         Note
       </NuxtLink>
@@ -19,16 +18,49 @@
       </NuxtLink>
     </div>
 
-    <p class="title-text text-xl font-semibold text-center m-6">
+    <div
+      class="title-text text-xl font-semibold text-gray-100 text-center mt-8 p-4 relative bg-gray-800"
+    >
       常に新しい技術に触れて作りたいものを作りたい。<br />
       そんないなりの日々の開発や作品をまとめたサイトです。
-    </p>
+    </div>
+    <h2 class="font-semibold text-3xl text-center my-8">最新記事</h2>
+    <div class="flex flex-wrap sm:-m-4 -mx-4 -mb-10 -mt-4">
+      <Thecard
+        v-for="content in contents"
+        :key="content.id"
+        :content="content"
+      />
+    </div>
   </div>
 </template>
+<script>
+export default {
+  async asyncData({ $axios }) {
+    const { contents } = await $axios.$get(
+      process.env.API_URL + "inaridiy?limit=3",
+      {
+        headers: { "X-API-KEY": process.env.API_KEY },
+      }
+    );
+    return { contents };
+  },
+};
+</script>
+<style lang="scss" scoped>
+.title-text {
+  &::before {
+    top: -20px;
+    background: linear-gradient(45deg, #2d3748 50%, transparent 50%),
+      linear-gradient(315deg, #2d3748 50%, transparent 50%);
+  }
 
-<style scoped>
-.title {
-  background: linear-gradient(70%);
+  &::before {
+    content: "";
+    height: 20px;
+    background-size: 40px 40px;
+    @apply absolute w-full left-0;
+  }
 }
 </style>
 

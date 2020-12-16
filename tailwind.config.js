@@ -4,10 +4,19 @@
 ** Docs: https://tailwindcss.com/docs/configuration
 ** Default: https://github.com/tailwindcss/tailwindcss/blob/master/stubs/defaultConfig.stub.js
 */
-
+const defaultTheme = require('tailwindcss/defaultTheme')
 module.exports = {
-
+  future: {
+    removeDeprecatedGapUtilities: true,
+    purgeLayersByDefault: true
+  },
   theme: {
+    extend: {
+      fontFamily: {
+        sans: ['DM Sans', ...defaultTheme.fontFamily.sans],
+        mono: ['DM Mono', ...defaultTheme.fontFamily.mono]
+      },
+    },
     typography: theme => ({
       default: {
         css: {
