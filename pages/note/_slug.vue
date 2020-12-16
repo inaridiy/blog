@@ -20,5 +20,8 @@ export default {
 
     return { title, publishedAt, body };
   },
+  mounted() {
+    Prism.highlightAll();
+  },
 };
 </script>
