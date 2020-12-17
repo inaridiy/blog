@@ -25,7 +25,7 @@
                 Note
               </NuxtLink>
               <NuxtLink
-                to="/about"
+                to="/production"
                 class="inline-block mt-0 text-teal-200 hover:text-white mr-2 sm:mr-4"
               >
                 Production

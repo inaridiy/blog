@@ -1,6 +1,6 @@
 <template>
   <nuxt-link
-    :to="`/note/${content.id}`"
+    :to="`/production/${content.id}`"
     class="p-4 md:w-1/3 md:mb-0 mb-6 flex flex-col justify-center items-center max-w-sm mx-auto transform hover:scale-95 transition duration-300"
   >
     <img

@@ -34,10 +34,21 @@ module.exports = function () {
             process.env.API_URL + "inaridiy?limit=100",
             { headers: { "X-API-KEY": process.env.API_KEY } }
         )
+        const production = await axios.get(
+            process.env.API_URL + "production?limit=100",
+            { headers: { "X-API-KEY": process.env.API_KEY } }
+        )
         let temp = []
+
         for (let content of pages.data.contents) {
             temp.push(generateOGP(content.title, content.id))
         }
+        for (let content of production.data.contents) {
+            if (!content.image) {
+                temp.push(generateOGP(content.title, content.id))
+            }
+        }
+
         await Promise.all(temp)
         // eslint-disable-next-line no-console
         console.log('OgpGenerater:finish')
