@@ -18,9 +18,7 @@
       </NuxtLink>
     </div>
 
-    <div
-      class="title-text text-xl font-semibold text-gray-100 text-center mt-8 p-4 relative bg-gray-800"
-    >
+    <div class="title-text text-xl font-semibold text-center mt-8 p-4 relative">
       常に新しい技術に触れて作りたいものを作りたい。<br />
       そんないなりの日々の開発や作品をまとめたサイトです。
     </div>
@@ -48,20 +46,6 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.title-text {
-  &::before {
-    top: -20px;
-    background: linear-gradient(45deg, #2d3748 50%, transparent 50%),
-      linear-gradient(315deg, #2d3748 50%, transparent 50%);
-  }
-
-  &::before {
-    content: "";
-    height: 20px;
-    background-size: 40px 40px;
-    @apply absolute w-full left-0;
-  }
-}
 </style>
 
 

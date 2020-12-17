@@ -66,7 +66,11 @@ export default {
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
   axios: { baseURL: process.env.API_URL },
   markdownit: {
-    injected: true
+    injected: true, // $mdを利用してmarkdownをhtmlにレンダリングする
+    breaks: true, // 改行コードを<br>に変換する
+    html: true, // HTML タグを有効にする
+    linkify: true, // URLに似たテキストをリンクに自動変換する
+    typography: true,  // 言語に依存しないきれいな 置換 + 引用符 を有効にする
   },
   googleFonts: {
     families: {
