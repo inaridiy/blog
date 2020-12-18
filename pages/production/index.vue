@@ -4,11 +4,9 @@
       <h1
         class="sm:text-3xl text-2xl font-medium title-font mb-2 text-gray-900"
       >
-        Note
+        Production
       </h1>
-      <p class="lg:w-1/2 w-full leading-relaxed text-base">
-        僕の日常とか、開発とかを適当に書く感じのノート
-      </p>
+      <p class="lg:w-1/2 w-full leading-relaxed text-base">僕が作った物とか</p>
     </div>
     <div class="flex flex-wrap sm:-m-4 -mx-4 -mb-10 -mt-4">
       <Thecard2
