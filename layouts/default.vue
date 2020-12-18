@@ -6,11 +6,3 @@
     </main>
   </div>
 </template>
-<script>
-export default {
-  async mounted() {
-    const music = await new Audio("/bgm/ww.mp3");
-    music.play();
-  },
-};
-</script>
