@@ -18,7 +18,7 @@
 <script>
 export default {
   async asyncData({ params, $axios, $md }) {
-    const { title, publishedAt, body, image } = await $axios.$get(
+    const { title, publishedAt, body, image, id } = await $axios.$get(
       `${process.env.API_URL}production/${params.slug}`,
       {
         headers: { "X-API-KEY": process.env.API_KEY },
@@ -26,7 +26,43 @@ export default {
     );
     const body_html = $md.render(body);
 
-    return { title, publishedAt, body, body_html, image };
+    return { title, publishedAt, body, body_html, image, id };
+  },
+  head() {
+    return {
+      title: this.title,
+      meta: [
+        {
+          hid: "description",
+          name: "description",
+          content: `${this.body.substr(0, 100)}...`,
+        },
+        { hid: "og:type", property: "og:type", content: "article" },
+        { hid: "og:title", property: "og:title", content: this.title },
+        {
+          hid: "og:description",
+          property: "og:description",
+          content: `${this.body.substr(0, 100)}...`,
+        },
+        {
+          hid: "og:url",
+          property: "og:url",
+          content: `${process.env.baseUrl}${this.$router.history.base}${this.$route.path}`,
+        },
+        {
+          hid: "og:image",
+          property: "og:image",
+          content: this.image
+            ? this.image.url
+            : `${process.env.baseUrl}/ogp/${this.id}.png`,
+        },
+        {
+          hid: "twitter:card",
+          name: "twitter:card",
+          content: "summary_large_image",
+        },
+      ],
+    };
   },
   computed: {
     date: function () {

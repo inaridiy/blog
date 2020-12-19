@@ -21,7 +21,7 @@
 export default {
   async asyncData({ $axios }) {
     const { contents } = await $axios.$get(
-      process.env.API_URL + "production?limit=15",
+      process.env.API_URL + "production?limit=100",
       {
         headers: { "X-API-KEY": process.env.API_KEY },
       }

@@ -83,7 +83,7 @@ export default {
     const prev = prev_content[0],
       next = next_content[0];
     const body_html = $md.render(body);
-    return { title, publishedAt, body, body_html, category, prev, next };
+    return { title, publishedAt, body, body_html, category, prev, next, id };
   },
   head() {
     return {
