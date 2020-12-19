@@ -4,7 +4,7 @@
       <nuxt-link
         v-if="prev"
         :to="`/note/${prev.id}`"
-        class="w-full md:w-1/2 bg-gray-300 p-2 m-2 rounded-md text font-medium text-lg shadow"
+        class="w-full sm:w-1/2 bg-gray-300 p-2 m-2 rounded-md text font-medium text-lg shadow"
         >前の記事:{{ prev.title }}</nuxt-link
       >
       <nuxt-link
@@ -50,7 +50,7 @@
 <script>
 export default {
   async asyncData({ params, $axios, $md, $nuxt }) {
-    const { title, publishedAt, body, category } = await $axios.$get(
+    const { title, publishedAt, body, category, id } = await $axios.$get(
       `${process.env.API_URL}inaridiy/${params.slug}`,
       {
         headers: { "X-API-KEY": process.env.API_KEY },
@@ -84,6 +84,35 @@ export default {
       next = next_content[0];
     const body_html = $md.render(body);
     return { title, publishedAt, body, body_html, category, prev, next };
+  },
+  head() {
+    return {
+      title: this.title,
+      meta: [
+        {
+          hid: "description",
+          name: "description",
+          content: `${this.body.substr(0, 100)}...`,
+        },
+        { hid: "og:type", property: "og:type", content: "article" },
+        { hid: "og:title", property: "og:title", content: this.title },
+        {
+          hid: "og:description",
+          property: "og:description",
+          content: `${this.body.substr(0, 100)}...`,
+        },
+        {
+          hid: "og:url",
+          property: "og:url",
+          content: `${process.env.baseUrl}${this.$router.history.base}${this.$route.path}`,
+        },
+        {
+          hid: "og:image",
+          property: "og:image",
+          content: `/ogp/${this.id}.png`,
+        },
+      ],
+    };
   },
   computed: {
     date: function () {

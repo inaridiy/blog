@@ -1,16 +1,22 @@
 require('dotenv').config();
 const { API_KEY, API_URL } = process.env;
+const baseDir = process.env.BASE_DIR || '/'
+const baseUrl = process.env.BASE_URL || 'http://localhost:3000'
 export default {
   // Target (https://go.nuxtjs.dev/config-target)
   target: 'static',
 
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
-    title: 'blog',
+    title: 'いなりの開発記録',
     meta: [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' }
+      { hid: 'description', name: 'description', content: 'いなりのの日常とか開発とか' },
+      { hid: 'og:site_name', property: 'og:site_name', content: 'いなりの開発記録' },
+      { hid: 'og:type', property: 'og:type', content: 'website' },
+      { hid: 'og:url', property: 'og:url', content: baseUrl },
+      { hid: 'og:title', property: 'og:title', content: 'いなりの開発記録' },
+      { hid: 'og:description', property: 'og:description', content: 'いなりのの日常とか開発とか' },
+      { hid: 'og:image', property: 'og:image', content: 'https://images.microcms-assets.io/protected/ap-northeast-1:a64cefb4-cff5-48f5-8704-92146a82c0f9/service/inaridiy/media/logo.png' },
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
@@ -84,6 +90,10 @@ export default {
 
   env: {
     API_KEY,
-    API_URL
-  }
+    API_URL,
+    baseUrl: baseUrl,
+  },
+  router: {
+    base: baseDir,
+  },
 }

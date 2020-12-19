@@ -2,11 +2,13 @@
   <div
     class="container border m-8 mx-auto rounded-lg text-gray-800 overflow-hidden shadow-lg"
   >
-    <h1 class="text-2xl md:text-5xl text-center font-semibold title">
+    <h1 class="text-2xl md:text-5xl text-center font-semibold title mt-4">
       いなりの開発記録
     </h1>
 
-    <div class="flex mx-auto w-56 font-semibold text-xl items-center">
+    <div
+      class="flex mx-auto w-56 font-semibold text-xl items-center border-b-2"
+    >
       <NuxtLink to="/about" class="inline-block mt-0 hover:text-teal-400 mr-4">
         About
       </NuxtLink>
@@ -42,6 +44,12 @@ export default {
       }
     );
     return { contents };
+  },
+  head() {
+    return {
+      titleTemplate: null,
+      title: "いなりの開発記録",
+    };
   },
 };
 </script>
