@@ -17,6 +17,11 @@ export default {
       { hid: 'og:title', property: 'og:title', content: 'いなりの開発記録' },
       { hid: 'og:description', property: 'og:description', content: 'いなりのの日常とか開発とか' },
       { hid: 'og:image', property: 'og:image', content: 'https://images.microcms-assets.io/protected/ap-northeast-1:a64cefb4-cff5-48f5-8704-92146a82c0f9/service/inaridiy/media/logo.png' },
+      {
+        hid: 'twitter:card',
+        name: 'twitter:card',
+        content: 'summary_large_image'
+      }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }

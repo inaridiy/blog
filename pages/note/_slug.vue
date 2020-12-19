@@ -109,7 +109,12 @@ export default {
         {
           hid: "og:image",
           property: "og:image",
-          content: `/ogp/${this.id}.png`,
+          content: `${process.env.baseUrl}/ogp/${this.id}.png`,
+        },
+        {
+          hid: "twitter:card",
+          name: "twitter:card",
+          content: "summary_large_image",
         },
       ],
     };
