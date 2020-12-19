@@ -1,5 +1,5 @@
 <template>
-  <main class="container mx-auto px-4 lg:px-8">
+  <main class="container mx-auto px-4 lg:px-8 col-span-4">
     <div class="flex">
       <nuxt-link
         v-if="prev"
@@ -18,15 +18,17 @@
     <div class="flex">
       <p class="publishedAt">{{ date }}</p>
       <div class="items-center justify-between">
-        <div
+        <nuxt-link
           v-for="ele in category"
           :key="ele.id"
+          :to="`/category/${ele.id}`"
           class="mx-2 rounded-lg px-1 bg-gray-800 text-gray-100"
         >
           {{ ele.name }}
-        </div>
+        </nuxt-link>
       </div>
     </div>
+
     <div
       class="content w-full prose sm:prose-sm lg:prose-lg max-w-none"
       v-html="body_html"
@@ -48,6 +50,7 @@
   </main>
 </template>
 <script>
+import cheerio from "cheerio";
 export default {
   async asyncData({ params, $axios, $md, $nuxt }) {
     const { title, publishedAt, body, category, id } = await $axios.$get(
@@ -83,7 +86,26 @@ export default {
     const prev = prev_content[0],
       next = next_content[0];
     const body_html = $md.render(body);
-    return { title, publishedAt, body, body_html, category, prev, next, id };
+
+    const $ = cheerio.load(body_html);
+    const headings = $("h1, h2, h3").toArray();
+    const toc = headings.map((data) => ({
+      text: data.children[0].data,
+      id: data.attribs.id,
+      name: data.name,
+    }));
+
+    return {
+      title,
+      publishedAt,
+      body,
+      body_html,
+      category,
+      prev,
+      next,
+      id,
+      toc,
+    };
   },
   head() {
     return {
@@ -130,3 +152,12 @@ export default {
   },
 };
 </script>
+<style lang="scss" scoped>
+.li_h1,
+.li_h2 {
+  @apply list-decimal text-xl ml-2;
+}
+.li_h3 {
+  @apply list-none text-lg ml-4;
+}
+</style>

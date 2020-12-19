@@ -15,7 +15,18 @@
       <div class="summary-post text-base text-justify">
         {{ content.body }}
       </div>
-      <p class="text-lg">{{ date }}</p>
+      <div class="flex">
+        <p class="text-lg">{{ date }}</p>
+        <div class="items-center justify-between">
+          <div
+            v-for="ele in content.category"
+            :key="ele.id"
+            class="mx-2 rounded-lg px-1 bg-gray-800 text-gray-100"
+          >
+            {{ ele.name }}
+          </div>
+        </div>
+      </div>
     </div>
   </nuxt-link>
 </template>

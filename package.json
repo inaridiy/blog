@@ -18,6 +18,7 @@
     "@nuxtjs/pwa": "^3.0.2",
     "@tailwindcss/typography": "^0.2.0",
     "axios": "^0.21.0",
+    "cheerio": "^1.0.0-rc.3",
     "core-js": "^3.6.5",
     "node-sass": "^5.0.0",
     "nuxt": "^2.14.6",
@@ -25,7 +26,8 @@
     "prismjs": "^1.22.0",
     "sass-loader": "^10.1.0",
     "sharp": "^0.26.3",
-    "text-to-svg": "^3.1.5"
+    "text-to-svg": "^3.1.5",
+    "vue-scrollto": "^2.20.0"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^3.1.0",

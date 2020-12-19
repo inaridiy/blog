@@ -72,7 +72,8 @@ export default {
     '@nuxtjs/axios',
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
-    '@nuxtjs/markdownit'
+    '@nuxtjs/markdownit',
+    'vue-scrollto/nuxt',
   ],
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
   axios: { baseURL: process.env.API_URL },
@@ -82,6 +83,7 @@ export default {
     html: true, // HTML タグを有効にする
     linkify: true, // URLに似たテキストをリンクに自動変換する
     typography: true,  // 言語に依存しないきれいな 置換 + 引用符 を有効にする
+    use: ["markdown-it-anchor"]
   },
   googleFonts: {
     families: {
@@ -91,6 +93,7 @@ export default {
   },
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
+    hardSource: true,
   },
 
   env: {
