@@ -65,7 +65,7 @@ export default {
     // https://go.nuxtjs.dev/tailwindcss
     '@nuxtjs/tailwindcss',
     '@/modules/ogp.js',
-    '@nuxtjs/google-fonts'
+    //   '@nuxtjs/google-fonts'
   ],
   modules: [
     // https://go.nuxtjs.dev/axios
@@ -85,15 +85,9 @@ export default {
     typography: true,  // 言語に依存しないきれいな 置換 + 引用符 を有効にする
     use: ["markdown-it-anchor"]
   },
-  googleFonts: {
-    families: {
-      'DM+Sans': true,
-      'DM+Mono': true
-    }
-  },
+
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
-    hardSource: true,
   },
 
   env: {
