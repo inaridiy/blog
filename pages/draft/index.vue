@@ -17,7 +17,7 @@
 
     <div
       class="content w-full prose sm:prose-sm lg:prose-lg max-w-none"
-      v-html="$md.render(data.body)"
+      v-html="data.body_html"
     ></div>
   </main>
 </template>
@@ -34,12 +34,15 @@ export default {
     if (query.id === undefined || query.draftKey === undefined) {
       return;
     }
-    const { data } = await $axios.$get(
+    const data = await this.$axios.$get(
       `${process.env.API_URL}inaridiy/${query.id}?draftKey=${query.draftKey}`,
       {
         headers: { "X-API-KEY": process.env.API_KEY },
       }
     );
+    console.log(data);
+    data.body_html = this.$md.render(data.body);
+
     this.data = data;
   },
 
