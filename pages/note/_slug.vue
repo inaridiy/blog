@@ -50,7 +50,6 @@
   </main>
 </template>
 <script>
-import cheerio from "cheerio";
 export default {
   async asyncData({ params, $axios, $md, $nuxt }) {
     const { title, publishedAt, body, category, id } = await $axios.$get(
@@ -86,14 +85,6 @@ export default {
     const prev = prev_content[0],
       next = next_content[0];
     const body_html = $md.render(body);
-
-    const $ = cheerio.load(body_html);
-    const headings = $("h1, h2, h3").toArray();
-    const toc = headings.map((data) => ({
-      text: data.children[0].data,
-      id: data.attribs.id,
-      name: data.name,
-    }));
 
     return {
       title,

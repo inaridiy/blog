@@ -1,7 +1,8 @@
 require('dotenv').config();
-const { API_KEY, API_URL } = process.env;
+const { API_KEY, API_URL, } = process.env;
 const baseDir = process.env.BASE_DIR || '/'
 const baseUrl = process.env.BASE_URL || 'http://localhost:3000'
+const g_id = process.env.G_ID
 export default {
   // Target (https://go.nuxtjs.dev/config-target)
   target: 'static',
@@ -65,6 +66,7 @@ export default {
     // https://go.nuxtjs.dev/tailwindcss
     '@nuxtjs/tailwindcss',
     '@/modules/ogp.js',
+    '@nuxtjs/google-analytics'
     //   '@nuxtjs/google-fonts'
   ],
   modules: [
@@ -84,6 +86,9 @@ export default {
     linkify: true, // URLに似たテキストをリンクに自動変換する
     typography: true,  // 言語に依存しないきれいな 置換 + 引用符 を有効にする
     use: ["markdown-it-anchor"]
+  },
+  googleAnalytics: {
+    id: g_id
   },
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
