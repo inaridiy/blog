@@ -65,8 +65,8 @@ export default {
     // https://go.nuxtjs.dev/eslint
     // https://go.nuxtjs.dev/tailwindcss
     '@nuxtjs/tailwindcss',
+    '@nuxtjs/google-analytics',
     '@/modules/ogp.js',
-    '@nuxtjs/google-analytics'
     //   '@nuxtjs/google-fonts'
   ],
   modules: [

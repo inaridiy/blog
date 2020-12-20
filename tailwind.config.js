@@ -11,12 +11,6 @@ module.exports = {
     purgeLayersByDefault: true
   },
   theme: {
-    extend: {
-      fontFamily: {
-        sans: ['DM Sans', ...defaultTheme.fontFamily.sans],
-        mono: ['DM Mono', ...defaultTheme.fontFamily.mono]
-      },
-    },
     typography: theme => ({
       default: {
         css: {

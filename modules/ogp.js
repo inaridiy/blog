@@ -4,10 +4,11 @@ import axios from 'axios'
 const textToSVG = TextToSVG.loadSync('./static/font.otf')
 const generateOGP = function (title, filename) {
     return new Promise((resolve, reject) => {
+        const f_size = title.length > 12 ? 45 : 75
         const textSvg = textToSVG.getSVG(title, {
             x: 0,
             y: 0,
-            fontSize: 75,
+            fontSize: f_size,
             anchor: 'top',
             attributes: { fill: 'rgba(31, 41, 55, var(--tw-text-opacity))', stroke: 'black' }
         })
