@@ -52,7 +52,6 @@ export default {
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [
     '~/plugins/prism',
-    '@/plugins/gtag'
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
@@ -77,6 +76,13 @@ export default {
     '@nuxtjs/pwa',
     '@nuxtjs/markdownit',
     'vue-scrollto/nuxt',
+    [
+      '@nuxtjs/google-gtag',
+      {
+        id: G_ID, //あなたのGoogleアナリティクスのプロパティID
+        debug: true //本番環境以外でもGAを有効にしたい場合はtrueに。
+      }
+    ]
   ],
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
   axios: { baseURL: process.env.API_URL },
