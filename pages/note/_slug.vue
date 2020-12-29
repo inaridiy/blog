@@ -14,7 +14,9 @@
         >次の記事:{{ next.title }}</nuxt-link
       >
     </div>
-    <h1 class="text-6xl items-center justify-between">{{ title }}</h1>
+    <h1 class="text-3xl lg:text-5xl items-center justify-between">
+      {{ title }}
+    </h1>
     <div class="flex">
       <p class="publishedAt">{{ date }}</p>
       <div class="items-center justify-between">
