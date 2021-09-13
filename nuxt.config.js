@@ -1,32 +1,47 @@
-require('dotenv').config();
+require("dotenv").config();
 const { API_KEY, API_URL, G_ID } = process.env;
-const baseDir = process.env.BASE_DIR || '/'
-const baseUrl = process.env.BASE_URL || 'http://localhost:3000'
+const baseDir = process.env.BASE_DIR || "/";
+const baseUrl = process.env.BASE_URL || "http://localhost:3000";
 
 export default {
   // Target (https://go.nuxtjs.dev/config-target)
-  target: 'static',
+  target: "static",
 
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
-    title: 'いなりの開発記録',
+    title: "いなりの開発記録",
     meta: [
-      { hid: 'description', name: 'description', content: 'いなりのの日常とか開発とか' },
-      { hid: 'og:site_name', property: 'og:site_name', content: 'いなりの開発記録' },
-      { hid: 'og:type', property: 'og:type', content: 'website' },
-      { hid: 'og:url', property: 'og:url', content: baseUrl },
-      { hid: 'og:title', property: 'og:title', content: 'いなりの開発記録' },
-      { hid: 'og:description', property: 'og:description', content: 'いなりのの日常とか開発とか' },
-      { hid: 'og:image', property: 'og:image', content: 'https://images.microcms-assets.io/protected/ap-northeast-1:a64cefb4-cff5-48f5-8704-92146a82c0f9/service/inaridiy/media/logo.png' },
       {
-        hid: 'twitter:card',
-        name: 'twitter:card',
-        content: 'summary_large_image'
+        hid: "description",
+        name: "description",
+        content: "いなりのの日常とか開発とか"
+      },
+      {
+        hid: "og:site_name",
+        property: "og:site_name",
+        content: "いなりの開発記録"
+      },
+      { hid: "og:type", property: "og:type", content: "website" },
+      { hid: "og:url", property: "og:url", content: baseUrl },
+      { hid: "og:title", property: "og:title", content: "いなりの開発記録" },
+      {
+        hid: "og:description",
+        property: "og:description",
+        content: "いなりのの日常とか開発とか"
+      },
+      {
+        hid: "og:image",
+        property: "og:image",
+        content:
+          "https://images.microcms-assets.io/protected/ap-northeast-1:a64cefb4-cff5-48f5-8704-92146a82c0f9/service/inaridiy/media/logo.png"
+      },
+      {
+        hid: "twitter:card",
+        name: "twitter:card",
+        content: "summary_large_image"
       }
     ],
-    link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-    ]
+    link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }]
   },
   /*generate: {
     async routes() {
@@ -45,14 +60,10 @@ export default {
     }
   },*/
   // Global CSS (https://go.nuxtjs.dev/config-css)
-  css: [
-    '@/assets/css/main.scss'
-  ],
+  css: ["@/assets/css/main.scss"],
   components: true,
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
-  plugins: [
-    '~/plugins/prism',
-  ],
+  plugins: ["~/plugins/prism"],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
   components: true,
@@ -64,23 +75,29 @@ export default {
   buildModules: [
     // https://go.nuxtjs.dev/eslint
     // https://go.nuxtjs.dev/tailwindcss
-    '@nuxtjs/tailwindcss',
+    "@nuxtjs/tailwindcss",
     //'@nuxtjs/google-analytics',
-    '@/modules/ogp.js',
+    "@/modules/ogp.js"
     //   '@nuxtjs/google-fonts'
   ],
   modules: [
     // https://go.nuxtjs.dev/axios
-    '@nuxtjs/axios',
+    "@nuxtjs/axios",
     // https://go.nuxtjs.dev/pwa
-    '@nuxtjs/pwa',
-    '@nuxtjs/markdownit',
-    'vue-scrollto/nuxt',
+    "@nuxtjs/pwa",
+    "@nuxtjs/markdownit",
+    "vue-scrollto/nuxt",
     [
-      '@nuxtjs/google-gtag',
+      "@nuxtjs/google-gtag",
       {
         id: G_ID, //あなたのGoogleアナリティクスのプロパティID
-        debug: true //本番環境以外でもGAを有効にしたい場合はtrueに。
+        debug: false //本番環境以外でもGAを有効にしたい場合はtrueに。
+      }
+    ],
+    [
+      "@nuxtjs/google-adsense",
+      {
+        id: "ca-pub-9592509925467345"
       }
     ]
   ],
@@ -91,22 +108,20 @@ export default {
     breaks: true, // 改行コードを<br>に変換する
     html: true, // HTML タグを有効にする
     linkify: true, // URLに似たテキストをリンクに自動変換する
-    typography: true,  // 言語に依存しないきれいな 置換 + 引用符 を有効にする
+    typography: true, // 言語に依存しないきれいな 置換 + 引用符 を有効にする
     use: ["markdown-it-anchor"]
   },
 
-
   // Build Configuration (https://go.nuxtjs.dev/config-build)
-  build: {
-  },
+  build: {},
 
   env: {
     API_KEY,
     API_URL,
     baseUrl: baseUrl,
-    G_ID,
+    G_ID
   },
   router: {
-    base: baseDir,
-  },
-}
+    base: baseDir
+  }
+};
