@@ -1,4 +1,4 @@
-export type ArticleMeta = {
+export type Article = {
   id: string;
   createdAt: string;
   updatedAt: string;
@@ -6,10 +6,15 @@ export type ArticleMeta = {
   revisedAt: string;
   category: [];
   title: string;
+  body: string;
 };
 
-export type Article = ArticleMeta & {
-  body: string;
+export type ArticleList = {
+  contents: Article[];
+  total: number;
+  totalCount: number;
+  offset: number;
+  limit: number;
 };
 
 export type Category = {

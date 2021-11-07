@@ -1,9 +1,9 @@
 import { Stack, Box, HStack, Heading } from '@chakra-ui/react';
 import { useColorModeValue } from '@chakra-ui/color-mode';
 import Image from 'next/image';
-import { ArticleMeta } from '../../../types/article';
+import { Article } from '../../../types/article';
 
-type Props = ArticleMeta;
+type Props = Article;
 export const ArticleCard: React.FC<Props> = ({ title }) => {
   return (
     <Stack

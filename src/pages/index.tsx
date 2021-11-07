@@ -10,10 +10,11 @@ export default function Home() {
     <Box p="2" pt="5">
       <TwContainer h="80" rounded="lg">
         <VStack spacing="5">
+          {/* <ArticleCard title="TestTitle" />
           <ArticleCard title="TestTitle" />
           <ArticleCard title="TestTitle" />
-          <ArticleCard title="TestTitle" />
-          <ArticleCard title="TestTitle" />
+          <ArticleCard title="TestTitle" /> 
+          */}
         </VStack>
       </TwContainer>
     </Box>

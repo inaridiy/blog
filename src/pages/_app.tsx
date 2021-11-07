@@ -2,6 +2,7 @@ import { ReactElement, ReactNode } from 'react';
 import type { NextPage } from 'next';
 import { AppProps } from 'next/app';
 import { ChakraProvider } from '@chakra-ui/react';
+import 'tailwindcss/tailwind.css';
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;

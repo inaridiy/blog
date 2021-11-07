@@ -15,12 +15,16 @@
     "@chakra-ui/react": "^1.6.10",
     "@emotion/react": "^11.5.0",
     "@emotion/styled": "^11.3.0",
+    "@tailwindcss/typography": "^0.4.1",
+    "chakra-ui-markdown-renderer": "^3.0.1",
     "framer-motion": "^4.1.17",
+    "github-markdown-css": "^5.0.0",
     "microcms-js-sdk": "^2.0.0",
     "next": "12.0.2",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-markdown": "^7.1.0",
+    "react-syntax-highlighter": "^15.4.4",
     "recoil": "^0.4.1"
   },
   "devDependencies": {
@@ -31,12 +35,15 @@
     "@storybook/react": "^6.3.12",
     "@types/node": "^16.11.4",
     "@types/react": "^17.0.32",
+    "autoprefixer": "^10.4.0",
     "babel-loader": "^8.2.3",
     "eslint": "8.1.0",
     "eslint-config-next": "11.1.2",
     "eslint-loader": "^4.0.2",
+    "postcss": "^8.3.11",
     "prettier": "2.4.1",
     "react-icons": "^4.3.1",
+    "tailwindcss": "^2.2.19",
     "typescript": "^4.4.4"
   }
 }
