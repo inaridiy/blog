@@ -13,10 +13,10 @@ export const DefaultLayout: React.FC<Props> = ({ children }) => {
         h="100vh"
         w="full"
         zIndex={-1}
-        pos="absolute"
+        pos="fixed"
         bgGradient={useColorModeValue(
           'linear(to-br, cyan.300, pink.500)',
-          'linear(to-bl, gray.800, gray.600)'
+          'linear(to-b, gray.900, gray.800, pink.900)'
         )}
       ></Box>
     </Flex>
