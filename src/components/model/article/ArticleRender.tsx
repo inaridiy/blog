@@ -1,14 +1,14 @@
 import ReactMarkdown from 'react-markdown';
 import { Box, BoxProps } from '@chakra-ui/react';
 import { useColorModeValue } from '@chakra-ui/color-mode';
-import CodeBlock from './ArticleCodeBlock';
+import dynamic from 'next/dynamic';
 
 type Props = BoxProps & { markdown: string };
 
 export const ArticleRender: React.FC<Props> = (props) => {
   const { markdown, ...rest } = props;
   const components = {
-    code: CodeBlock,
+    code: dynamic(() => import('./ArticleCodeBlock')),
   };
 
   return (

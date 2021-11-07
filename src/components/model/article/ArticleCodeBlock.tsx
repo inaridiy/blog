@@ -1,4 +1,3 @@
-import { Box } from '@chakra-ui/layout';
 import { CodeComponent } from 'react-markdown/lib/ast-to-react';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { tomorrow as style } from 'react-syntax-highlighter/dist/cjs/styles/prism';
