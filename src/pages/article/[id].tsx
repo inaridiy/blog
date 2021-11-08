@@ -28,7 +28,7 @@ export default function ArticlePage({ article }: { article: Article }) {
 
 export const getStaticPaths = async () => {
   const data = await client.get<ArticleList>({
-    endpoint: process.env.ARTICLE_END_POINT || '',
+    endpoint: 'article',
   });
   //console.log(data);
   const paths: string[] = data.contents.map(
@@ -42,7 +42,7 @@ export const getStaticProps: GetStaticProps<{ article: Article }> = async (
 ) => {
   const contentId = context.params?.id as string;
   const article = await client.get<Article>({
-    endpoint: process.env.ARTICLE_END_POINT || '',
+    endpoint: 'article',
     contentId,
   });
 
