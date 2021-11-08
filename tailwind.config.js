@@ -22,6 +22,34 @@ module.exports = {
             },
           },
         },
+        lg: {
+          css: {
+            pre: {
+              padding: '0',
+              margin: '0',
+            },
+            'code::before': {
+              content: '',
+            },
+            'code::after': {
+              content: '',
+            },
+          },
+        },
+        sm: {
+          css: {
+            pre: {
+              padding: '0',
+              margin: '0',
+            },
+            'code::before': {
+              content: '',
+            },
+            'code::after': {
+              content: '',
+            },
+          },
+        },
         dark: {
           css: {
             color: theme('colors.gray.200'),

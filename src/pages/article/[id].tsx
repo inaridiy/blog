@@ -1,22 +1,26 @@
 import type { ReactElement } from 'react';
 import { GetStaticProps } from 'next';
-import { Stack } from '@chakra-ui/layout';
+import { Stack, Box } from '@chakra-ui/layout';
+import { useColorModeValue } from '@chakra-ui/color-mode';
 import { client } from '../../lib/client';
 import { Article, ArticleList } from '../../types/article';
 import { DefaultLayout } from '../../components/layouts/DefaultLayout';
 import { ArticleRender } from '../../components/model/article/ArticleRender';
 import { TwContainer } from '../../components/ui/TwContainer';
 
-const blogData = {
-  title: 'TEST',
-  body: '',
-};
-
 export default function ArticlePage({ article }: { article: Article }) {
   return (
     <TwContainer>
       <Stack mx={{ base: '2', md: '10' }}>
-        <ArticleRender markdown={article.body} />
+        <Box
+          as="article"
+          className={`prose prose-sm prose-red lg:prose-lg ${useColorModeValue(
+            '',
+            'prose-dark'
+          )}`}
+        >
+          <ArticleRender markdown={article.body} />
+        </Box>
       </Stack>
     </TwContainer>
   );

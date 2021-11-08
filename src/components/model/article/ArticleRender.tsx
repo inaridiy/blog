@@ -1,27 +1,13 @@
 import ReactMarkdown from 'react-markdown';
-import { Box, BoxProps } from '@chakra-ui/react';
-import { useColorModeValue } from '@chakra-ui/color-mode';
+
 import dynamic from 'next/dynamic';
 
-type Props = BoxProps & { markdown: string };
+type Props = { markdown: string };
 
-export const ArticleRender: React.FC<Props> = (props) => {
-  const { markdown, ...rest } = props;
+export const ArticleRender: React.FC<Props> = ({ markdown }) => {
   const components = {
     code: dynamic(() => import('./ArticleCodeBlock')),
   };
 
-  return (
-    <Box as="article" {...rest}>
-      <ReactMarkdown
-        className={`prose prose-red lg:prose-lg ${useColorModeValue(
-          '',
-          'prose-dark'
-        )}`}
-        components={components}
-      >
-        {markdown}
-      </ReactMarkdown>
-    </Box>
-  );
+  return <ReactMarkdown components={components}>{markdown}</ReactMarkdown>;
 };
