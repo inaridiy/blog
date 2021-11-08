@@ -1,6 +1,6 @@
 import type { ReactElement } from 'react';
 import { GetStaticProps } from 'next';
-import { Stack, Box } from '@chakra-ui/react';
+import { Stack, Box, Heading, HStack, Spacer, Text } from '@chakra-ui/react';
 import { useColorModeValue } from '@chakra-ui/color-mode';
 import { client } from '../../lib/client';
 import { Article, ArticleList } from '../../types/article';
@@ -10,6 +10,7 @@ import { TwContainer } from '../../components/ui/TwContainer';
 import { useOgImage } from '../../hooks/useOgImage';
 import { mdToHast } from '../../lib/transpiler';
 import Image from 'next/image';
+import { ArticleTag } from '../../components/model/article/ArticleTag';
 
 export default function ArticlePage({
   article,
@@ -23,6 +24,15 @@ export default function ArticlePage({
   return (
     <TwContainer>
       <Stack mx={{ base: '2', md: '10' }}>
+        <Heading as="h1" size="xl" py="12">
+          {article.title}
+        </Heading>
+        <HStack py="4">
+          {article.category.map((category) => (
+            <ArticleTag key={category.name}>{category.name}</ArticleTag>
+          ))}
+          <Spacer />
+        </HStack>
         <Box pos="relative" w="full" rounded="xl" overflow="hidden">
           <Image
             src={ogImage}

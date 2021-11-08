@@ -4,7 +4,7 @@ export type Article = {
   updatedAt: string;
   publishedAt: string;
   revisedAt: string;
-  category: [];
+  category: Category[];
   title: string;
   body: string;
   og_frame: OGFrame | null;
