@@ -7,7 +7,7 @@ export type Article = {
   category: [];
   title: string;
   body: string;
-  og_frame: OGFrame;
+  og_frame: OGFrame | null;
 };
 
 export type ArticleList = {
@@ -46,5 +46,9 @@ export type UploadImage = {
   publishedAt: string;
   revisedAt: string;
   name: string;
-  image: string;
+  image: {
+    url: string;
+    width: number;
+    height: number;
+  };
 };
