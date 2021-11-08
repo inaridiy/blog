@@ -14,7 +14,7 @@ module.exports = {
               padding: '2px',
               margin: '1px',
               fontSize: '1em',
-              fontWeight: 900,
+              fontWeight: '700',
               borderRadius: '0.5rem',
               backgroundColor: 'white',
             },
