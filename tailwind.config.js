@@ -8,48 +8,19 @@ module.exports = {
   theme: {
     extend: {
       typography: (theme) => ({
-        DEFAULT: {
-          css: {
-            pre: {
-              padding: '0',
-              margin: '0',
-            },
-            'code::before': {
-              content: '',
-            },
-            'code::after': {
-              content: '',
-            },
-          },
-        },
-        lg: {
-          css: {
-            pre: {
-              padding: '0',
-              margin: '0',
-            },
-            'code::before': {
-              content: '',
-            },
-            'code::after': {
-              content: '',
-            },
-          },
-        },
         sm: {
           css: {
-            pre: {
-              padding: '0',
-              margin: '0',
-            },
-            'code::before': {
-              content: '',
-            },
-            'code::after': {
-              content: '',
+            code: {
+              padding: '2px',
+              margin: '1px',
+              fontSize: '1em',
+              fontWeight: 900,
+              borderRadius: '0.5rem',
+              backgroundColor: 'white',
             },
           },
         },
+
         dark: {
           css: {
             color: theme('colors.gray.200'),
