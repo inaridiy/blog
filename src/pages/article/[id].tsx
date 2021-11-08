@@ -8,10 +8,18 @@ import { DefaultLayout } from '../../components/layouts/DefaultLayout';
 import { ArticleRender } from '../../components/model/article/ArticleRender';
 import { TwContainer } from '../../components/ui/TwContainer';
 import { useOgImage } from '../../hooks/useOgImage';
+import { mdToHast } from '../../lib/transpiler';
 import Image from 'next/image';
 
-export default function ArticlePage({ article }: { article: Article }) {
+export default function ArticlePage({
+  article,
+  html,
+}: {
+  article: Article;
+  html: string;
+}) {
   const ogImage = useOgImage(article);
+
   return (
     <TwContainer>
       <Stack mx={{ base: '2', md: '10' }}>
@@ -32,7 +40,7 @@ export default function ArticlePage({ article }: { article: Article }) {
             'prose-dark'
           )}`}
         >
-          <ArticleRender markdown={article.body} />
+          <ArticleRender html={html} />
         </Box>
       </Stack>
     </TwContainer>
@@ -61,9 +69,10 @@ export const getStaticProps: GetStaticProps<{ article: Article }> = async (
       depth: 3,
     },
   });
+  const VFile = await mdToHast(article.body);
 
   return {
-    props: { article }, // ページコンポーネントにpropsとして渡されます。
+    props: { article, html: VFile.value }, // ページコンポーネントにpropsとして渡されます。
   };
 };
 
