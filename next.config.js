@@ -4,7 +4,7 @@ module.exports = {
     optimizeFonts: true,
   },
   images: {
-    domains: ['og-image-inaridiy.vercel.app', 'images.microcms-assets.io'],
+    domains: process.env.NEXT_PUBLIC_IMAGE_DOMAINS.split(','),
     formats: ['image/avif', 'image/webp'],
   },
 };

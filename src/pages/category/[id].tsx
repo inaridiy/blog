@@ -24,7 +24,7 @@ export default function Home({
     <Box p="2" pt="5">
       <TwContainer h="80" rounded="lg">
         <Heading as="h1" size="xl" py="4">
-          Category: {thisCategory?.name}
+          カテゴリー: {thisCategory?.name}
         </Heading>
         <Stack
           alignItems="flex-start"

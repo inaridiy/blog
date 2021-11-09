@@ -4,6 +4,7 @@ import { AppProps } from 'next/app';
 import { ChakraProvider } from '@chakra-ui/react';
 import 'tailwindcss/tailwind.css';
 import 'prism-themes/themes/prism-material-oceanic.css';
+import '../assets/toc.css';
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;

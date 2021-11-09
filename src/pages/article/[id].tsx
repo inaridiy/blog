@@ -1,17 +1,14 @@
 import type { ReactElement } from 'react';
+import { useEffect } from 'react';
 import { GetStaticProps } from 'next';
-import { Stack, Box, Heading, HStack, Spacer, Text } from '@chakra-ui/react';
-import { useColorModeValue } from '@chakra-ui/color-mode';
+import tocbot from 'tocbot';
 import { client } from '../../lib/client';
 import { Article, ArticleList } from '../../types/article';
 import { DefaultLayout } from '../../components/layouts/DefaultLayout';
-import { ArticleRender } from '../../components/model/article/ArticleRender';
 import { TwContainer } from '../../components/ui/TwContainer';
-import { useOgImage } from '../../hooks/useOgImage';
 import { mdToHast } from '../../lib/transpiler';
-import Image from 'next/image';
-import { ArticleTag } from '../../components/model/article/ArticleTag';
-import { useDate } from '../../hooks/useDate';
+import { ArticleView } from '../../components/model/article/ArticleView';
+import { ArticleSideContnt } from '../../components/model/article/ArticleSideContnt';
 
 export default function ArticlePage({
   article,
@@ -20,42 +17,17 @@ export default function ArticlePage({
   article: Article;
   html: string;
 }) {
-  const ogImage = useOgImage(article);
-  const updatedDay = useDate(article.updatedAt);
-  console.log(updatedDay);
+  useEffect(() => {
+    console.log('tocbot');
+    tocbot.init({
+      tocSelector: '.toc',
+      contentSelector: '.content',
+      headingSelector: 'h1, h2, h3',
+    });
+  }, []);
   return (
     <TwContainer>
-      <Stack mx={{ base: '2', md: '10' }}>
-        <Heading as="h1" size="xl" py="12">
-          {article.title}
-        </Heading>
-        <HStack py="4">
-          {article.category.map((category) => (
-            <ArticleTag key={category.name} category={category} />
-          ))}
-          <Spacer />
-          <Text fontSize="sm">更新日: {updatedDay}</Text>
-        </HStack>
-        <Box pos="relative" w="full" rounded="xl" overflow="hidden">
-          <Image
-            src={ogImage}
-            alt={article.title}
-            layout="responsive"
-            width="1024"
-            height="585"
-            objectFit="cover"
-          />
-        </Box>
-        <Box
-          as="article"
-          className={`prose prose-sm prose-red lg:prose-lg ${useColorModeValue(
-            '',
-            'prose-dark'
-          )}`}
-        >
-          <ArticleRender html={html} />
-        </Box>
-      </Stack>
+      <ArticleView html={html} article={article} side={<ArticleSideContnt />} />
     </TwContainer>
   );
 }

@@ -1,6 +1,6 @@
 import type { ReactElement } from 'react';
 import { GetStaticProps } from 'next';
-import { Box, Stack, Spacer, VStack } from '@chakra-ui/react';
+import { Box, Stack, Spacer, VStack, Text } from '@chakra-ui/react';
 import { client } from '../lib/client';
 import { ArticleList, CategoryList } from '../types/article';
 import { DefaultLayout } from '../components/layouts/DefaultLayout';
@@ -21,6 +21,7 @@ export default function Home({
         <Stack
           alignItems="flex-start"
           direction={{ base: 'column', md: 'row' }}
+          mt="20"
         >
           <VStack spacing="5">
             {articles.contents.map((article) => (
