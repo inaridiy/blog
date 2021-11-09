@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { Article } from '../../../types/article';
 import { ArticleTag } from './ArticleTag';
 import { ArticleRender } from './ArticleRender';
+import { SIdeShareBtn } from '../sns/SIdeShareBtn';
 import { useOgImage } from '../../../hooks/useOgImage';
 import { useDate } from '../../../hooks/useDate';
 import React from 'react';
@@ -20,6 +21,7 @@ export const ArticleView: React.FC<Props> = ({ article, html, side }) => {
 
   return (
     <Stack>
+      <SIdeShareBtn />
       <Heading as="h1" size="xl" py="12">
         {article.title}
       </Heading>
