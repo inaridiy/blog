@@ -8,11 +8,11 @@ export const DefaultLayout: React.FC<Props> = ({ children }) => {
   return (
     <Flex direction="column" h="100vh">
       <Header />
-      <Box flex={1} mt="20">
+      <Box flex={1} mt="20" mb="5">
         {children}
       </Box>
       <Box as="footer" w="full">
-        <VStack pt="2" bg="gray.800" color="white">
+        <VStack py="2" bg="gray.800" color="white">
           <Text>
             made by
             <Link href="https://twitter.com/unknown_gakusei" px="1">
