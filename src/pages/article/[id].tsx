@@ -18,7 +18,6 @@ export default function ArticlePage({
   html: string;
 }) {
   useEffect(() => {
-    console.log('tocbot');
     tocbot.init({
       tocSelector: '.toc',
       contentSelector: '.content',

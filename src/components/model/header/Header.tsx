@@ -7,7 +7,7 @@ type Props = {};
 
 export const Header: React.FC<Props> = ({}) => {
   return (
-    <Container maxW={'container.xl'} pos="fixed" zIndex={1}>
+    <Container maxW={'container.xl'} pos="fixed" zIndex={5}>
       <HStack bg="transparent" h="24">
         <HeaderTitle />
         <Spacer />

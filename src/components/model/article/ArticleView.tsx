@@ -1,12 +1,4 @@
-import {
-  HStack,
-  Box,
-  Heading,
-  Stack,
-  Spacer,
-  Text,
-  Flex,
-} from '@chakra-ui/react';
+import { HStack, Box, Heading, Stack, Spacer, Text } from '@chakra-ui/react';
 import { useColorModeValue } from '@chakra-ui/color-mode';
 import Image from 'next/image';
 import { Article } from '../../../types/article';
@@ -38,11 +30,7 @@ export const ArticleView: React.FC<Props> = ({ article, html, side }) => {
         <Spacer />
         <Text fontSize="sm">公開日: {createdDay}</Text>
       </HStack>
-      <Stack
-        dalignItems="flex-start"
-        direction={{ base: 'column', md: 'row' }}
-        alignItems="flex-start"
-      >
+      <Stack alignItems="flex-start" direction={{ base: 'column', md: 'row' }}>
         <Stack w={{ base: '100%', md: '70%' }}>
           <Box pos="relative" w="full" rounded="xl" overflow="hidden">
             <Image
