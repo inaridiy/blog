@@ -2,6 +2,7 @@ import type { ReactElement } from 'react';
 import { useEffect } from 'react';
 import { GetStaticProps } from 'next';
 import tocbot from 'tocbot';
+import Head from 'next/head';
 import { client } from '../../lib/client';
 import { Article, ArticleList } from '../../types/article';
 import { DefaultLayout } from '../../components/layouts/DefaultLayout';
@@ -9,6 +10,7 @@ import { TwContainer } from '../../components/ui/TwContainer';
 import { mdToHast } from '../../lib/transpiler';
 import { ArticleView } from '../../components/model/article/ArticleView';
 import { ArticleSideContnt } from '../../components/model/article/ArticleSideContnt';
+import { useOgImage } from '../../hooks/useOgImage';
 
 export default function ArticlePage({
   article,
@@ -17,6 +19,7 @@ export default function ArticlePage({
   article: Article;
   html: string;
 }) {
+  const ogImage = useOgImage(article);
   useEffect(() => {
     tocbot.init({
       tocSelector: '.toc',
@@ -25,9 +28,32 @@ export default function ArticlePage({
     });
   }, []);
   return (
-    <TwContainer>
-      <ArticleView html={html} article={article} side={<ArticleSideContnt />} />
-    </TwContainer>
+    <>
+      <Head>
+        <title>{article.title}</title>
+        <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+        <meta name="description" content={article.body.slice(60)} />
+        <meta
+          property="og:url"
+          content={`${process.env.NEXT_PUBLIC_ORIGIN}/article/${article.id}`}
+        />
+        <meta property="og:title" content={process.env.NEXT_PUBLIC_SITE_NAME} />
+        <meta
+          property="og:site_name"
+          content={process.env.NEXT_PUBLIC_SITE_NAME}
+        />
+        <meta property="og:description" content={article.body.slice(60)} />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content={ogImage} />
+      </Head>
+      <TwContainer>
+        <ArticleView
+          html={html}
+          article={article}
+          side={<ArticleSideContnt />}
+        />
+      </TwContainer>
+    </>
   );
 }
 
