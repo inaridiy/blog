@@ -45,6 +45,7 @@ export const getStaticProps: GetStaticProps<{
     endpoint: process.env.ARTICLE_END_POINT || '',
     queries: {
       depth: 3,
+      limit: 100,
     },
   });
 
@@ -52,6 +53,7 @@ export const getStaticProps: GetStaticProps<{
     endpoint: process.env.CATEGORY_END_POINT || '',
     queries: {
       depth: 3,
+      limit: 100,
     },
   });
   return {

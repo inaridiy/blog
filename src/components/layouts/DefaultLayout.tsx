@@ -1,4 +1,4 @@
-import { Flex, Box } from '@chakra-ui/react';
+import { Flex, Box, VStack, Text, Link } from '@chakra-ui/react';
 import { useColorModeValue } from '@chakra-ui/color-mode';
 import { Header } from '../model/header/Header';
 
@@ -10,6 +10,16 @@ export const DefaultLayout: React.FC<Props> = ({ children }) => {
       <Header />
       <Box flex={1} mt="20">
         {children}
+      </Box>
+      <Box as="footer">
+        <VStack p="2" bg="gray.800" color="white">
+          <Text>
+            made by
+            <Link href="https://twitter.com/unknown_gakusei" px="1">
+              @unknown_gakusei
+            </Link>
+          </Text>
+        </VStack>
       </Box>
       <Box
         h="100vh"

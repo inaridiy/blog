@@ -65,6 +65,7 @@ export const getStaticProps: GetStaticProps<{
     endpoint: process.env.ARTICLE_END_POINT || '',
     queries: {
       depth: 3,
+      limit: 100,
       filters: `category[contains]${contentId}`,
     },
   });
@@ -73,6 +74,7 @@ export const getStaticProps: GetStaticProps<{
     endpoint: process.env.CATEGORY_END_POINT || '',
     queries: {
       depth: 3,
+      limit: 100,
     },
   });
 

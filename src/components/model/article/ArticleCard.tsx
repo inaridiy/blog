@@ -31,8 +31,9 @@ export const ArticleCard: React.FC<Props> = ({ article }) => {
           h={{ base: '60%', sm: '100%' }}
           pos="relative"
           borderRight={{ base: '0', sm: '2px' }}
+          borderBottom={{ base: '2px', sm: '0' }}
           borderColor={{
-            base: '0',
+            base: useColorModeValue('gray.400', 'gray.700'),
             sm: useColorModeValue('gray.400', 'gray.700'),
           }}
         >
