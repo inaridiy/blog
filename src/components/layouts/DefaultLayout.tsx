@@ -11,8 +11,8 @@ export const DefaultLayout: React.FC<Props> = ({ children }) => {
       <Box flex={1} mt="20">
         {children}
       </Box>
-      <Box as="footer">
-        <VStack p="2" bg="gray.800" color="white">
+      <Box as="footer" w="full">
+        <VStack pt="2" bg="gray.800" color="white">
           <Text>
             made by
             <Link href="https://twitter.com/unknown_gakusei" px="1">

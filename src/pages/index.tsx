@@ -16,25 +16,23 @@ export default function Home({
   categories: CategoryList;
 }): ReactElement {
   return (
-    <Box p="2" pt="5">
-      <TwContainer h="80" rounded="lg">
-        <Stack
-          alignItems="flex-start"
-          direction={{ base: 'column', md: 'row' }}
-          mt="20"
-        >
-          <VStack spacing="5">
-            {articles.contents.map((article) => (
-              <ArticleCard key={article.title} article={article} />
-            ))}
-          </VStack>
-          <VStack w={{ base: 'full', md: '72' }}>
-            <Categories categories={categories} />
-            <Spacer />
-          </VStack>
-        </Stack>
-      </TwContainer>
-    </Box>
+    <TwContainer rounded="lg">
+      <Stack
+        alignItems="flex-start"
+        direction={{ base: 'column', md: 'row' }}
+        mt={{ base: '10', md: '20' }}
+      >
+        <VStack spacing="5">
+          {articles.contents.map((article) => (
+            <ArticleCard key={article.title} article={article} />
+          ))}
+        </VStack>
+        <VStack w={{ base: 'full', md: '72' }}>
+          <Categories categories={categories} />
+          <Spacer />
+        </VStack>
+      </Stack>
+    </TwContainer>
   );
 }
 export const getStaticProps: GetStaticProps<{
