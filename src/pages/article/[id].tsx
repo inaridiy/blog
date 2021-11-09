@@ -45,6 +45,7 @@ export default function ArticlePage({
         <meta property="og:description" content={article.body.slice(0, 120)} />
         <meta property="og:type" content="website" />
         <meta property="og:image" content={ogImage} />
+        <meta property="twitter:image" content={ogImage} />
       </Head>
       <TwContainer>
         <ArticleView
