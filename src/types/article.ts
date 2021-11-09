@@ -27,6 +27,14 @@ export type Category = {
   name: string;
 };
 
+export type CategoryList = {
+  contents: Category[];
+  total: number;
+  totalCount: number;
+  offset: number;
+  limit: number;
+};
+
 export type OGFrame = {
   id: string;
   createdAt: string;

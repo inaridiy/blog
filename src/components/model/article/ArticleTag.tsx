@@ -1,20 +1,24 @@
-import { Box } from '@chakra-ui/react';
+import { Box, Link } from '@chakra-ui/react';
 import toMaterialStyle from 'material-color-hash';
+import NextLink from 'next/link';
+import { Category } from '../../../types/article';
 
-type Props = { children?: React.ReactNode };
+type Props = { category: Category };
 
-export const ArticleTag: React.FC<Props> = ({ children }) => {
-  const color = toMaterialStyle(String(children), 900);
+export const ArticleTag: React.FC<Props> = ({ category }) => {
+  const color = toMaterialStyle(String(category.name), 900);
 
   return (
-    <Box
-      color="white"
-      px="4"
-      py="0.5"
-      rounded="full"
-      bg={color.backgroundColor}
-    >
-      {children}
-    </Box>
+    <NextLink href={`/category/${category.id}`}>
+      <Link
+        color="white"
+        px="4"
+        py="0.5"
+        rounded="full"
+        bg={color.backgroundColor}
+      >
+        {category.name}
+      </Link>
+    </NextLink>
   );
 };

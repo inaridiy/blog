@@ -1,17 +1,20 @@
-import { Stack, Box, HStack, Heading } from '@chakra-ui/react';
+import { Stack, Box, Text, Heading, HStack, Spacer } from '@chakra-ui/react';
 import { useColorModeValue } from '@chakra-ui/color-mode';
 import Image from 'next/image';
 import NextLink from 'next/link';
 import { Article } from '../../../types/article';
 import { useOgImage } from '../../../hooks/useOgImage';
+import { ArticleTag } from '../article/ArticleTag';
+import { useDate } from '../../../hooks/useDate';
 
 type Props = { article: Article };
 export const ArticleCard: React.FC<Props> = ({ article }) => {
   const image = useOgImage(article);
+  const date = useDate(article.updatedAt);
   return (
     <NextLink href={`/article/${article.id}`}>
       <Stack
-        h={{ base: '72', sm: '40', md: '48' }}
+        h={{ base: '72', sm: '40', md: '56' }}
         w="full"
         transition="all 0.2s"
         _hover={{
@@ -44,11 +47,30 @@ export const ArticleCard: React.FC<Props> = ({ article }) => {
         <Stack
           w={{ base: '100%', sm: '60%' }}
           h={{ base: '40%', sm: '100%' }}
-          p={{ base: '2', sm: '5' }}
+          p={{ base: '2', sm: '3' }}
+          display="flex"
         >
           <Heading as="h3" size="md">
             {article.title}
           </Heading>
+          <Text
+            display={{ base: 'none', sm: 'block' }}
+            fontWeight="normal"
+            fontSize="xs"
+            pl="2"
+            color="gray.500"
+            flexGrow={1}
+            overflow="hidden"
+          >
+            {article.body.slice(0, 140)}
+          </Text>
+          <HStack>
+            {article.category.map((category) => (
+              <ArticleTag key={category.name} category={category} />
+            ))}
+            <Spacer />
+            <Text fontSize="xs">{date}</Text>
+          </HStack>
         </Stack>
       </Stack>
     </NextLink>

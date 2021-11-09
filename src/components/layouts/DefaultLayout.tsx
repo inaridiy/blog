@@ -6,9 +6,11 @@ type Props = { children: React.ReactNode };
 
 export const DefaultLayout: React.FC<Props> = ({ children }) => {
   return (
-    <Flex direction="column">
+    <Flex direction="column" h="100vh">
       <Header />
-      <Box flexGrow={1}>{children}</Box>
+      <Box flex={1} mt="20">
+        {children}
+      </Box>
       <Box
         h="100vh"
         w="full"

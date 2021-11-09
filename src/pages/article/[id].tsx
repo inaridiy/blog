@@ -11,6 +11,7 @@ import { useOgImage } from '../../hooks/useOgImage';
 import { mdToHast } from '../../lib/transpiler';
 import Image from 'next/image';
 import { ArticleTag } from '../../components/model/article/ArticleTag';
+import { useDate } from '../../hooks/useDate';
 
 export default function ArticlePage({
   article,
@@ -20,7 +21,8 @@ export default function ArticlePage({
   html: string;
 }) {
   const ogImage = useOgImage(article);
-
+  const updatedDay = useDate(article.updatedAt);
+  console.log(updatedDay);
   return (
     <TwContainer>
       <Stack mx={{ base: '2', md: '10' }}>
@@ -29,9 +31,10 @@ export default function ArticlePage({
         </Heading>
         <HStack py="4">
           {article.category.map((category) => (
-            <ArticleTag key={category.name}>{category.name}</ArticleTag>
+            <ArticleTag key={category.name} category={category} />
           ))}
           <Spacer />
+          <Text fontSize="sm">更新日: {updatedDay}</Text>
         </HStack>
         <Box pos="relative" w="full" rounded="xl" overflow="hidden">
           <Image
