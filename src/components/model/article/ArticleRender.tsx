@@ -3,7 +3,7 @@ import { unified } from 'unified';
 import rehypeParse from 'rehype-parse';
 import rehypeReact from 'rehype-react';
 import { ArticleLink } from './ArticleLink';
-import { ReactElement } from 'rehype-react/lib';
+import { ArticleImage } from './ArticleImage';
 
 type Props = { html: string };
 const HtmlToReact = unified()
@@ -12,6 +12,7 @@ const HtmlToReact = unified()
     createElement,
     components: {
       a: ArticleLink as any,
+      img: ArticleImage,
     },
   });
 
