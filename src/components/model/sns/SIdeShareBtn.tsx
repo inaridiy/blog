@@ -15,7 +15,7 @@ export const SIdeShareBtn: React.FC = ({}) => {
   };
 
   return (
-    <VStack pos="fixed" top="30%" left="0" color="white" zIndex={8}>
+    <VStack pos="fixed" bottom="70%" left="0" color="white" zIndex={8}>
       <Link
         p="2"
         bg="twitter.400"
