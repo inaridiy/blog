@@ -16,6 +16,8 @@
     "@emotion/react": "^11.5.0",
     "@emotion/styled": "^11.3.0",
     "@mapbox/rehype-prism": "^0.8.0",
+    "@remark-embedder/core": "^2.0.0",
+    "@remark-embedder/transformer-oembed": "^2.0.0",
     "@tailwindcss/typography": "^0.4.1",
     "framer-motion": "^4.1.17",
     "material-color-hash": "^0.1.6",
