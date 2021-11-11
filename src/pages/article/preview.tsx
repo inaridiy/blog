@@ -1,6 +1,6 @@
 import type { ReactElement } from 'react';
-import { useEffect, useState } from 'react';
-import { GetStaticProps } from 'next';
+import { useEffect } from 'react';
+import { GetServerSideProps } from 'next';
 import tocbot from 'tocbot';
 import Head from 'next/head';
 import { client } from '../../lib/client';
@@ -11,29 +11,16 @@ import { mdToHast } from '../../lib/transpiler';
 import { ArticleView } from '../../components/model/article/ArticleView';
 import { ArticleSideContnt } from '../../components/model/article/ArticleSideContnt';
 import { useOgImage } from '../../hooks/useOgImage';
-import { useRouter } from 'next/dist/client/router';
 
-export default function ArticlePage() {
-  // const ogImage = useOgImage(article);
-  const [article, setArticle] = useState<Article>();
-  const [html, setHtml] = useState<string>('');
-
-  const router = useRouter();
+export default function ArticlePage({
+  article,
+  html,
+}: {
+  article: Article;
+  html: string;
+}) {
+  const ogImage = useOgImage(article);
   useEffect(() => {
-    (async () => {
-      const article = await client.get<Article>({
-        endpoint: 'inari' || '',
-        contentId: router.query.id as string,
-        queries: {
-          depth: 3,
-          draftKey: router.query.draftKey as string,
-        },
-      });
-      const VFile = await mdToHast(article.body);
-
-      setArticle(article);
-      setHtml(VFile.value as string);
-    })();
     tocbot.init({
       tocSelector: '.toc',
       contentSelector: '.content',
@@ -43,17 +30,36 @@ export default function ArticlePage() {
   return (
     <>
       <TwContainer>
-        {article && html && (
-          <ArticleView
-            html={html}
-            article={article}
-            side={<ArticleSideContnt />}
-          />
-        )}
+        <ArticleView
+          html={html}
+          article={article}
+          side={<ArticleSideContnt />}
+        />
       </TwContainer>
     </>
   );
 }
+
+export const getServerSideProps: GetServerSideProps<{ article: Article }> =
+  async (context) => {
+    console.log(context.query);
+    const contentId = context.query.id as string;
+    const draftKey = context.query.draftKey as string;
+
+    const article = await client.get<Article>({
+      endpoint: process.env.ARTICLE_END_POINT || '',
+      contentId,
+      queries: {
+        depth: 3,
+        draftKey,
+      },
+    });
+    const VFile = await mdToHast(article.body);
+
+    return {
+      props: { article, html: VFile.value }, // ページコンポーネントにpropsとして渡されます。
+    };
+  };
 
 ArticlePage.getLayout = (page: ReactElement) => (
   <DefaultLayout>{page}</DefaultLayout>
