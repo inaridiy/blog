@@ -6,6 +6,7 @@ import { Article } from '../../../types/article';
 import { useOgImage } from '../../../hooks/useOgImage';
 import { ArticleTag } from '../article/ArticleTag';
 import { useDate } from '../../../hooks/useDate';
+import { CategoriesList } from '../category/CategoriesList';
 
 type Props = { article: Article };
 export const ArticleCard: React.FC<Props> = ({ article }) => {
@@ -14,7 +15,7 @@ export const ArticleCard: React.FC<Props> = ({ article }) => {
   return (
     <NextLink href={`/article/${article.id}`}>
       <Stack
-        h={{ base: '72', sm: '40', md: '56' }}
+        h={{ base: 'auto', sm: '40', md: '56' }}
         w="full"
         transition="all 0.2s"
         _hover={{
@@ -28,7 +29,7 @@ export const ArticleCard: React.FC<Props> = ({ article }) => {
       >
         <Box
           w={{ base: '100%', sm: '40%', md: '50%' }}
-          h={{ base: '60%', sm: '100%' }}
+          h={{ base: '40', sm: '100%' }}
           pos="relative"
           borderRight={{ base: '0', sm: '2px' }}
           borderBottom={{ base: '2px', sm: '0' }}
@@ -65,10 +66,8 @@ export const ArticleCard: React.FC<Props> = ({ article }) => {
           >
             {article.body.slice(0, 140)}
           </Text>
-          <HStack mb="2">
-            {article.category.map((category) => (
-              <ArticleTag key={category.name} category={category} />
-            ))}
+          <HStack>
+            <CategoriesList categories={article.category} />
             <Spacer />
             <Text fontSize="xs">{date}</Text>
           </HStack>

@@ -15,6 +15,7 @@ export const ArticleTag: React.FC<Props> = ({ category }) => {
         px="4"
         py="0.5"
         rounded="full"
+        whiteSpace="nowrap"
         bg={color.backgroundColor}
       >
         {category.name}
