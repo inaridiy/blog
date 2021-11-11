@@ -22,7 +22,7 @@ export default function ArticlePage() {
   useEffect(() => {
     (async () => {
       const article = await client.get<Article>({
-        endpoint: process.env.ARTICLE_END_POINT || '',
+        endpoint: 'inari' || '',
         contentId: router.query.id as string,
         queries: {
           depth: 3,
