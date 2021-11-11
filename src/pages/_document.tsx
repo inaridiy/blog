@@ -2,6 +2,7 @@ import Document, { Html, Head, Main, NextScript } from 'next/document';
 import { Box } from '@chakra-ui/layout';
 
 const GA_TRACKING_ID = process.env.NEXT_PUBLIC_GA_ID || '';
+GA_TRACKING_ID || console.warn('GA_TRACKING_ID is not defined');
 
 class MyDocument extends Document {
   render() {
