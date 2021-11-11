@@ -42,7 +42,6 @@ export default function ArticlePage({
 
 export const getServerSideProps: GetServerSideProps<{ article: Article }> =
   async (context) => {
-    console.log(context.query);
     const contentId = context.query.id as string;
     const draftKey = context.query.draftKey as string;
 
