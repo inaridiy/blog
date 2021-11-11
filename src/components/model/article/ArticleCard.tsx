@@ -65,7 +65,7 @@ export const ArticleCard: React.FC<Props> = ({ article }) => {
           >
             {article.body.slice(0, 140)}
           </Text>
-          <HStack>
+          <HStack mb="2">
             {article.category.map((category) => (
               <ArticleTag key={category.name} category={category} />
             ))}
