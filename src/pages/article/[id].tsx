@@ -24,7 +24,7 @@ export default function ArticlePage({
     tocbot.init({
       tocSelector: '.toc',
       contentSelector: '.content',
-      headingSelector: 'h1, h2, h3',
+      headingSelector: 'h1, h2, h3, h4, h5',
     });
   }, []);
   return (
