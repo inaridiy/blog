@@ -15,7 +15,7 @@ export const SIdeShareBtn: React.FC = ({}) => {
   };
 
   return (
-    <VStack pos="fixed" bottom="70%" left="0" color="white" zIndex={8}>
+    <VStack pos="fixed" bottom="50%" left="0" color="white" zIndex={8}>
       <Link
         p="2"
         bg="twitter.400"
@@ -23,6 +23,7 @@ export const SIdeShareBtn: React.FC = ({}) => {
         shadow="xl"
         _hover={{ bg: 'twitter.600' }}
         href={twitterLink}
+        alt="twitter link"
       >
         <Icon as={BsTwitter} w="6" h="6" />
       </Link>
@@ -33,6 +34,7 @@ export const SIdeShareBtn: React.FC = ({}) => {
         shadow="xl"
         _hover={{ bg: 'teal.600' }}
         onClick={copyLink}
+        aria-label="URLのコピーボタン"
       >
         <Icon as={BiCopy} w="6" h="6" />
       </Button>
