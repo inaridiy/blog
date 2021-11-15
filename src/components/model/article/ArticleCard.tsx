@@ -22,7 +22,7 @@ export const ArticleCard: React.FC<Props> = ({ article }) => {
   const date = useDate(article.updatedAt);
   return (
     <NextLink href={`/article/${article.id}`}>
-      <Link href={`/article/${article.id}`}>
+      <Link href={`/article/${article.id}`} w="full">
         <Stack
           h={{ base: 'auto', sm: '40', md: '56' }}
           w="full"
