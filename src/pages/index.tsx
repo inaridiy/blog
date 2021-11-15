@@ -32,9 +32,9 @@ export default function Home({
           content={`${process.env.NEXT_PUBLIC_ORIGIN}/logo.png`}
         />
       </Head>
-      <TwContainer rounded="lg">
+
+      <TwContainer>
         <Stack
-          alignItems="flex-start"
           direction={{ base: 'column', md: 'row' }}
           mt={{ base: '10', md: '20' }}
         >
