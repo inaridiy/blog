@@ -8,7 +8,6 @@ module.exports = withPWA({
   },
   pwa: {
     dest: 'public',
-    runtimeCaching,
   },
   images: {
     domains: process.env.NEXT_PUBLIC_IMAGE_DOMAINS.split(','),
