@@ -9,6 +9,11 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head>
+          <link rel="manifest" href="/manifest.webmanifest" />
+          <link
+            rel="apple-touch-icon"
+            href="/apple-touch-icon-180x180-precomposed.png"
+          />
           <link
             href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@700&display=swap"
             rel="stylesheet"
@@ -32,11 +37,6 @@ class MyDocument extends Document {
             </>
           )}
           <meta name="theme-color" content="#fff" />
-          <link rel="manifest" href="/manifest.json" />
-          <link
-            rel="apple-touch-icon"
-            href="/apple-touch-icon-180x180-precomposed.png"
-          />
         </Head>
 
         <Box as="body" fontFamily="'Noto Sans JP', sans-serif">
