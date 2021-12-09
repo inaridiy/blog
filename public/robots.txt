@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://inaridiy.tech
+
+# Sitemaps
+Sitemap: https://inaridiy.tech/sitemap.xml
