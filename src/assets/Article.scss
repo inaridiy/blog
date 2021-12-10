@@ -1,0 +1,9 @@
+.znc div.code-block-container {
+  @apply -mx-4 sm:mx-0 rounded-none sm:rounded-md;
+  ::-webkit-scrollbar {
+    height: 4px;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-gradient-to-r from-cyan-500 to-blue-500;
+  }
+}

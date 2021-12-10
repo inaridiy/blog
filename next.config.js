@@ -1,6 +1,4 @@
-const withPWA = require('next-pwa');
-
-module.exports = withPWA({
+module.exports = {
   reactStrictMode: true,
   experimental: {
     optimizeFonts: true,
@@ -12,4 +10,4 @@ module.exports = withPWA({
     domains: process.env.NEXT_PUBLIC_IMAGE_DOMAINS.split(','),
     formats: ['image/avif', 'image/webp'],
   },
-});
+};

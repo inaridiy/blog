@@ -1,12 +1,7 @@
 import type { ReactElement } from 'react';
 import { GetStaticProps } from 'next';
-import { Box, Stack, Spacer, VStack, Heading } from '@chakra-ui/react';
 import { client } from '../../lib/client';
 import { ArticleList, CategoryList } from '../../types/article';
-import { DefaultLayout } from '../../components/layouts/DefaultLayout';
-import { TwContainer } from '../../components/ui/TwContainer';
-import { ArticleCard } from '../../components/model/article/ArticleCard';
-import { Categories } from '../../components/model/category/Categories';
 import { useRouter } from 'next/dist/client/router';
 
 export default function Home({
@@ -20,29 +15,7 @@ export default function Home({
   const thisCategory = categories.contents.find(
     (s) => s.id === router.query.id
   );
-  return (
-    <Box p="2" pt="5">
-      <TwContainer h="80" rounded="lg">
-        <Heading as="h1" size="xl" py="4">
-          カテゴリー: {thisCategory?.name}
-        </Heading>
-        <Stack
-          alignItems="flex-start"
-          direction={{ base: 'column', md: 'row' }}
-        >
-          <VStack spacing="5">
-            {articles.contents.map((article) => (
-              <ArticleCard key={article.title} article={article} />
-            ))}
-          </VStack>
-          <VStack w={{ base: 'full', md: '72' }}>
-            <Categories categories={categories} />
-            <Spacer />
-          </VStack>
-        </Stack>
-      </TwContainer>
-    </Box>
-  );
+  return <></>;
 }
 
 export const getStaticPaths = async () => {
@@ -82,5 +55,3 @@ export const getStaticProps: GetStaticProps<{
     props: { articles, categories }, // ページコンポーネントにpropsとして渡されます。
   };
 };
-
-Home.getLayout = (page: ReactElement) => <DefaultLayout>{page}</DefaultLayout>;

@@ -1,15 +1,9 @@
-import type { ReactElement } from 'react';
 import { useEffect } from 'react';
 import { GetServerSideProps } from 'next';
 import tocbot from 'tocbot';
-import Head from 'next/head';
 import { client } from '../../lib/client';
 import { Article, ArticleList } from '../../types/article';
-import { DefaultLayout } from '../../components/layouts/DefaultLayout';
-import { TwContainer } from '../../components/ui/TwContainer';
-import { mdToHast } from '../../lib/transpiler';
-import { ArticleView } from '../../components/model/article/ArticleView';
-import { ArticleSideContnt } from '../../components/model/article/ArticleSideContnt';
+import { mdToHTML } from '../../lib/transpiler';
 import { useOgImage } from '../../hooks/useOgImage';
 
 export default function ArticlePage({
@@ -27,17 +21,7 @@ export default function ArticlePage({
       headingSelector: 'h1, h2, h3',
     });
   }, []);
-  return (
-    <>
-      <TwContainer>
-        <ArticleView
-          html={html}
-          article={article}
-          side={<ArticleSideContnt />}
-        />
-      </TwContainer>
-    </>
-  );
+  return <></>;
 }
 
 export const getServerSideProps: GetServerSideProps<{ article: Article }> =
@@ -53,13 +37,9 @@ export const getServerSideProps: GetServerSideProps<{ article: Article }> =
         draftKey,
       },
     });
-    const VFile = await mdToHast(article.body);
+    const html = mdToHTML(article.body);
 
     return {
-      props: { article, html: VFile.value }, // ページコンポーネントにpropsとして渡されます。
+      props: { article, html }, // ページコンポーネントにpropsとして渡されます。
     };
   };
-
-ArticlePage.getLayout = (page: ReactElement) => (
-  <DefaultLayout>{page}</DefaultLayout>
-);
