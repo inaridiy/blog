@@ -6,6 +6,7 @@ module.exports = withBundleAnalyzer({
   reactStrictMode: true,
   experimental: {
     optimizeFonts: true,
+    concurrentFeatures: true
   },
   pwa: {
     dest: 'public',
