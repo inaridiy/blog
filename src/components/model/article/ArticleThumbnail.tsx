@@ -11,7 +11,7 @@ export const ArticleThumbnail: React.FC<Props> = ({ article }) => {
       <Image
         src={ogImage}
         alt={article.title}
-        layout="responsive"
+        layout="fill"
         width="1024"
         height="585"
         objectFit="cover"
