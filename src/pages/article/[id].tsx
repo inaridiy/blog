@@ -3,9 +3,13 @@ import { GetStaticProps } from 'next';
 import tocbot from 'tocbot';
 import { client } from '../../lib/client';
 import { Article, ArticleList } from '../../types/article';
-import { mdToHTML } from '../../lib/transpiler';
+import { mdToHTML, parser } from '../../lib/transpiler';
 import { useOgImage } from '../../hooks/useOgImage';
-import { ArticleView } from '../../components/model/article/ArticleView';
+import {
+  ArticleView,
+  ArticleTitle,
+  ArticleThumbnail,
+} from '../../components/model/article';
 
 export default function ArticlePage({
   article,
@@ -14,8 +18,8 @@ export default function ArticlePage({
   article: Article;
   html: string;
 }) {
-  /* const ogImage = useOgImage(article);
-  useEffect(() => {
+  const ogImage = useOgImage(article);
+  /* useEffect(() => {
     tocbot.init({
       tocSelector: '.toc',
       contentSelector: '.content',
@@ -23,11 +27,11 @@ export default function ArticlePage({
     });
   }, []);*/
   return (
-    <>
-      <div className="px-4">
-        <ArticleView html={html}></ArticleView>
-      </div>
-    </>
+    <article className="container px-2 md:px-4 mx-auto ">
+      <ArticleTitle titleHtml={article.title} />
+      <ArticleThumbnail article={article} />
+      <ArticleView html={html}></ArticleView>
+    </article>
   );
 }
 
@@ -53,6 +57,7 @@ export const getStaticProps: GetStaticProps<{ article: Article }> = async (
       depth: 3,
     },
   });
+  article.title = parser.translateHTMLString(article.title);
   const html = mdToHTML(article.body);
 
   return {
