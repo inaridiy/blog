@@ -1,4 +1,9 @@
-export type Article = {
+export type Article = ArticleRes & {
+  html: string;
+  titleHtml: string;
+};
+
+export type ArticleRes = {
   id: string;
   createdAt: string;
   updatedAt: string;
@@ -11,7 +16,7 @@ export type Article = {
 };
 
 export type ArticleList = {
-  contents: Article[];
+  contents: ArticleRes[];
   total: number;
   totalCount: number;
   offset: number;
@@ -43,7 +48,7 @@ export type OGFrame = {
   revisedAt: string;
   name: string;
   keyWord: string;
-  theme: 'light' | 'dark';
+  theme: "light" | "dark";
   images: UploadImage[];
 };
 

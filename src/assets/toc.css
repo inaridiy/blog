@@ -33,7 +33,7 @@ a.toc-link {
 }
 .toc-link::before {
   background-color: #eee;
-  content: ' ';
+  content: " ";
   display: inline-block;
   height: inherit;
   left: 0;
@@ -43,29 +43,4 @@ a.toc-link {
 }
 .is-active-link::before {
   background-color: #54bc4b;
-}
-
-.SideNav {
-  -ms-overflow-style: none; /* IE, Edge 対応 */
-  scrollbar-width: none; /* Firefox 対応 */
-}
-.SideNav::-webkit-scrollbar {
-  /* Chrome, Safari 対応 */
-  display: none;
-}
-
-::-webkit-scrollbar{
-  width: 10px;
-  height: 0px;
-}
-::-webkit-scrollbar-track{
-  background: #fff;
-  border: none;
-  border-radius: 10px;
-  box-shadow: inset 0 0 2px #777; 
-}
-::-webkit-scrollbar-thumb{
-  background: #ccc;
-  border-radius: 10px;
-  box-shadow: none;
 }

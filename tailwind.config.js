@@ -1,81 +1,20 @@
-module.exports = {
-  mode: 'jit',
-  purge: [
-    './src/pages/**/*.{js,ts,jsx,tsx}',
-    './src/components/**/*.{js,ts,jsx,tsx}',
-  ],
-  darkMode: 'class', // or 'media' or 'class'
-  theme: {
-    extend: {
-      typography: (theme) => ({
-        sm: {
-          css: {
-            code: {
-              padding: '2px',
-              margin: '1px',
-              fontSize: '1em',
-              fontWeight: '700',
-              borderRadius: '0.5rem',
-              backgroundColor: 'white',
-            },
-          },
-        },
+const colors = require("tailwindcss/colors");
 
-        dark: {
-          css: {
-            color: theme('colors.gray.200'),
-            a: {
-              color: theme('colors.gray.200'),
-              '&:hover': {
-                color: theme('colors.gray.200'),
-              },
-            },
-            'h2 a': {
-              color: theme('colors.gray.200'),
-            },
-            h1: {
-              color: theme('colors.gray.200'),
-            },
-            h2: {
-              color: theme('colors.gray.200'),
-            },
-            h3: {
-              color: theme('colors.gray.200'),
-            },
-            h4: {
-              color: theme('colors.gray.200'),
-            },
-            h5: {
-              color: theme('colors.gray.200'),
-            },
-            h6: {
-              color: theme('colors.gray.200'),
-            },
-            th: {
-              color: theme('colors.gray.200'),
-            },
-            strong: {
-              color: theme('colors.gray.200'),
-            },
-            code: {
-              color: theme('colors.gray.200'),
-            },
-            figcaption: {
-              color: theme('colors.gray.200'),
-            },
-            code: {
-              color: theme('colors.gray.900'),
-            },
-            blockquote: {
-              color: theme('colors.gray.200'),
-            },
-          },
-        },
-      }),
-    },
+module.exports = {
+  mode: "jit",
+  content: [
+    "./src/assets/**/*.{css}",
+    "./src/components/*.{vue,js}",
+    "./src/components/**/*.{vue,js}",
+    "./src/pages/*.vue",
+    "./src/pages/**/*.vue",
+    "./src/plugins/**/*.{js,ts}",
+    "./src/*.{vue,js,ts}",
+    "./nuxt.config.{js,ts}",
+    /* ... */
+  ],
+  theme: {
+    extend: { colors },
   },
-  variants: {
-    extend: { typography: ['dark'] },
-  },
-  plugins: [require('@tailwindcss/typography')],
+  plugins: [],
 };

@@ -1,0 +1,47 @@
+.znc > div.code-block-container {
+  @apply -mx-2 sm:mx-0 rounded-none sm:rounded-md overflow-hidden;
+}
+.znc > div.code-block-container ::-webkit-scrollbar {
+  height: 4px;
+}
+.znc > div.code-block-container ::-webkit-scrollbar-thumb {
+  @apply bg-gradient-to-r from-cyan-500 to-blue-500;
+}
+.znc > div.code-block-container > pre > code {
+  @apply p-2 sm:p-4;
+}
+.znc img {
+  @apply rounded-md drop-shadow-lg;
+}
+.znc p code {
+  @apply border;
+}
+.znc h1,
+.znc h2 {
+  @apply border-b-2;
+}
+.znc h1,
+.znc h2,
+.znc h3,
+.znc h4 {
+  @apply font-bold;
+}
+.znc h1 a,
+.znc h2 a,
+.znc h3 a,
+.znc h4 a {
+  @apply text-lightBlue-500;
+}
+.znc h1 a::before,
+.znc h2 a::before,
+.znc h3 a::before,
+.znc h4 a::before {
+  content: "#";
+  @apply text-3xl -mr-1 hidden sm:inline-block md:-ml-4 md:opacity-0;
+}
+.znc h1:hover a::before,
+.znc h2:hover a::before,
+.znc h3:hover a::before,
+.znc h4:hover a::before {
+  @apply opacity-100;
+}
