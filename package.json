@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "budoux": "^0.0.3",
+    "canvas": "^2.8.0",
     "microcms-js-sdk": "^2.0.0",
     "zenn-content-css": "^0.1.99",
     "zenn-embed-elements": "^0.1.99",
