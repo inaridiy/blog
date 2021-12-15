@@ -12,6 +12,7 @@ export const ArticleThumbnail: React.FC<Props> = ({ article }) => {
         className="rounded-lg"
         src={ogImage}
         alt={article.title}
+        layout="fixed"
         width="1024"
         height="585"
       />
