@@ -17,7 +17,7 @@ type staticProps = {
 
 export default function ArticlePage({ article, html, titleHtml }: staticProps) {
   return (
-    <article className="container px-2 md:px-4 mx-auto ">
+    <article className="container px-2 md:px-4 mx-auto">
       <ArticleTitle titleHtml={titleHtml} />
       <ArticleThumbnail article={article} />
       <ArticleView html={html}></ArticleView>

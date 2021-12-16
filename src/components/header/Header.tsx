@@ -4,10 +4,12 @@ import { ToggleLightMode } from '../ui';
 
 export const Header: React.FC = ({}) => {
   return (
-    <header className="container flex fixed z-10 items-center px-2 sm:px-4 mx-auto w-full h-16">
-      <HeaderTitle />
-      <Spacer />
-      <ToggleLightMode />
+    <header className="flex fixed z-10 justify-center w-full drop-shadow-lg">
+      <div className="container flex items-center px-2 sm:px-0 pr-4 h-16">
+        <HeaderTitle />
+        <Spacer />
+        <ToggleLightMode />
+      </div>
     </header>
   );
 };

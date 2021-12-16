@@ -8,6 +8,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [theme, setTheme] = useState<ThemeValue>({ mode: 'light' });
+
   useEffect(() => {
     if (theme.mode === 'dark') {
       document.documentElement.classList.add('dark');
