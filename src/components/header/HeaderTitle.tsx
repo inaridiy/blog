@@ -4,8 +4,26 @@ export const HeaderTitle: React.FC = ({}) => {
   return (
     <Link href="/" passHref>
       <a>
-        <h1 className="text-4xl font-bold dark:text-gray-100">
-          {process.env.NEXT_PUBLIC_SITE_NAME}
+        <h1 className="font-bold">
+          <span
+            className="text-4xl  text-transparent 
+      bg-clip-text bg-gradient-to-r from-pink-500 to-orange-500"
+          >
+            いなり
+          </span>
+          <span
+            className="text-3xl  dark:text-transparent 
+      dark:bg-clip-text dark:bg-gradient-to-r from-orange-500 to-blue-500"
+          >
+            が
+          </span>
+          <span
+            className="text-4xl text-transparent 
+      bg-clip-text bg-gradient-to-r from-blue-500 to-cyan-500"
+          >
+            DIY
+          </span>
+          <br />
         </h1>
       </a>
     </Link>
