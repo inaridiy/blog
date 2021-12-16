@@ -9,7 +9,7 @@ import {
   ArticleView,
   ArticleTitle,
   ArticleThumbnail,
-} from '../../components/model/article';
+} from '../../components/article';
 
 export default function ArticlePage({
   article,

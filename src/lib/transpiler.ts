@@ -22,6 +22,6 @@ const heddingReplacer = (match: string, p1: string, p2: string, p3: string) => {
 };
 
 const imageReplacer = (match: string, p1: string, p2: string, p3: string) => {
-  const result = `<img loading="lazy" ${p1} src="${p2}?h=480" ${p3} />`;
+  const result = `<img loading="lazy" ${p1} src="${p2}?h=480&fm=webp&q=85" ${p3} />`;
   return result;
 };

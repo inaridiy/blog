@@ -1,5 +1,5 @@
-import { Article } from '../../../types/article';
-import { useOgImage } from '../../../hooks/useOgImage';
+import { Article } from '../../types/article';
+import { useOgImage } from '../../hooks/useOgImage';
 import Image from 'next/image';
 
 type Props = { article: Article };
