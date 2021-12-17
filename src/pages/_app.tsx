@@ -7,6 +7,7 @@ import { ThemeProvider } from '../components/ThemeProvider';
 import 'tailwindcss/tailwind.css';
 import '../assets/toc.css';
 import '../assets/Article.scss';
+import '../assets/global.scss';
 
 function MyApp({ Component, pageProps }: AppProps) {
   useEffect(() => import('zenn-embed-elements') as any, []);
