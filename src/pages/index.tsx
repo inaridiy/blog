@@ -11,7 +11,11 @@ export default function Home({
   articles: ArticleList;
   categories: CategoryList;
 }): ReactElement {
-  return <div className="container px-2 md:px-4 mx-auto"></div>;
+  return (
+    <div className="container px-2 md:px-4 mx-auto">
+      <About />
+    </div>
+  );
 }
 
 export const getStaticProps: GetStaticProps<{

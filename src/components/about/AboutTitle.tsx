@@ -1,5 +1,5 @@
 export const AboutTitle = () => (
-  <h1 className="font-bold">
+  <h1 className="p-2 font-bold bg-trueGray-100 dark:bg-gray-800 rounded-lg drop-shadow-lg">
     <span
       className="text-4xl sm:text-6xl  text-transparent 
       bg-clip-text bg-gradient-to-r from-pink-500 to-orange-500"
@@ -7,7 +7,7 @@ export const AboutTitle = () => (
       いなり
     </span>
     <span
-      className="text-3xl md:text-5xl dark:text-transparent 
+      className="text-3xl sm:text-5xl dark:text-transparent 
       dark:bg-clip-text dark:bg-gradient-to-r from-orange-500 to-blue-500"
     >
       が
