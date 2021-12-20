@@ -9,13 +9,13 @@ export const BottomNav: React.FC<Props> = ({}) => {
     dark:bg-trueGray-900 rounded-t-xl drop-shadow-t-xl"
     >
       <div className="absolute w-full">
-        <div className="mx-auto mt-1 w-1/2 h-1.5 bg-gray-600 dark:bg-gray-200 rounded-full drop-shadow-xl"></div>
+        <div className="mx-auto mt-1.5 w-1/4 h-1.5 bg-gray-600 dark:bg-gray-200 rounded-full drop-shadow-xl"></div>
       </div>
       <div className="flex h-full">
-        <BottomButton href="/" />
-        <BottomButton href="/" />
-        <BottomButton href="/" />
-        <BottomButton href="/" />
+        <BottomButton href="/" text="Home" />
+        <BottomButton href="/" text="Blog" />
+        <BottomButton href="/" text="Homw" />
+        <BottomButton href="/" text="Home" />
       </div>
     </nav>
   );
