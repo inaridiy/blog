@@ -18,6 +18,6 @@ export const getStaticProps: GetStaticProps<{
   });
 
   return {
-    props: { articles }, // ページコンポーネントにpropsとして渡されます。
+    props: { articles },
   };
 };

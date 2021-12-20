@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import type { NextPage } from 'next';
 import { AppProps } from 'next/app';
 import initTwitterScriptInner from 'zenn-embed-elements/lib/init-twitter-script-inner';
 import { Header } from '../components/header';
@@ -9,7 +10,16 @@ import '../assets/toc.css';
 import '../assets/Article.scss';
 import '../assets/global.scss';
 
-function MyApp({ Component, pageProps }: AppProps) {
+type NextPageWithLayout = NextPage & {
+  getLayout?: (page: React.ReactElement) => React.ReactNode;
+};
+
+type AppPropsWithLayout = AppProps & {
+  Component: NextPageWithLayout;
+};
+
+function MyApp({ Component, pageProps }: AppPropsWithLayout) {
+  const getLayout = Component.getLayout ?? ((page) => page);
   useEffect(() => import('zenn-embed-elements') as any, []);
 
   return (
@@ -20,10 +30,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         }}
       />
       <div className="flex overflow-hidden relative flex-col min-w-full min-h-screen text-gray-900 dark:text-white bg-trueGray-100 dark:bg-trueGray-800">
-        <Header />
-        <main className="relative flex-grow mt-16">
-          <Component {...pageProps} />
-        </main>
+        {getLayout(<Component {...pageProps} />)}
       </div>
     </ThemeProvider>
   );

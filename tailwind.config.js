@@ -10,6 +10,9 @@ module.exports = {
   theme: {
     extend: {
       colors,
+      dropShadow: {
+        't-xl': '0 -10px 10px rgb(0 0 0 / 0.1)',
+      },
     },
   },
   variants: {
