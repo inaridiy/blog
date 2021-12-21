@@ -15,9 +15,10 @@ export const BottomNav: React.FC<Props> = ({}) => {
       eventData.dir === 'Up' ? setOpen(true) : 'Down' ? setOpen(false) : '';
     },
     onSwiping: (eventData) => {
-      setSwiping(true);
-      setDrawerX(-eventData.deltaY);
-      console.log(eventData.deltaY);
+      if (eventData.dir === 'Up' || eventData.dir === 'Down') {
+        setSwiping(true);
+        setDrawerX(-eventData.deltaY);
+      }
     },
   });
 
