@@ -1,2 +1,2 @@
 export * from './BottomNav';
-export * from './BottomButton';
+export * from './BottomButtons';
