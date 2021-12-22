@@ -24,6 +24,7 @@ export const BottomNav: React.FC<Props> = ({}) => {
 
   return (
     <nav
+      style={{ overscrollBehaviorY: 'none' }}
       className="flex sm:hidden fixed bottom-0 z-10 flex-col w-screen bg-trueGray-100 dark:bg-trueGray-900 rounded-t-xl drop-shadow-t-xl"
       {...handlers}
     >
