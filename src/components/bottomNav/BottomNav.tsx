@@ -14,31 +14,31 @@ export const BottomNav: React.FC<Props> = ({}) => {
       setDrawerX(0);
       eventData.dir === 'Up' ? setOpen(true) : 'Down' ? setOpen(false) : '';
     },
-    onSwiping: (eventData) => {
+    /*onSwiping: (eventData) => {
       if (eventData.dir === 'Up' || eventData.dir === 'Down') {
         setSwiping(true);
         setDrawerX(-eventData.deltaY);
       }
-    },
+    },*/
   });
 
   return (
     <nav
-      style={{ overscrollBehaviorY: 'none' }}
-      className="flex sm:hidden fixed bottom-0 z-10 flex-col w-screen bg-trueGray-100 dark:bg-trueGray-900 rounded-t-xl drop-shadow-t-xl"
+      style={{ overscrollBehavior: 'contain' }}
+      className="flex sm:hidden overflow-auto fixed bottom-0 z-10 flex-col w-screen bg-trueGray-100 dark:bg-trueGray-900 rounded-t-xl drop-shadow-t-xl"
       {...handlers}
     >
-      <div
-        className="overflow-hidden relative flex-grow w-full"
-        style={{
-          transitionDuration: isSwiping ? undefined : '300ms',
-          height: isOpen
-            ? `max(20px,calc(80vh - ${-drawerX}px))`
-            : `max(20px,${drawerX + 20}px)`,
-        }}
-      >
+      <div className="relative flex-grow w-full">
         <div className="my-2 mx-auto w-1/4 h-1.5 bg-gray-600 dark:bg-gray-200 rounded-full"></div>
-        <div className="absolute">
+        <div
+          style={{
+            transitionDuration: isSwiping ? undefined : '300ms',
+            height: isOpen
+              ? `max(0px,calc(60vh - ${-drawerX}px))`
+              : `max(0px,${drawerX}px)`,
+          }}
+          className="overflow-hidden"
+        >
           <h1 className="text-4xl">Teststsetstst</h1>
         </div>
       </div>
