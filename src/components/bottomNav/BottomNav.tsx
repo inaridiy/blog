@@ -14,17 +14,17 @@ export const BottomNav: React.FC<Props> = ({}) => {
       setDrawerX(0);
       eventData.dir === 'Up' ? setOpen(true) : 'Down' ? setOpen(false) : '';
     },
-    /*onSwiping: (eventData) => {
+    onSwiping: (eventData) => {
       if (eventData.dir === 'Up' || eventData.dir === 'Down') {
         setSwiping(true);
         setDrawerX(-eventData.deltaY);
       }
-    },*/
+    },
   });
 
   return (
     <nav
-      style={{ overscrollBehavior: 'contain' }}
+      style={{ touchAction: 'none' }}
       className="flex sm:hidden overflow-auto fixed bottom-0 z-10 flex-col w-screen bg-trueGray-100 dark:bg-trueGray-900 rounded-t-xl drop-shadow-t-xl"
       {...handlers}
     >
