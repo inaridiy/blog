@@ -1,5 +1,6 @@
 import { GetStaticProps } from 'next';
 import { client } from '../../lib/client';
+import { NormalLayout } from '../../components/layouts/normal';
 import { Article, ArticleList } from '../../types/article';
 import { mdToHTML, parser } from '../../lib/transpiler';
 import {
@@ -52,4 +53,8 @@ export const getStaticProps: GetStaticProps<staticProps> = async (context) => {
   return {
     props: { article, html, titleHtml },
   };
+};
+
+ArticlePage.getLayout = function getLayout(page: React.ReactElement) {
+  return <NormalLayout>{page}</NormalLayout>;
 };

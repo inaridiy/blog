@@ -1,17 +1,17 @@
-import { useSwipeable } from 'react-swipeable';
+import { useSwipeable, SwipeEventData } from 'react-swipeable';
 import { BottomNav } from '../bottomNav';
 import { Header } from '../header';
 
 type Props = { children: React.ReactNode };
 
-let cb: (direction: string) => void;
-const onHandle = (callback: (direction: string) => void) => {
+let cb: (direction: SwipeEventData) => void;
+const onHandle = (callback: (direction: SwipeEventData) => void) => {
   cb = callback;
 };
 export const NormalLayout: React.FC<Props> = ({ children }) => {
   const handler = useSwipeable({
     onSwiped: (eventData) => {
-      cb(eventData.dir);
+      cb(eventData);
     },
   });
   return (
