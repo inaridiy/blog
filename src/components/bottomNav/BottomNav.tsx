@@ -20,6 +20,7 @@ export const BottomNav: React.FC<Props> = ({}) => {
         setDrawerX(-eventData.deltaY);
       }
     },
+    trackMouse: true,
   });
 
   return (
