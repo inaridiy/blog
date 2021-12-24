@@ -1,18 +1,16 @@
-import { useState, useRef } from 'react';
-import { useSwipeable, SwipeEventData } from 'react-swipeable';
+import { useState } from 'react';
+import { useSwipeable } from 'react-swipeable';
 import { BottomButtons } from '.';
 
 type Props = {
-  onHandleRoot: (cb: (direction: SwipeEventData) => void) => void;
+  isOpen: boolean;
+  setOpen: (isOpen: boolean) => void;
+  className?: string;
 };
 
-export const BottomNav: React.FC<Props> = ({ onHandleRoot }) => {
-  const [isOpen, setOpen] = useState(false);
+export const BottomNav: React.FC<Props> = ({ className, isOpen, setOpen }) => {
   const [drawerX, setDrawerX] = useState(0);
   const [isSwiping, setSwiping] = useState(false);
-  onHandleRoot((eventData: SwipeEventData) => {
-    eventData.dir === 'Down' && setOpen(false);
-  });
   const handlers = useSwipeable({
     onSwiped: (eventData) => {
       setSwiping(false);
@@ -31,7 +29,10 @@ export const BottomNav: React.FC<Props> = ({ onHandleRoot }) => {
   return (
     <nav
       style={{ touchAction: 'none' }}
-      className="flex sm:hidden overflow-auto fixed bottom-0 z-10 flex-col w-screen bg-trueGray-100 dark:bg-trueGray-900 rounded-t-xl drop-shadow-t-xl"
+      className={
+        'flex sm:hidden overflow-auto fixed bottom-0 z-10 flex-col w-screen bg-trueGray-100 dark:bg-trueGray-900 rounded-t-xl drop-shadow-t-xl ' +
+        className
+      }
       {...handlers}
     >
       <div className="relative flex-grow w-full">

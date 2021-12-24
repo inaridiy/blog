@@ -5,7 +5,7 @@ type Props = { href: string; text: string; icon: React.ReactNode };
 
 export const BottomButtons: React.FC = () => {
   return (
-    <div className="flex">
+    <div className="flex h-16">
       <BottomButton
         href="/"
         text="Home"
