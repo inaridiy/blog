@@ -2,12 +2,18 @@ import { useState, useRef } from 'react';
 import { useSwipeable } from 'react-swipeable';
 import { BottomButtons } from '.';
 
-type Props = {};
+type Props = {
+  onHandleRoot: (cb: (direction: string) => void) => void;
+};
 
-export const BottomNav: React.FC<Props> = ({}) => {
+export const BottomNav: React.FC<Props> = ({ onHandleRoot }) => {
   const [isOpen, setOpen] = useState(false);
   const [drawerX, setDrawerX] = useState(0);
   const [isSwiping, setSwiping] = useState(false);
+  onHandleRoot((direction: string) => {
+    direction === 'Up' && setOpen(true);
+    direction === 'Down' && setOpen(false);
+  });
   const handlers = useSwipeable({
     onSwiped: (eventData) => {
       setSwiping(false);
