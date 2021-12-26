@@ -29,7 +29,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
           __html: initTwitterScriptInner,
         }}
       />
-      <div className="flex overflow-hidden relative flex-col min-w-full min-h-screen text-gray-900 dark:text-white bg-trueGray-100 dark:bg-trueGray-800">
+      <div className="flex overflow-hidden relative flex-col min-w-full min-h-screen text-gray-900 dark:text-white bg-trueGray-100 dark:bg-trueGray-800 duration-150">
         {getLayout(<Component {...pageProps} />)}
       </div>
     </ThemeProvider>

@@ -30,7 +30,7 @@ export const BottomNav: React.FC<Props> = ({ className, isOpen, setOpen }) => {
     <nav
       style={{ touchAction: 'none' }}
       className={
-        'flex sm:hidden overflow-auto fixed bottom-0 z-10 flex-col w-screen bg-trueGray-100 dark:bg-trueGray-900 rounded-t-xl drop-shadow-t-xl ' +
+        'flex sm:hidden overflow-auto fixed bottom-0 z-10 flex-col w-screen bg-trueGray-100 dark:bg-trueGray-900 rounded-t-xl drop-shadow-t-xl duration-150 ' +
         className
       }
       {...handlers}

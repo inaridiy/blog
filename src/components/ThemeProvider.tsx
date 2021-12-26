@@ -31,7 +31,6 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
       document.documentElement.classList.remove('dark');
     }
     setStorage(theme.mode);
-    console.log(storageValue);
   }, [theme]);
   return (
     <themeValueContext.Provider value={theme}>
