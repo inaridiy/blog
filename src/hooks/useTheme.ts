@@ -12,5 +12,8 @@ export const useTheme = () => {
       ...themeValue,
       mode: themeValue.mode === 'light' ? 'dark' : 'light',
     });
-  return { theme: themeValue, setTheme, toggleMode };
+  const setColor = (color: string) => {
+    setTheme({ ...themeValue, color });
+  };
+  return { theme: themeValue, setTheme, toggleMode, setColor };
 };

@@ -27,7 +27,7 @@ export default function Home(): React.ReactElement {
             Tomorrow
           </span>
         </h2>
-        <p className="text-lg text-gray-500">無名な学生のしがないブログ</p>
+        <p className="text-lg text-gray-500">無名な高校生のしがないブログ</p>
       </div>
     </div>
   );

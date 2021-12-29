@@ -30,13 +30,13 @@ export const BottomNav: React.FC<Props> = ({ className, isOpen, setOpen }) => {
     <nav
       style={{ touchAction: 'none' }}
       className={
-        'flex sm:hidden overflow-auto fixed bottom-0 z-10 flex-col w-screen bg-trueGray-100 dark:bg-trueGray-900 rounded-t-xl drop-shadow-t-xl duration-150 ' +
+        'flex sm:hidden overflow-auto fixed bottom-0 z-10 flex-col w-full bg-trueGray-100 text-gray-800 rounded-t-xl drop-shadow-t-xl duration-150 ' +
         className
       }
       {...handlers}
     >
       <div className="relative flex-grow w-full">
-        <div className="my-2 mx-auto w-1/4 h-1.5 bg-gray-600 dark:bg-gray-200 rounded-full"></div>
+        <div className="my-2 mx-auto w-1/4 h-1.5 bg-gray-600 rounded-full"></div>
         <div
           style={{
             transitionDuration: isSwiping ? undefined : '300ms',

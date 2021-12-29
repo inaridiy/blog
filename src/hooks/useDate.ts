@@ -5,5 +5,5 @@ export const useDate = (dateString: string) => {
     date.getMonth(),
     date.getFullYear(),
   ];
-  return `${year}.${month}.${day}`;
+  return `${year} / ${month} / ${day}`;
 };

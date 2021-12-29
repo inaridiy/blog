@@ -7,8 +7,8 @@ import {
   ArticleView,
   ArticleTitle,
   ArticleThumbnail,
-  ArticleToc,
 } from '../../components/article';
+import { Progress } from '../../components/ui/Progress';
 
 type staticProps = {
   article: Article;
@@ -19,6 +19,7 @@ type staticProps = {
 export default function ArticlePage({ article, html, titleHtml }: staticProps) {
   return (
     <article className="container px-2 md:px-4 pt-2 mx-auto">
+      <Progress />
       <ArticleThumbnail article={article} />
       <div className="px-2">
         <ArticleTitle titleHtml={titleHtml} />

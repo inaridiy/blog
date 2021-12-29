@@ -2,13 +2,19 @@ import React, { createContext, useState, useEffect } from 'react';
 import { ThemeValue, SetTheme } from '../types/theme';
 import { useLocalStorage } from 'react-use';
 
-export const themeValueContext = createContext<ThemeValue>({ mode: 'light' });
+export const themeValueContext = createContext<ThemeValue>({
+  mode: 'light',
+  color: 'transparent',
+});
 export const setThemeContext = createContext<SetTheme>(() => undefined);
 
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [theme, setTheme] = useState<ThemeValue>({ mode: 'light' });
+  const [theme, setTheme] = useState<ThemeValue>({
+    mode: 'light',
+    color: 'transparent',
+  });
   const [storageValue, setStorage] = useLocalStorage<'dark' | 'light'>('theme');
 
   useEffect(() => {
