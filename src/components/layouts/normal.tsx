@@ -15,7 +15,7 @@ export const NormalLayout: React.FC<Props> = ({
   const { pathname } = useRouter();
 
   const [dir, setDir] = useState<SwipeEventData['dir']>('Down');
-  const [isOpen, setOpen] = useState(true);
+  const [isOpen, setOpen] = useState(false);
   const handler = useSwipeable({
     onSwiped: (eventData) => {
       //eventData.dir === 'Down' && setOpen(false);

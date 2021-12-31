@@ -12,13 +12,14 @@ export const BottomSearch: React.FC = () => {
     setArticles(articleList.contents);
   };
   const handlers = useSwipeable({
-    onSwiped: ({ event }) => event.stopPropagation(),
-    onSwiping: ({ event }) => event.stopPropagation(),
+    onSwiping: ({ event }) => {
+      event.stopPropagation();
+    },
     trackMouse: true,
   });
 
   return (
-    <div className="overflow-y-scroll p-2 w-full h-full">
+    <div className="overflow-y-scroll p-2 w-full h-full" {...handlers}>
       <input
         className="p-1 mb-4 w-full h-12 rounded-lg drop-shadow"
         placeholder=" 検索ワードを入力"
