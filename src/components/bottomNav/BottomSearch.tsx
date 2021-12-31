@@ -16,21 +16,15 @@ export const BottomSearch: React.FC = () => {
     onSwiping: ({ event }) => event.stopPropagation(),
     trackMouse: true,
   });
-  useEffect(() => {
-    fetch('/api/search?query=')
-      .then((res) => res.json())
-      .then((res) => {
-        setArticles(res.contents);
-      });
-  }, []);
+
   return (
     <div className="overflow-y-scroll p-2 w-full h-full">
       <input
-        className="p-1 w-full h-12 rounded-lg drop-shadow mb-4"
+        className="p-1 mb-4 w-full h-12 rounded-lg drop-shadow"
         placeholder=" 検索ワードを入力"
         onChange={onChange}
       />
-      <div className="flex flex-col gap-2" {...handlers}>
+      <div className="flex flex-col gap-2">
         {articles.slice(1).map((article) => (
           <ArticleCard article={article} key={article.id} />
         ))}
