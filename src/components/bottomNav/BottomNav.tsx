@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useSwipeable } from 'react-swipeable';
-import { BottomButtons } from '.';
+import { BottomButtons, BottomSearch } from '.';
 
 type Props = {
   isOpen: boolean;
@@ -13,12 +13,17 @@ export const BottomNav: React.FC<Props> = ({ className, isOpen, setOpen }) => {
   const [isSwiping, setSwiping] = useState(false);
   const handlers = useSwipeable({
     onSwiped: (eventData) => {
+      console.log(eventData);
       setSwiping(false);
       setDrawerX(0);
-      eventData.dir === 'Up' ? setOpen(true) : 'Down' ? setOpen(false) : '';
+      eventData.velocity > 1 &&
+        (eventData.dir === 'Up' ? setOpen(true) : 'Down' ? setOpen(false) : '');
     },
     onSwiping: (eventData) => {
-      if (eventData.dir === 'Up' || eventData.dir === 'Down') {
+      if (
+        eventData.dir === 'Up' ||
+        (eventData.dir === 'Down' && eventData.velocity > 0.2)
+      ) {
         setSwiping(true);
         setDrawerX(-eventData.deltaY);
       }
@@ -46,7 +51,7 @@ export const BottomNav: React.FC<Props> = ({ className, isOpen, setOpen }) => {
           }}
           className="overflow-hidden"
         >
-          <h1 className="text-4xl">Teststsetstst</h1>
+          <BottomSearch />
         </div>
       </div>
       <BottomButtons />

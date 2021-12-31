@@ -3,25 +3,31 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useOgImage } from '../../hooks/useOgImage';
 import { useDate } from '../../hooks/useDate';
+import { CategoryChips } from '../category/CategoryChips';
+import { Spacer } from '../ui';
 
 type Props = { article: Article };
 
-export const ArticleCardTop: React.FC<Props> = ({ article }) => {
+export const ArticleCard: React.FC<Props> = ({ article }) => {
   const ogImage = useOgImage(article);
   const date = useDate(article.publishedAt);
   return (
     <Link href={`/article/${article.id}`}>
-      <a className="flex overflow-hidden relative flex-col bg-trueGray-100 dark:bg-trueGray-900 rounded-lg drop-shadow-lg">
-        <div className="px-1 text-sm sm:text-base text-white bg-gray-800 rounded-t">
-          {date}
-        </div>
-        <div className="flex sm:flex-col-reverse">
-          <div className="flex-grow">
-            <h2 className="px-2 text-lg sm:text-xl font-bold">
-              {article.title}
-            </h2>
+      <a className="flex overflow-hidden relative sm:flex-col-reverse h-full bg-trueGray-100 dark:bg-trueGray-900 rounded-lg drop-shadow-lg article-card">
+        <div className="flex flex-col flex-grow min-w-0">
+          <h2
+            className="px-2 text-lg sm:text-2xl font-bold"
+            dangerouslySetInnerHTML={{ __html: article.title }}
+          />
+          <Spacer />
+          <div className="flex overflow-auto p-1 w-full text-sm sm:text-base">
+            <p>{date}</p>
+            <Spacer />
+            <CategoryChips categories={article.category} />
           </div>
-          <div className="overflow-hidden flex-shrink-0 p-1 w-40 sm:w-full drop-shadow">
+        </div>
+        <div className="overflow-hidden flex-shrink-0 w-40 sm:w-full">
+          <div className="px-1 pt-1 text-center bg-gradient-to-r from-cyan-500 to-blue-500 rounded-lg drop-shadow">
             <Image
               className="rounded-lg"
               src={ogImage}

@@ -17,6 +17,6 @@ export const usePos = () => {
   useEffect(() => {
     document.addEventListener('scroll', onScroll);
     return (): void => document.removeEventListener('scroll', onScroll);
-  });
+  }, []);
   return progress;
 };

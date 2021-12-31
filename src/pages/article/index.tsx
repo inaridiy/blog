@@ -1,16 +1,18 @@
 import { GetStaticProps } from 'next';
-import { ArticleCardTop } from '../../components/article/ArticleCard';
+import { ArticleCard } from '../../components/article/ArticleCard';
 import { NormalLayout } from '../../components/layouts/normal';
-import { client } from '../../lib/client';
+import { client, colorGene, parser } from '../../lib';
 import { ArticleList } from '../../types/article';
 import toMaterialStyle from 'material-color-hash';
-import { colorGene } from '../../lib/colorGene';
 
 export default function ArticlesPage({ articles }: { articles: ArticleList }) {
   return (
-    <div className="container grid sm:grid-cols-3 gap-x-5 gap-y-10 px-2 md:px-4 mx-auto max-w-screen-lg">
-      {articles.contents.map((article) => (
-        <ArticleCardTop article={article} key={article.id} />
+    <div className="container grid sm:grid-cols-2 md:grid-cols-3 gap-5 sm:gap-y-10 px-2 md:px-4 mx-auto max-w-screen-lg">
+      <div className="sm:col-span-2 row-span-2">
+        <ArticleCard article={articles.contents[0]} />
+      </div>
+      {articles.contents.slice(1).map((article) => (
+        <ArticleCard article={article} key={article.id} />
       ))}
     </div>
   );
@@ -31,6 +33,7 @@ export const getStaticProps: GetStaticProps<{
     ...articles,
     contents: articles.contents.map((article) => ({
       ...article,
+      title: parser.translateHTMLString(article.title),
       body: '',
       color: toMaterialStyle(article.title, 800).backgroundColor,
       bgColor: colorGene(article.title),

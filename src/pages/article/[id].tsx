@@ -9,6 +9,7 @@ import {
   ArticleThumbnail,
 } from '../../components/article';
 import { Progress } from '../../components/ui/Progress';
+import { ArticleInfo } from '../../components/article/ArticleInfo';
 
 type staticProps = {
   article: Article;
@@ -22,6 +23,7 @@ export default function ArticlePage({ article, html, titleHtml }: staticProps) {
       <Progress />
       <ArticleThumbnail article={article} />
       <div className="px-2">
+        <ArticleInfo article={article} />
         <ArticleTitle titleHtml={titleHtml} />
         <ArticleView html={html} />
       </div>

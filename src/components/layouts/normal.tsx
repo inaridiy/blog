@@ -33,13 +33,7 @@ export const NormalLayout: React.FC<Props> = ({
         }}
       ></div>
       <Header />
-      <main
-        className="relative flex-grow mt-16 mb-24"
-        {...handler}
-        onClick={() => {
-          setOpen(false);
-        }}
-      >
+      <main className="relative flex-grow mt-16 mb-24" {...handler}>
         {children}
       </main>
       <BottomNav

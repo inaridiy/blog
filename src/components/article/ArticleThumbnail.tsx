@@ -7,7 +7,7 @@ type Props = { article: Article };
 export const ArticleThumbnail: React.FC<Props> = ({ article }) => {
   const ogImage = useOgImage(article);
   return (
-    <div className="overflow-hidden drop-shadow-lg">
+    <div className="overflow-hidden drop-shadow">
       <Image
         className="rounded-lg"
         src={ogImage}
