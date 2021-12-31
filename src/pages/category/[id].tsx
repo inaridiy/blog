@@ -1,8 +1,9 @@
-import type { ReactElement } from 'react';
 import { GetStaticProps } from 'next';
+import { useRouter } from 'next/router';
+import { NormalLayout } from '../../components/layouts/normal';
+import { ArticleCard } from '../../components/article/ArticleCard';
 import { client } from '../../lib/client';
 import { ArticleList, CategoryList } from '../../types/article';
-import { useRouter } from 'next/dist/client/router';
 
 export default function Home({
   articles,
@@ -10,12 +11,22 @@ export default function Home({
 }: {
   articles: ArticleList;
   categories: CategoryList;
-}): ReactElement {
+}) {
   const router = useRouter();
   const thisCategory = categories.contents.find(
     (s) => s.id === router.query.id
   );
-  return <></>;
+  return (
+    <div className="container grid sm:grid-cols-2 md:grid-cols-3 gap-5 sm:gap-y-10 px-2 md:px-4 mx-auto max-w-screen-lg">
+      <h2 className="text-3xl font-bold">{`${thisCategory?.name} の記事一覧`}</h2>
+      <div className="sm:col-span-2 row-span-2">
+        <ArticleCard article={articles.contents[0]} />
+      </div>
+      {articles.contents.slice(1).map((article) => (
+        <ArticleCard article={article} key={article.id} />
+      ))}
+    </div>
+  );
 }
 
 export const getStaticPaths = async () => {
@@ -54,4 +65,8 @@ export const getStaticProps: GetStaticProps<{
   return {
     props: { articles, categories }, // ページコンポーネントにpropsとして渡されます。
   };
+};
+
+Home.getLayout = function getPageLayout(page: React.ReactElement) {
+  return <NormalLayout alwaysShowBottomNav>{page}</NormalLayout>;
 };

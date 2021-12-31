@@ -21,6 +21,9 @@ export const NormalLayout: React.FC<Props> = ({
       eventData.dir === 'Down' && setOpen(false);
       setDir(eventData.dir);
     },
+    onTap: () => {
+      setOpen(false);
+    },
   });
 
   return (
@@ -33,7 +36,7 @@ export const NormalLayout: React.FC<Props> = ({
         }}
       ></div>
       <Header />
-      <main className="relative flex-grow mt-16 mb-24" {...handler}>
+      <main className="relative flex-grow mt-16 mb-24 min-h-full" {...handler}>
         {children}
       </main>
       <BottomNav

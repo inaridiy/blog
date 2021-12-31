@@ -1,6 +1,7 @@
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 import { useSwipeable } from 'react-swipeable';
-import { BottomButtons, BottomSearch } from '.';
+import { BottomButtons, BottomSearch, BottomToc } from '.';
 
 type Props = {
   isOpen: boolean;
@@ -11,23 +12,37 @@ type Props = {
 export const BottomNav: React.FC<Props> = ({ className, isOpen, setOpen }) => {
   const [drawerX, setDrawerX] = useState(0);
   const [isSwiping, setSwiping] = useState(false);
+  const { pathname } = useRouter();
+  const isAritlcePage =
+    pathname.split('/')[1] === 'article' && pathname.split('/')[2];
+
   const handlers = useSwipeable({
     onSwiped: (eventData) => {
-      setSwiping(false);
-      setDrawerX(0);
+      if (!eventData.first) {
+        setSwiping(false);
+        setDrawerX(0);
 
-      eventData.dir === 'Up' ? setOpen(true) : 'Down' ? setOpen(false) : '';
+        eventData.absY > 100 &&
+          (eventData.dir === 'Up'
+            ? setOpen(true)
+            : 'Down'
+            ? setOpen(false)
+            : '');
+      }
     },
     onSwiping: (eventData) => {
-      if (
-        eventData.dir === 'Up' ||
-        (eventData.dir === 'Down' && eventData.velocity > 0.02)
-      ) {
-        setSwiping(true);
-        setDrawerX(-eventData.deltaY);
+      if (!eventData.first) {
+        if (
+          eventData.dir === 'Up' ||
+          (eventData.dir === 'Down' && eventData.velocity > 0.02)
+        ) {
+          setSwiping(true);
+          setDrawerX(-eventData.deltaY);
+        }
       }
     },
     trackMouse: true,
+    delta: 10,
   });
 
   return (
@@ -50,10 +65,10 @@ export const BottomNav: React.FC<Props> = ({ className, isOpen, setOpen }) => {
           }}
           className="overflow-hidden"
         >
-          <BottomSearch />
+          {isAritlcePage ? <BottomToc /> : <BottomSearch />}
         </div>
       </div>
-      <BottomButtons />
+      <BottomButtons {...{ setOpen, isOpen }} />
     </nav>
   );
 };

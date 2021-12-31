@@ -7,6 +7,7 @@ import {
   ArticleView,
   ArticleTitle,
   ArticleThumbnail,
+  ArticleToc,
 } from '../../components/article';
 import { Progress } from '../../components/ui/Progress';
 import { ArticleInfo } from '../../components/article/ArticleInfo';
@@ -19,15 +20,23 @@ type staticProps = {
 
 export default function ArticlePage({ article, html, titleHtml }: staticProps) {
   return (
-    <article className="container px-2 md:px-4 pt-2 mx-auto">
+    <div className="grid grid-cols-1 sm:grid-cols-3 px-2 md:px-4 pt-2 mx-auto max-w-screen-xl">
       <Progress />
-      <ArticleThumbnail article={article} />
-      <div className="px-2">
-        <ArticleInfo article={article} />
-        <ArticleTitle titleHtml={titleHtml} />
-        <ArticleView html={html} />
+      <div className="col-span-1 sm:col-span-2">
+        <ArticleThumbnail article={article} />
+        <article className="px-2">
+          <ArticleInfo article={article} />
+          <ArticleTitle titleHtml={titleHtml} />
+          <ArticleView html={html} />
+        </article>
       </div>
-    </article>
+      <div className="mx-2 ">
+        <div className="sticky top-16 right-0">
+          <h1 className="text-4xl font-bold">目次</h1>
+          <ArticleToc />
+        </div>
+      </div>
+    </div>
   );
 }
 

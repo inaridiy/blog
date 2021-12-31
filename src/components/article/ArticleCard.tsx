@@ -12,7 +12,7 @@ export const ArticleCard: React.FC<Props> = ({ article }) => {
   const ogImage = useOgImage(article);
   const date = useDate(article.publishedAt);
   return (
-    <div className="flex overflow-hidden relative sm:flex-col-reverse h-full bg-trueGray-100 dark:bg-trueGray-900 rounded-lg drop-shadow article-card">
+    <div className="flex overflow-hidden relative sm:flex-col-reverse h-full dark:text-gray-50 bg-trueGray-100 dark:bg-trueGray-900 rounded-lg drop-shadow article-card">
       <div className="flex flex-col flex-grow min-w-0">
         <h2
           className="px-2 text-lg sm:text-2xl font-bold"
@@ -37,7 +37,7 @@ export const ArticleCard: React.FC<Props> = ({ article }) => {
         </div>
       </div>
       <Link href={`/article/${article.id}`}>
-        <a className="absolute inset-0 z-10" onClick={(e) => console.log(e)} />
+        <a className="absolute inset-0 z-10" />
       </Link>
     </div>
   );
