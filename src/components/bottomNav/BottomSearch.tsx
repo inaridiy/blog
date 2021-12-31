@@ -24,13 +24,13 @@ export const BottomSearch: React.FC = () => {
       });
   }, []);
   return (
-    <div className="overflow-y-scroll p-2 w-full h-full" {...handlers}>
-      <div className="flex flex-col gap-2">
-        <input
-          className="p-1 w-full h-12 rounded-lg drop-shadow"
-          placeholder=" 検索ワードを入力"
-          onChange={onChange}
-        />
+    <div className="overflow-y-scroll p-2 w-full h-full">
+      <input
+        className="p-1 w-full h-12 rounded-lg drop-shadow mb-4"
+        placeholder=" 検索ワードを入力"
+        onChange={onChange}
+      />
+      <div className="flex flex-col gap-2" {...handlers}>
         {articles.slice(1).map((article) => (
           <ArticleCard article={article} key={article.id} />
         ))}

@@ -13,7 +13,7 @@ export const ArticleCard: React.FC<Props> = ({ article }) => {
   const date = useDate(article.publishedAt);
   return (
     <Link href={`/article/${article.id}`}>
-      <a className="flex overflow-hidden relative sm:flex-col-reverse h-full bg-trueGray-100 dark:bg-trueGray-900 rounded-lg drop-shadow-lg article-card">
+      <div className="flex overflow-hidden relative sm:flex-col-reverse h-full bg-trueGray-100 dark:bg-trueGray-900 rounded-lg drop-shadow article-card">
         <div className="flex flex-col flex-grow min-w-0">
           <h2
             className="px-2 text-lg sm:text-2xl font-bold"
@@ -37,7 +37,7 @@ export const ArticleCard: React.FC<Props> = ({ article }) => {
             />
           </div>
         </div>
-      </a>
+      </div>
     </Link>
   );
 };
