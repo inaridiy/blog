@@ -13,7 +13,6 @@ export const BottomNav: React.FC<Props> = ({ className, isOpen, setOpen }) => {
   const [isSwiping, setSwiping] = useState(false);
   const handlers = useSwipeable({
     onSwiped: (eventData) => {
-      console.log(eventData);
       setSwiping(false);
       setDrawerX(0);
       eventData.velocity > 1 &&
