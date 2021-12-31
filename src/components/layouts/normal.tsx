@@ -18,7 +18,7 @@ export const NormalLayout: React.FC<Props> = ({
   const [isOpen, setOpen] = useState(false);
   const handler = useSwipeable({
     onSwiped: (eventData) => {
-      //eventData.dir === 'Down' && setOpen(false);
+      eventData.dir === 'Down' && setOpen(false);
       setDir(eventData.dir);
     },
   });
