@@ -1,7 +1,7 @@
 import { Article } from '../types/article';
 
 export const useOgImage = (article: Article) => {
-  const { title, og_frame: frame } = article;
+  const { title = '', og_frame: frame } = article || {};
   const endPoint = process.env.NEXT_PUBLIC_OG_IMAGE_END_POINT;
   const theme = frame?.theme || 'light';
   const fontSize = '100px';

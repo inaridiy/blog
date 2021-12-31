@@ -1,5 +1,7 @@
 export type Article = {
   id: string;
+  color?: string;
+  bgColor?: string;
   createdAt: string;
   updatedAt: string;
   publishedAt: string;

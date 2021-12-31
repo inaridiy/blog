@@ -1,13 +1,9 @@
-import type { ReactElement } from 'react';
 import { GetStaticProps } from 'next';
-import { Box, Stack, Spacer, VStack, Heading } from '@chakra-ui/react';
+import { useRouter } from 'next/router';
+import { NormalLayout } from '../../components/layouts/normal';
+import { ArticleCard } from '../../components/article/ArticleCard';
 import { client } from '../../lib/client';
 import { ArticleList, CategoryList } from '../../types/article';
-import { DefaultLayout } from '../../components/layouts/DefaultLayout';
-import { TwContainer } from '../../components/ui/TwContainer';
-import { ArticleCard } from '../../components/model/article/ArticleCard';
-import { Categories } from '../../components/model/category/Categories';
-import { useRouter } from 'next/dist/client/router';
 
 export default function Home({
   articles,
@@ -15,33 +11,18 @@ export default function Home({
 }: {
   articles: ArticleList;
   categories: CategoryList;
-}): ReactElement {
+}) {
   const router = useRouter();
   const thisCategory = categories.contents.find(
     (s) => s.id === router.query.id
   );
   return (
-    <Box p="2" pt="5">
-      <TwContainer h="80" rounded="lg">
-        <Heading as="h1" size="xl" py="4">
-          カテゴリー: {thisCategory?.name}
-        </Heading>
-        <Stack
-          alignItems="flex-start"
-          direction={{ base: 'column', md: 'row' }}
-        >
-          <VStack spacing="5">
-            {articles.contents.map((article) => (
-              <ArticleCard key={article.title} article={article} />
-            ))}
-          </VStack>
-          <VStack w={{ base: 'full', md: '72' }}>
-            <Categories categories={categories} />
-            <Spacer />
-          </VStack>
-        </Stack>
-      </TwContainer>
-    </Box>
+    <div className="container grid sm:grid-cols-2 md:grid-cols-3 gap-5 sm:gap-y-10 px-2 md:px-4 mx-auto max-w-screen-lg">
+      <h2 className="text-3xl font-bold">{`${thisCategory?.name} の記事一覧`}</h2>
+      {articles.contents.map((article) => (
+        <ArticleCard article={article} key={article.id} />
+      ))}
+    </div>
   );
 }
 
@@ -83,4 +64,6 @@ export const getStaticProps: GetStaticProps<{
   };
 };
 
-Home.getLayout = (page: ReactElement) => <DefaultLayout>{page}</DefaultLayout>;
+Home.getLayout = function getPageLayout(page: React.ReactElement) {
+  return <NormalLayout alwaysShowBottomNav>{page}</NormalLayout>;
+};

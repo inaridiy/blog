@@ -1,20 +1,27 @@
-import { remark } from 'remark';
-import remarkUnwrapImages from 'remark-unwrap-images';
-import remarkRehype from 'remark-rehype';
-import rehypeStringify from 'rehype-stringify';
-import slug from 'remark-slug';
-const rehypePrism = require('@mapbox/rehype-prism');
-import remarkEmbedder from '@remark-embedder/core';
-import oembedTransformer from '@remark-embedder/transformer-oembed';
+import markdownToHtml from 'zenn-markdown-html';
+import { loadDefaultJapaneseParser } from 'budoux';
+export const parser = loadDefaultJapaneseParser();
 
-export const mdToHast = async (markdown: string) =>
-  await remark()
-    .use(remarkEmbedder as any, {
-      transformers: [oembedTransformer],
-    })
-    .use(remarkUnwrapImages)
-    .use(slug)
-    .use(remarkRehype)
-    .use(rehypePrism, { ignoreMissing: true })
-    .use(rehypeStringify)
-    .process(markdown);
+export const mdToHTML = (markdown: string) => {
+  const html = markdownToHtml(markdown);
+  const result = html
+    .replace(/<p>(.*?)<\/p>/gs, pReplacer)
+    .replace(/<h(\d) (.*?)>(.*?)<\/h\d>/gs, heddingReplacer)
+    .replace(/<img (.*?)src="(.*?)" (.*?)>/gs, imageReplacer);
+  return result;
+};
+//
+const pReplacer = (match: string, p1: string, p2: string) => {
+  const result = `<p>${parser.translateHTMLString(p1)}</p>`;
+  return result;
+};
+
+const heddingReplacer = (match: string, p1: string, p2: string, p3: string) => {
+  const result = `<h${p1} ${p2}>${parser.translateHTMLString(p3)}</h${p1}>`;
+  return result;
+};
+
+const imageReplacer = (match: string, p1: string, p2: string, p3: string) => {
+  const result = `<img loading="lazy" ${p1} src="${p2}?h=480&fm=webp&q=85" ${p3} />`;
+  return result;
+};

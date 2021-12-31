@@ -1,3 +1,10 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": [
+    "next/core-web-vitals",
+    "plugin:tailwindcss/recommended"
+  ],
+  "rules": {
+    "@next/next/no-document-import-in-page": "off"
+},
+  "plugins": ["tailwindcss"]
 }

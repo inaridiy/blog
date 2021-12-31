@@ -1,79 +1,38 @@
-import type { ReactElement } from 'react';
-import { GetStaticProps } from 'next';
-import { Box, Stack, Spacer, VStack, Text } from '@chakra-ui/react';
-import Head from 'next/head';
-import { client } from '../lib/client';
-import { ArticleList, CategoryList } from '../types/article';
-import { DefaultLayout } from '../components/layouts/DefaultLayout';
-import { TwContainer } from '../components/ui/TwContainer';
-import { ArticleCard } from '../components/model/article/ArticleCard';
-import { Categories } from '../components/model/category/Categories';
+import { NormalLayout } from '../components/layouts/normal';
+import { About } from '../components/about';
+import { BlogCard } from '../components/home/cards/BlogCard';
 
-export default function Home({
-  articles,
-  categories,
-}: {
-  articles: ArticleList;
-  categories: CategoryList;
-}): ReactElement {
+export default function Home(): React.ReactElement {
   return (
-    <>
-      <Head>
-        <meta property="og:url" content={process.env.NEXT_PUBLIC_ORIGIN} />
-        <meta property="og:title" content={process.env.NEXT_PUBLIC_SITE_NAME} />
-        <meta
-          property="og:site_name"
-          content={process.env.NEXT_PUBLIC_SITE_NAME}
-        />
-        <meta property="og:description" content="無名な学生のしがないブログ" />
-        <meta property="og:type" content="website" />
-        <meta
-          property="og:image"
-          content={`${process.env.NEXT_PUBLIC_ORIGIN}/logo.png`}
-        />
-      </Head>
-
-      <TwContainer>
-        <Stack
-          direction={{ base: 'column', md: 'row' }}
-          mt={{ base: '10', md: '20' }}
-        >
-          <VStack spacing="5">
-            {articles.contents.map((article) => (
-              <ArticleCard key={article.title} article={article} />
-            ))}
-          </VStack>
-          <VStack w={{ base: 'full', md: '72' }}>
-            <Categories categories={categories} />
-            <Spacer />
-          </VStack>
-        </Stack>
-      </TwContainer>
-    </>
+    <div className="container px-2 md:px-4 mx-auto">
+      <div
+        className="flex flex-col gap-2 justify-center items-center px-8 h-96 text-center"
+        style={{ wordBreak: 'keep-all', overflowWrap: 'break-word' }}
+      >
+        <h2 className="text-3xl font-bold">
+          毎日が
+          <span
+            className="text-4xl text-transparent bg-clip-text 
+          bg-gradient-to-r from-cyan-500 to-blue-500"
+          >
+            EveryDay
+          </span>
+          ,
+          <wbr />
+          あしたも
+          <span
+            className="text-4xl text-transparent bg-clip-text 
+          bg-gradient-to-r from-orange-500 to-pink-500"
+          >
+            Tomorrow
+          </span>
+        </h2>
+        <p className="text-lg text-gray-500">無名な高校生のしがないブログ</p>
+      </div>
+    </div>
   );
 }
-export const getStaticProps: GetStaticProps<{
-  articles: ArticleList;
-  categories: CategoryList;
-}> = async (context) => {
-  const articles = await client.get<ArticleList>({
-    endpoint: process.env.ARTICLE_END_POINT || '',
-    queries: {
-      depth: 3,
-      limit: 100,
-    },
-  });
 
-  const categories = await client.get<CategoryList>({
-    endpoint: process.env.CATEGORY_END_POINT || '',
-    queries: {
-      depth: 3,
-      limit: 100,
-    },
-  });
-  return {
-    props: { articles, categories }, // ページコンポーネントにpropsとして渡されます。
-  };
+Home.getLayout = function getLayout(page: React.ReactElement) {
+  return <NormalLayout alwaysShowBottomNav>{page}</NormalLayout>;
 };
-
-Home.getLayout = (page: ReactElement) => <DefaultLayout>{page}</DefaultLayout>;
