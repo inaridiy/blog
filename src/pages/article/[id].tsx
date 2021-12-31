@@ -11,6 +11,7 @@ import {
 } from '../../components/article';
 import { Progress } from '../../components/ui/Progress';
 import { ArticleInfo } from '../../components/article/ArticleInfo';
+import { ArticleMeta } from '../../components/article/ArticleMeta';
 
 type staticProps = {
   article: Article;
@@ -22,6 +23,7 @@ export default function ArticlePage({ article, html, titleHtml }: staticProps) {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-3 px-2 md:px-4 pt-2 mx-auto max-w-screen-xl">
       <Progress />
+      <ArticleMeta article={article} />
       <div className="col-span-1 sm:col-span-2">
         <ArticleThumbnail article={article} />
         <article className="px-2">

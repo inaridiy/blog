@@ -19,10 +19,7 @@ export default function Home({
   return (
     <div className="container grid sm:grid-cols-2 md:grid-cols-3 gap-5 sm:gap-y-10 px-2 md:px-4 mx-auto max-w-screen-lg">
       <h2 className="text-3xl font-bold">{`${thisCategory?.name} の記事一覧`}</h2>
-      <div className="sm:col-span-2 row-span-2">
-        <ArticleCard article={articles.contents[0]} />
-      </div>
-      {articles.contents.slice(1).map((article) => (
+      {articles.contents.map((article) => (
         <ArticleCard article={article} key={article.id} />
       ))}
     </div>
