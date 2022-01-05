@@ -46,7 +46,7 @@ export const getStaticPaths = async () => {
   const data = await client.get<ArticleList>({
     endpoint: process.env.ARTICLE_END_POINT || '',
     queries: {
-      limit: 1000,
+      limit: 100,
     },
   });
   const paths: string[] = data.contents.map(
