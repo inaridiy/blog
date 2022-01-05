@@ -45,6 +45,9 @@ export default function ArticlePage({ article, html, titleHtml }: staticProps) {
 export const getStaticPaths = async () => {
   const data = await client.get<ArticleList>({
     endpoint: process.env.ARTICLE_END_POINT || '',
+    queries: {
+      limit: 1000,
+    },
   });
   const paths: string[] = data.contents.map(
     (article) => `/article/${article.id}`
