@@ -8,10 +8,10 @@ import {
   ArticleTitle,
   ArticleThumbnail,
   ArticleToc,
+  ArticleInfo,
+  ArticleMeta,
 } from '../../components/article';
 import { Progress } from '../../components/ui/Progress';
-import { ArticleInfo } from '../../components/article/ArticleInfo';
-import { ArticleMeta } from '../../components/article/ArticleMeta';
 
 type staticProps = {
   article: Article;
