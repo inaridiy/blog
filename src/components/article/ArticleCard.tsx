@@ -26,9 +26,9 @@ export const ArticleCard: React.FC<Props> = ({ article }) => {
         </div>
       </div>
       <div className="overflow-hidden flex-shrink-0 w-40 sm:w-full">
-        <div className="px-1 pt-1 text-center bg-gradient-to-r from-cyan-500 to-blue-500 rounded-lg drop-shadow">
+        <div className="p-2 pb-1 bg-gradient-to-r from-cyan-500 to-blue-500 inline-block rounded-lg">
           <Image
-            className="rounded-lg"
+            className="rounded-lg p-2 bg-gradient-to-r from-cyan-500 to-blue-500"
             src={ogImage}
             alt={article.title}
             width="512"

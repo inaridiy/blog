@@ -31,6 +31,13 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
         <meta name="keywords" content="無名,学生,ブログ" />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
+      <script
+        defer
+        dangerouslySetInnerHTML={{
+          __html: initTwitterScriptInner,
+        }}
+      />
+
       <div className="flex relative flex-col min-w-full min-h-screen text-gray-900 dark:text-white bg-trueGray-100 dark:bg-trueGray-800 duration-150">
         {getLayout(<Component {...pageProps} />)}
       </div>
