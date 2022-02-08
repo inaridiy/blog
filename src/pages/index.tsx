@@ -1,10 +1,18 @@
 import type { NextPage } from "next";
-import { Button } from "@nextui-org/react";
+import { useTheme as useNextTheme } from "next-themes";
+import { Switch, useTheme } from "@nextui-org/react";
 
 const Home: NextPage = () => {
+  const { setTheme } = useNextTheme();
+  const { isDark, type } = useTheme();
+  console.log(isDark);
   return (
     <div>
-      <Button>Click me</Button>
+      The current theme is: {type}
+      <Switch
+        initialChecked={isDark}
+        onChange={(e) => setTheme(e.target.checked ? "dark" : "light")}
+      />
     </div>
   );
 };
