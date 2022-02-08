@@ -1,7 +1,12 @@
 import type { NextPage } from "next";
+import { Button } from "@nextui-org/react";
 
 const Home: NextPage = () => {
-  return <div>Hello World</div>;
+  return (
+    <div>
+      <Button>Click me</Button>
+    </div>
+  );
 };
 
 export default Home;
