@@ -7,4 +7,7 @@ export const StyledIconButton = styled("button", {
   background: "transparent",
   border: "none",
   padding: 0,
+  "&:hover": {
+    opacity: 0.7,
+  },
 });
