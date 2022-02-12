@@ -5,10 +5,10 @@ import { StyledIconButton } from "./styles";
 
 const SelectLocale = () => {
   return (
-    <Button.Group color="gradient" bordered>
+    <Button.Group color="gradient" bordered css={{ m: 0 }}>
       <Button>
         <NextLink href="/" locale="ja">
-          <Text>Japanese</Text>
+          <Text>日本語</Text>
         </NextLink>
       </Button>
       <Button>

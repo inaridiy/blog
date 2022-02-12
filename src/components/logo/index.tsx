@@ -13,7 +13,15 @@ export const Logo: React.FC<Props> = ({
   const { title, subtitle } = useContent();
   return (
     <Col>
-      <Text size={size} weight="bold" css={{ mb: _subtitle ? "-0.3em" : 0 }}>
+      <Text
+        size={size}
+        weight="bold"
+        css={{
+          mb: _subtitle ? "-0.3em" : 0,
+          textGradient: "45deg, $blue500 -20%, $pink500 90%",
+          width: "fit-content",
+        }}
+      >
         {title}
       </Text>
       <Text small hidden={!_subtitle}>
