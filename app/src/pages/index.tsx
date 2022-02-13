@@ -1,14 +1,20 @@
-import { useTheme } from "@nextui-org/react";
+import { Button } from "@nextui-org/react";
 import type { NextPage } from "next";
-import { useTheme as useNextTheme } from "next-themes";
+import { useWeb3 } from "../hooks/useWeb3";
 import DefaultLayout from "../layouts/default";
 
 const Home: NextPage = () => {
-  const { setTheme } = useNextTheme();
-  const { isDark, type } = useTheme();
+  const { initWeb3, account } = useWeb3();
+  const connectWallet = async () => {
+    console.log("on click");
+    await initWeb3({ isRequestAccount: true });
+  };
   return (
     <DefaultLayout>
-      <div></div>
+      <Button onClick={connectWallet} shadow>
+        Connect Wallet
+      </Button>
+      {String(account?.ethName)}
     </DefaultLayout>
   );
 };
