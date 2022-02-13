@@ -5,8 +5,9 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
 import "@openzeppelin/contracts/access/AccessControlEnumerable.sol";
+import "hardhat/console.sol";
 
-pragma solidity ^0.8.11;
+pragma solidity ^0.8.4;
 
 contract Article is ERC721URIStorage, AccessControlEnumerable {
     bytes32 public constant WRITER_ROLE = keccak256("Writer");
@@ -21,7 +22,8 @@ contract Article is ERC721URIStorage, AccessControlEnumerable {
     function post(string memory tokenURI) public returns (uint256) {
         require(
             hasRole(WRITER_ROLE, msg.sender) ||
-                hasRole(EDITOR_ROLE, msg.sender),
+                hasRole(EDITOR_ROLE, msg.sender) ||
+                hasRole(DEFAULT_ADMIN_ROLE, msg.sender),
             "You don't have the authority."
         );
         _tokenIds.increment();
@@ -31,18 +33,23 @@ contract Article is ERC721URIStorage, AccessControlEnumerable {
         return newItemId;
     }
 
-    function edit(string memory tokenURI, uint256 tokenId) public {
+    function edit(uint256 tokenId, string memory tokenURI) public {
         require(
-            hasRole(EDITOR_ROLE, msg.sender),
+            hasRole(EDITOR_ROLE, msg.sender) ||
+                hasRole(DEFAULT_ADMIN_ROLE, msg.sender),
             "You don't have the authority."
         );
+        require(isOwnerdByMembers(tokenId), "A third party has the token.");
         _setTokenURI(tokenId, tokenURI);
     }
 
-    function isOwnerdByMembers(uint256 tokenId) public view {
-        bool result = false;
+    function isOwnerdByMembers(uint256 tokenId) public view returns (bool) {
         address tokenOwner = ownerOf(tokenId);
-        uint256 writerCount = getRoleMemberCount(WRITER_ROLE);
+        bool isAdmin = hasRole(DEFAULT_ADMIN_ROLE, tokenOwner);
+        bool isEditor = hasRole(EDITOR_ROLE, tokenOwner);
+        bool isWriter = hasRole(WRITER_ROLE, tokenOwner);
+        //    console.log(tokenOwner);
+        return isAdmin || isEditor || isWriter;
     }
 
     function supportsInterface(bytes4 interfaceId)
