@@ -1,13 +1,25 @@
+import WalletConnectProvider from "@walletconnect/web3-provider";
 import { ethers } from "ethers";
 import { Account } from "../types/web3Types";
 
 export const getWeb3Provider = (ethereum: any) =>
   new ethers.providers.Web3Provider(ethereum);
 
+export const getWeb3ProviderByWalletConnect = async () => {
+  const walletConnect = new WalletConnectProvider({
+    rpc: {
+      1: `https://mainnet.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_PROJECT_ID}`,
+      80001: `https://rpc-mumbai.matic.today`,
+    },
+  });
+  await walletConnect.enable();
+  return new ethers.providers.Web3Provider(walletConnect);
+};
+
 export const getInfuraProvider = () =>
   new ethers.providers.InfuraProvider(
     "homestead",
-    process.env.NEXT_PUBLIC_INFURA_API_KEY
+    process.env.NEXT_PUBLIC_INFURA_PROJECT_ID
   );
 
 export const getAccountIds = (

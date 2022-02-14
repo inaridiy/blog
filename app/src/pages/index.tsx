@@ -7,7 +7,7 @@ const Home: NextPage = () => {
   const { initWeb3, account } = useWeb3();
   const connectWallet = async () => {
     console.log("on click");
-    await initWeb3({ isRequestAccount: true });
+    await initWeb3({ isRequestAccount: true, wallet: "wallet_connect" });
   };
   return (
     <DefaultLayout>

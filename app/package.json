@@ -11,6 +11,7 @@
     "@nextui-org/react": "^1.0.2-beta.3",
     "@typescript-eslint/eslint-plugin": "^5.11.0",
     "@typescript-eslint/parser": "^5.11.0",
+    "@walletconnect/web3-provider": "^1.7.1",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.25.4",
     "ethers": "^5.5.4",

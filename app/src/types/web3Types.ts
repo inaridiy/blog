@@ -13,6 +13,10 @@ export interface Web3ContextInterface {
   isTargetChain: boolean;
   isConnected: boolean;
   error: string;
-  initWeb3: (opt?: { isRequestAccount?: boolean }) => Promise<void>;
+  metamask: boolean;
+  initWeb3: (opt?: {
+    isRequestAccount?: boolean;
+    wallet?: "metamask" | "wallet_connect";
+  }) => Promise<void>;
   switchToTargetChain: () => Promise<void>;
 }
