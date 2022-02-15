@@ -1,7 +1,10 @@
-import React, { createContext, useState } from "react";
+import WalletConnectProvider from "@walletconnect/web3-provider";
+import React, { createContext, useEffect, useState } from "react";
 import { Web3ContextInterface } from "../types/web3Types";
 import {
+  checkIsTargetChain,
   getAccount,
+  getAccountByIds,
   getWeb3Provider,
   getWeb3ProviderByWalletConnect,
 } from "../util/webeUtil";
@@ -12,13 +15,14 @@ type Interface = Web3ContextInterface;
 const getDefaultContextValue = (): Web3ContextInterface => ({
   isInitializing: true,
   provider: null,
-  initWeb3: async () => {},
   account: null,
   chainId: null,
   isTargetChain: false,
   isConnected: false,
   error: "",
   metamask: false,
+  initWeb3: async () => {},
+  disconnect: () => {},
   switchToTargetChain: async () => {},
 });
 
@@ -35,6 +39,10 @@ export const Web3Provider: React.FC<React.PropsWithChildren<{}>> = ({
   const [metamask, setMetamask] = useState<Interface["metamask"]>(false);
   const [isInitializing, setIsInitializing] =
     useState<Interface["isInitializing"]>(true);
+  const [walletConnect, setWalletConnect] =
+    useState<WalletConnectProvider | null>(null);
+  const [isTargetChain, setIsTargetChain] =
+    useState<Interface["isTargetChain"]>(false);
 
   const initWeb3 = async ({
     isRequestAccount = false,
@@ -63,12 +71,20 @@ export const Web3Provider: React.FC<React.PropsWithChildren<{}>> = ({
     const _provider = getWeb3Provider(ethereum);
     setProvider(_provider);
     setAccount(await getAccount(_provider, isRequestAccount));
+    ethereum.on("accountsChanged", handleAccountsChanged);
+    ethereum.on("chainChanged", handleChainChanged);
   };
 
   const connectWalletConnect = async () => {
-    const _provider = await getWeb3ProviderByWalletConnect();
+    const [_walletConnect, _provider] = await getWeb3ProviderByWalletConnect();
+    setWalletConnect(_walletConnect);
     setProvider(_provider);
     setAccount(await getAccount(_provider, false));
+  };
+
+  const disconnect = () => {
+    resetWeb3();
+    walletConnect && walletConnect.disconnect();
   };
 
   const resetWeb3 = () => {
@@ -82,10 +98,26 @@ export const Web3Provider: React.FC<React.PropsWithChildren<{}>> = ({
     }
   };
 
-  const handleAccountsChanged = async (_accountId: string) => {};
+  const handleAccountsChanged = async (_accountId: string[]) => {
+    try {
+      setIsInitializing(true);
+      setAccount(await getAccountByIds(_accountId));
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setIsInitializing(false);
+    }
+  };
 
-  const handleChainChanged = (_chainId: string) => {};
+  const handleChainChanged = (_chainId: string) => {
+    setChainId(_chainId);
+    setIsTargetChain(checkIsTargetChain(_chainId));
+  };
 
+  useEffect(() => {
+    initWeb3({ isRequestAccount: false, wallet: "metamask" });
+    return resetWeb3;
+  }, []);
   return (
     <Web3Context.Provider
       value={{
@@ -95,6 +127,9 @@ export const Web3Provider: React.FC<React.PropsWithChildren<{}>> = ({
         chainId,
         initWeb3,
         isInitializing,
+        isTargetChain,
+        disconnect,
+        metamask,
       }}
     >
       {children}

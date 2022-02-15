@@ -7,14 +7,14 @@ const Home: NextPage = () => {
   const { initWeb3, account } = useWeb3();
   const connectWallet = async () => {
     console.log("on click");
-    await initWeb3({ isRequestAccount: true, wallet: "wallet_connect" });
+    await initWeb3({ isRequestAccount: true });
   };
   return (
     <DefaultLayout>
       <Button onClick={connectWallet} shadow>
         Connect Wallet
       </Button>
-      {String(account?.ethName)}
+      {String(account?.ethName || account?.abbreviatedId)}
     </DefaultLayout>
   );
 };

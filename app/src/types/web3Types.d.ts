@@ -2,6 +2,7 @@ import { ethers } from "ethers";
 
 export interface Account {
   id: string;
+  abbreviatedId: string;
   ethName: string | null;
   avatar: string | null;
 }
@@ -14,6 +15,7 @@ export interface Web3ContextInterface {
   isConnected: boolean;
   error: string;
   metamask: boolean;
+  disconnect: () => void;
   initWeb3: (opt?: {
     isRequestAccount?: boolean;
     wallet?: "metamask" | "wallet_connect";
