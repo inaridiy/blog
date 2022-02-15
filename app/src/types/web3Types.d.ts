@@ -10,13 +10,11 @@ export interface Web3ContextInterface {
   provider: ethers.providers.Web3Provider | null;
   account: Account | null;
   chainId: string | null;
-  isInitializing: boolean;
+  isLoading: boolean;
   isTargetChain: boolean;
-  isConnected: boolean;
   error: string;
-  metamask: boolean;
   disconnect: () => void;
-  initWeb3: (opt?: {
+  connectWallet: (opt?: {
     isRequestAccount?: boolean;
     wallet?: "metamask" | "wallet_connect";
   }) => Promise<void>;
