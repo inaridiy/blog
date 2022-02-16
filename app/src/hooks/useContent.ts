@@ -10,7 +10,7 @@ const en = {
 };
 const ja = {
   title: "無名開発",
-  subtitle: "高校生のWeb3の冒険",
+  subtitle: "高校生のWeb3の冒険譚",
   selectLocale: {
     ja: "日本語",
     en: "English",
