@@ -9,6 +9,7 @@ import {
   CallOverrides,
   ContractTransaction,
   Overrides,
+  PayableOverrides,
   PopulatedTransaction,
   Signer,
   utils,
@@ -17,34 +18,49 @@ import { FunctionFragment, Result, EventFragment } from "@ethersproject/abi";
 import { Listener, Provider } from "@ethersproject/providers";
 import { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
 
+export declare namespace Articles {
+  export type ArticleStruct = {
+    writer: string;
+    price: BigNumberish;
+    uri: string;
+    ownerOnly: string;
+  };
+
+  export type ArticleStructOutput = [string, BigNumber, string, string] & {
+    writer: string;
+    price: BigNumber;
+    uri: string;
+    ownerOnly: string;
+  };
+}
+
 export interface ArticleInterface extends utils.Interface {
   contractName: "Article";
   functions: {
     "DEFAULT_ADMIN_ROLE()": FunctionFragment;
     "EDITOR_ROLE()": FunctionFragment;
     "WRITER_ROLE()": FunctionFragment;
-    "approve(address,uint256)": FunctionFragment;
-    "balanceOf(address)": FunctionFragment;
-    "edit(uint256,string)": FunctionFragment;
-    "getApproved(uint256)": FunctionFragment;
+    "balanceOf(address,uint256)": FunctionFragment;
+    "balanceOfBatch(address[],uint256[])": FunctionFragment;
+    "edit(uint256,string,string,uint256)": FunctionFragment;
+    "getArticles(address)": FunctionFragment;
     "getRoleAdmin(bytes32)": FunctionFragment;
     "getRoleMember(bytes32,uint256)": FunctionFragment;
     "getRoleMemberCount(bytes32)": FunctionFragment;
     "grantRole(bytes32,address)": FunctionFragment;
     "hasRole(bytes32,address)": FunctionFragment;
     "isApprovedForAll(address,address)": FunctionFragment;
-    "isOwnerdByMembers(uint256)": FunctionFragment;
-    "name()": FunctionFragment;
-    "ownerOf(uint256)": FunctionFragment;
-    "post(string)": FunctionFragment;
+    "mint(uint256,uint256)": FunctionFragment;
+    "ownerOnlyUri(address,uint256)": FunctionFragment;
+    "post(string,string,uint256,uint256)": FunctionFragment;
+    "price(uint256)": FunctionFragment;
     "renounceRole(bytes32,address)": FunctionFragment;
     "revokeRole(bytes32,address)": FunctionFragment;
-    "safeTransferFrom(address,address,uint256)": FunctionFragment;
+    "safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)": FunctionFragment;
+    "safeTransferFrom(address,address,uint256,uint256,bytes)": FunctionFragment;
     "setApprovalForAll(address,bool)": FunctionFragment;
     "supportsInterface(bytes4)": FunctionFragment;
-    "symbol()": FunctionFragment;
-    "tokenURI(uint256)": FunctionFragment;
-    "transferFrom(address,address,uint256)": FunctionFragment;
+    "uri(uint256)": FunctionFragment;
   };
 
   encodeFunctionData(
@@ -60,18 +76,18 @@ export interface ArticleInterface extends utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "approve",
+    functionFragment: "balanceOf",
     values: [string, BigNumberish]
   ): string;
-  encodeFunctionData(functionFragment: "balanceOf", values: [string]): string;
+  encodeFunctionData(
+    functionFragment: "balanceOfBatch",
+    values: [string[], BigNumberish[]]
+  ): string;
   encodeFunctionData(
     functionFragment: "edit",
-    values: [BigNumberish, string]
+    values: [BigNumberish, string, string, BigNumberish]
   ): string;
-  encodeFunctionData(
-    functionFragment: "getApproved",
-    values: [BigNumberish]
-  ): string;
+  encodeFunctionData(functionFragment: "getArticles", values: [string]): string;
   encodeFunctionData(
     functionFragment: "getRoleAdmin",
     values: [BytesLike]
@@ -97,15 +113,18 @@ export interface ArticleInterface extends utils.Interface {
     values: [string, string]
   ): string;
   encodeFunctionData(
-    functionFragment: "isOwnerdByMembers",
-    values: [BigNumberish]
+    functionFragment: "mint",
+    values: [BigNumberish, BigNumberish]
   ): string;
-  encodeFunctionData(functionFragment: "name", values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "ownerOf",
-    values: [BigNumberish]
+    functionFragment: "ownerOnlyUri",
+    values: [string, BigNumberish]
   ): string;
-  encodeFunctionData(functionFragment: "post", values: [string]): string;
+  encodeFunctionData(
+    functionFragment: "post",
+    values: [string, string, BigNumberish, BigNumberish]
+  ): string;
+  encodeFunctionData(functionFragment: "price", values: [BigNumberish]): string;
   encodeFunctionData(
     functionFragment: "renounceRole",
     values: [BytesLike, string]
@@ -115,8 +134,12 @@ export interface ArticleInterface extends utils.Interface {
     values: [BytesLike, string]
   ): string;
   encodeFunctionData(
+    functionFragment: "safeBatchTransferFrom",
+    values: [string, string, BigNumberish[], BigNumberish[], BytesLike]
+  ): string;
+  encodeFunctionData(
     functionFragment: "safeTransferFrom",
-    values: [string, string, BigNumberish]
+    values: [string, string, BigNumberish, BigNumberish, BytesLike]
   ): string;
   encodeFunctionData(
     functionFragment: "setApprovalForAll",
@@ -126,15 +149,7 @@ export interface ArticleInterface extends utils.Interface {
     functionFragment: "supportsInterface",
     values: [BytesLike]
   ): string;
-  encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "tokenURI",
-    values: [BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "transferFrom",
-    values: [string, string, BigNumberish]
-  ): string;
+  encodeFunctionData(functionFragment: "uri", values: [BigNumberish]): string;
 
   decodeFunctionResult(
     functionFragment: "DEFAULT_ADMIN_ROLE",
@@ -148,11 +163,14 @@ export interface ArticleInterface extends utils.Interface {
     functionFragment: "WRITER_ROLE",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "balanceOfBatch",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "edit", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "getApproved",
+    functionFragment: "getArticles",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -173,18 +191,22 @@ export interface ArticleInterface extends utils.Interface {
     functionFragment: "isApprovedForAll",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "mint", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "isOwnerdByMembers",
+    functionFragment: "ownerOnlyUri",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "ownerOf", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "post", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "price", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "renounceRole",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "revokeRole", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "safeBatchTransferFrom",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "safeTransferFrom",
     data: BytesLike
@@ -197,40 +219,30 @@ export interface ArticleInterface extends utils.Interface {
     functionFragment: "supportsInterface",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "tokenURI", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "transferFrom",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: "uri", data: BytesLike): Result;
 
   events: {
-    "Approval(address,address,uint256)": EventFragment;
     "ApprovalForAll(address,address,bool)": EventFragment;
     "RoleAdminChanged(bytes32,bytes32,bytes32)": EventFragment;
     "RoleGranted(bytes32,address,address)": EventFragment;
     "RoleRevoked(bytes32,address,address)": EventFragment;
-    "Transfer(address,address,uint256)": EventFragment;
+    "TransferBatch(address,address,address,uint256[],uint256[])": EventFragment;
+    "TransferSingle(address,address,address,uint256,uint256)": EventFragment;
+    "URI(string,uint256)": EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "Approval"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "ApprovalForAll"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "RoleAdminChanged"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "RoleGranted"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "RoleRevoked"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Transfer"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "TransferBatch"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "TransferSingle"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "URI"): EventFragment;
 }
-
-export type ApprovalEvent = TypedEvent<
-  [string, string, BigNumber],
-  { owner: string; approved: string; tokenId: BigNumber }
->;
-
-export type ApprovalEventFilter = TypedEventFilter<ApprovalEvent>;
 
 export type ApprovalForAllEvent = TypedEvent<
   [string, string, boolean],
-  { owner: string; operator: string; approved: boolean }
+  { account: string; operator: string; approved: boolean }
 >;
 
 export type ApprovalForAllEventFilter = TypedEventFilter<ApprovalForAllEvent>;
@@ -257,12 +269,38 @@ export type RoleRevokedEvent = TypedEvent<
 
 export type RoleRevokedEventFilter = TypedEventFilter<RoleRevokedEvent>;
 
-export type TransferEvent = TypedEvent<
-  [string, string, BigNumber],
-  { from: string; to: string; tokenId: BigNumber }
+export type TransferBatchEvent = TypedEvent<
+  [string, string, string, BigNumber[], BigNumber[]],
+  {
+    operator: string;
+    from: string;
+    to: string;
+    ids: BigNumber[];
+    values: BigNumber[];
+  }
 >;
 
-export type TransferEventFilter = TypedEventFilter<TransferEvent>;
+export type TransferBatchEventFilter = TypedEventFilter<TransferBatchEvent>;
+
+export type TransferSingleEvent = TypedEvent<
+  [string, string, string, BigNumber, BigNumber],
+  {
+    operator: string;
+    from: string;
+    to: string;
+    id: BigNumber;
+    value: BigNumber;
+  }
+>;
+
+export type TransferSingleEventFilter = TypedEventFilter<TransferSingleEvent>;
+
+export type URIEvent = TypedEvent<
+  [string, BigNumber],
+  { value: string; id: BigNumber }
+>;
+
+export type URIEventFilter = TypedEventFilter<URIEvent>;
 
 export interface Article extends BaseContract {
   contractName: "Article";
@@ -298,24 +336,30 @@ export interface Article extends BaseContract {
 
     WRITER_ROLE(overrides?: CallOverrides): Promise<[string]>;
 
-    approve(
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
+    balanceOf(
+      account: string,
+      id: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
 
-    balanceOf(owner: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    balanceOfBatch(
+      accounts: string[],
+      ids: BigNumberish[],
+      overrides?: CallOverrides
+    ): Promise<[BigNumber[]]>;
 
     edit(
       tokenId: BigNumberish,
       tokenURI: string,
+      ownerOnly: string,
+      _price: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    getApproved(
-      tokenId: BigNumberish,
+    getArticles(
+      user: string,
       overrides?: CallOverrides
-    ): Promise<[string]>;
+    ): Promise<[Articles.ArticleStructOutput[]]>;
 
     getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<[string]>;
 
@@ -343,27 +387,32 @@ export interface Article extends BaseContract {
     ): Promise<[boolean]>;
 
     isApprovedForAll(
-      owner: string,
+      account: string,
       operator: string,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
-    isOwnerdByMembers(
-      tokenId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<[boolean]>;
+    mint(
+      id: BigNumberish,
+      quantity: BigNumberish,
+      overrides?: PayableOverrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
 
-    name(overrides?: CallOverrides): Promise<[string]>;
-
-    ownerOf(
-      tokenId: BigNumberish,
+    ownerOnlyUri(
+      user: string,
+      id: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[string]>;
 
     post(
       tokenURI: string,
+      ownerOnly: string,
+      quantity: BigNumberish,
+      _price: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
+
+    price(id: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     renounceRole(
       role: BytesLike,
@@ -377,18 +426,21 @@ export interface Article extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    "safeTransferFrom(address,address,uint256)"(
+    safeBatchTransferFrom(
       from: string,
       to: string,
-      tokenId: BigNumberish,
+      ids: BigNumberish[],
+      amounts: BigNumberish[],
+      data: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    "safeTransferFrom(address,address,uint256,bytes)"(
+    safeTransferFrom(
       from: string,
       to: string,
-      tokenId: BigNumberish,
-      _data: BytesLike,
+      id: BigNumberish,
+      amount: BigNumberish,
+      data: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
@@ -403,19 +455,7 @@ export interface Article extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
-    symbol(overrides?: CallOverrides): Promise<[string]>;
-
-    tokenURI(
-      tokenId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<[string]>;
-
-    transferFrom(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
+    uri(id: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
   };
 
   DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<string>;
@@ -424,24 +464,30 @@ export interface Article extends BaseContract {
 
   WRITER_ROLE(overrides?: CallOverrides): Promise<string>;
 
-  approve(
-    to: string,
-    tokenId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
+  balanceOf(
+    account: string,
+    id: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
 
-  balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+  balanceOfBatch(
+    accounts: string[],
+    ids: BigNumberish[],
+    overrides?: CallOverrides
+  ): Promise<BigNumber[]>;
 
   edit(
     tokenId: BigNumberish,
     tokenURI: string,
+    ownerOnly: string,
+    _price: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  getApproved(
-    tokenId: BigNumberish,
+  getArticles(
+    user: string,
     overrides?: CallOverrides
-  ): Promise<string>;
+  ): Promise<Articles.ArticleStructOutput[]>;
 
   getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<string>;
 
@@ -469,24 +515,32 @@ export interface Article extends BaseContract {
   ): Promise<boolean>;
 
   isApprovedForAll(
-    owner: string,
+    account: string,
     operator: string,
     overrides?: CallOverrides
   ): Promise<boolean>;
 
-  isOwnerdByMembers(
-    tokenId: BigNumberish,
+  mint(
+    id: BigNumberish,
+    quantity: BigNumberish,
+    overrides?: PayableOverrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  ownerOnlyUri(
+    user: string,
+    id: BigNumberish,
     overrides?: CallOverrides
-  ): Promise<boolean>;
-
-  name(overrides?: CallOverrides): Promise<string>;
-
-  ownerOf(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  ): Promise<string>;
 
   post(
     tokenURI: string,
+    ownerOnly: string,
+    quantity: BigNumberish,
+    _price: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
+
+  price(id: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
 
   renounceRole(
     role: BytesLike,
@@ -500,18 +554,21 @@ export interface Article extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  "safeTransferFrom(address,address,uint256)"(
+  safeBatchTransferFrom(
     from: string,
     to: string,
-    tokenId: BigNumberish,
+    ids: BigNumberish[],
+    amounts: BigNumberish[],
+    data: BytesLike,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  "safeTransferFrom(address,address,uint256,bytes)"(
+  safeTransferFrom(
     from: string,
     to: string,
-    tokenId: BigNumberish,
-    _data: BytesLike,
+    id: BigNumberish,
+    amount: BigNumberish,
+    data: BytesLike,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
@@ -526,16 +583,7 @@ export interface Article extends BaseContract {
     overrides?: CallOverrides
   ): Promise<boolean>;
 
-  symbol(overrides?: CallOverrides): Promise<string>;
-
-  tokenURI(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
-
-  transferFrom(
-    from: string,
-    to: string,
-    tokenId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
+  uri(id: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
   callStatic: {
     DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<string>;
@@ -544,24 +592,30 @@ export interface Article extends BaseContract {
 
     WRITER_ROLE(overrides?: CallOverrides): Promise<string>;
 
-    approve(
-      to: string,
-      tokenId: BigNumberish,
+    balanceOf(
+      account: string,
+      id: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<void>;
+    ): Promise<BigNumber>;
 
-    balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOfBatch(
+      accounts: string[],
+      ids: BigNumberish[],
+      overrides?: CallOverrides
+    ): Promise<BigNumber[]>;
 
     edit(
       tokenId: BigNumberish,
       tokenURI: string,
+      ownerOnly: string,
+      _price: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    getApproved(
-      tokenId: BigNumberish,
+    getArticles(
+      user: string,
       overrides?: CallOverrides
-    ): Promise<string>;
+    ): Promise<Articles.ArticleStructOutput[]>;
 
     getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<string>;
 
@@ -589,21 +643,32 @@ export interface Article extends BaseContract {
     ): Promise<boolean>;
 
     isApprovedForAll(
-      owner: string,
+      account: string,
       operator: string,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
-    isOwnerdByMembers(
-      tokenId: BigNumberish,
+    mint(
+      id: BigNumberish,
+      quantity: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<boolean>;
+    ): Promise<void>;
 
-    name(overrides?: CallOverrides): Promise<string>;
+    ownerOnlyUri(
+      user: string,
+      id: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<string>;
 
-    ownerOf(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    post(
+      tokenURI: string,
+      ownerOnly: string,
+      quantity: BigNumberish,
+      _price: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
-    post(tokenURI: string, overrides?: CallOverrides): Promise<BigNumber>;
+    price(id: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
 
     renounceRole(
       role: BytesLike,
@@ -617,18 +682,21 @@ export interface Article extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    "safeTransferFrom(address,address,uint256)"(
+    safeBatchTransferFrom(
       from: string,
       to: string,
-      tokenId: BigNumberish,
+      ids: BigNumberish[],
+      amounts: BigNumberish[],
+      data: BytesLike,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    "safeTransferFrom(address,address,uint256,bytes)"(
+    safeTransferFrom(
       from: string,
       to: string,
-      tokenId: BigNumberish,
-      _data: BytesLike,
+      id: BigNumberish,
+      amount: BigNumberish,
+      data: BytesLike,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -643,37 +711,17 @@ export interface Article extends BaseContract {
       overrides?: CallOverrides
     ): Promise<boolean>;
 
-    symbol(overrides?: CallOverrides): Promise<string>;
-
-    tokenURI(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
-
-    transferFrom(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    uri(id: BigNumberish, overrides?: CallOverrides): Promise<string>;
   };
 
   filters: {
-    "Approval(address,address,uint256)"(
-      owner?: string | null,
-      approved?: string | null,
-      tokenId?: BigNumberish | null
-    ): ApprovalEventFilter;
-    Approval(
-      owner?: string | null,
-      approved?: string | null,
-      tokenId?: BigNumberish | null
-    ): ApprovalEventFilter;
-
     "ApprovalForAll(address,address,bool)"(
-      owner?: string | null,
+      account?: string | null,
       operator?: string | null,
       approved?: null
     ): ApprovalForAllEventFilter;
     ApprovalForAll(
-      owner?: string | null,
+      account?: string | null,
       operator?: string | null,
       approved?: null
     ): ApprovalForAllEventFilter;
@@ -711,16 +759,41 @@ export interface Article extends BaseContract {
       sender?: string | null
     ): RoleRevokedEventFilter;
 
-    "Transfer(address,address,uint256)"(
+    "TransferBatch(address,address,address,uint256[],uint256[])"(
+      operator?: string | null,
       from?: string | null,
       to?: string | null,
-      tokenId?: BigNumberish | null
-    ): TransferEventFilter;
-    Transfer(
+      ids?: null,
+      values?: null
+    ): TransferBatchEventFilter;
+    TransferBatch(
+      operator?: string | null,
       from?: string | null,
       to?: string | null,
-      tokenId?: BigNumberish | null
-    ): TransferEventFilter;
+      ids?: null,
+      values?: null
+    ): TransferBatchEventFilter;
+
+    "TransferSingle(address,address,address,uint256,uint256)"(
+      operator?: string | null,
+      from?: string | null,
+      to?: string | null,
+      id?: null,
+      value?: null
+    ): TransferSingleEventFilter;
+    TransferSingle(
+      operator?: string | null,
+      from?: string | null,
+      to?: string | null,
+      id?: null,
+      value?: null
+    ): TransferSingleEventFilter;
+
+    "URI(string,uint256)"(
+      value?: null,
+      id?: BigNumberish | null
+    ): URIEventFilter;
+    URI(value?: null, id?: BigNumberish | null): URIEventFilter;
   };
 
   estimateGas: {
@@ -730,24 +803,27 @@ export interface Article extends BaseContract {
 
     WRITER_ROLE(overrides?: CallOverrides): Promise<BigNumber>;
 
-    approve(
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+    balanceOf(
+      account: string,
+      id: BigNumberish,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOfBatch(
+      accounts: string[],
+      ids: BigNumberish[],
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     edit(
       tokenId: BigNumberish,
       tokenURI: string,
+      ownerOnly: string,
+      _price: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    getApproved(
-      tokenId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    getArticles(user: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     getRoleAdmin(
       role: BytesLike,
@@ -778,27 +854,32 @@ export interface Article extends BaseContract {
     ): Promise<BigNumber>;
 
     isApprovedForAll(
-      owner: string,
+      account: string,
       operator: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    isOwnerdByMembers(
-      tokenId: BigNumberish,
-      overrides?: CallOverrides
+    mint(
+      id: BigNumberish,
+      quantity: BigNumberish,
+      overrides?: PayableOverrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    name(overrides?: CallOverrides): Promise<BigNumber>;
-
-    ownerOf(
-      tokenId: BigNumberish,
+    ownerOnlyUri(
+      user: string,
+      id: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     post(
       tokenURI: string,
+      ownerOnly: string,
+      quantity: BigNumberish,
+      _price: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
+
+    price(id: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
 
     renounceRole(
       role: BytesLike,
@@ -812,18 +893,21 @@ export interface Article extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    "safeTransferFrom(address,address,uint256)"(
+    safeBatchTransferFrom(
       from: string,
       to: string,
-      tokenId: BigNumberish,
+      ids: BigNumberish[],
+      amounts: BigNumberish[],
+      data: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    "safeTransferFrom(address,address,uint256,bytes)"(
+    safeTransferFrom(
       from: string,
       to: string,
-      tokenId: BigNumberish,
-      _data: BytesLike,
+      id: BigNumberish,
+      amount: BigNumberish,
+      data: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
@@ -838,19 +922,7 @@ export interface Article extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    symbol(overrides?: CallOverrides): Promise<BigNumber>;
-
-    tokenURI(
-      tokenId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    transferFrom(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
+    uri(id: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -862,25 +934,28 @@ export interface Article extends BaseContract {
 
     WRITER_ROLE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    approve(
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+    balanceOf(
+      account: string,
+      id: BigNumberish,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    balanceOf(
-      owner: string,
+    balanceOfBatch(
+      accounts: string[],
+      ids: BigNumberish[],
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     edit(
       tokenId: BigNumberish,
       tokenURI: string,
+      ownerOnly: string,
+      _price: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    getApproved(
-      tokenId: BigNumberish,
+    getArticles(
+      user: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -913,26 +988,34 @@ export interface Article extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     isApprovedForAll(
-      owner: string,
+      account: string,
       operator: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    isOwnerdByMembers(
-      tokenId: BigNumberish,
-      overrides?: CallOverrides
+    mint(
+      id: BigNumberish,
+      quantity: BigNumberish,
+      overrides?: PayableOverrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    ownerOf(
-      tokenId: BigNumberish,
+    ownerOnlyUri(
+      user: string,
+      id: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     post(
       tokenURI: string,
+      ownerOnly: string,
+      quantity: BigNumberish,
+      _price: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    price(
+      id: BigNumberish,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     renounceRole(
@@ -947,18 +1030,21 @@ export interface Article extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    "safeTransferFrom(address,address,uint256)"(
+    safeBatchTransferFrom(
       from: string,
       to: string,
-      tokenId: BigNumberish,
+      ids: BigNumberish[],
+      amounts: BigNumberish[],
+      data: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    "safeTransferFrom(address,address,uint256,bytes)"(
+    safeTransferFrom(
       from: string,
       to: string,
-      tokenId: BigNumberish,
-      _data: BytesLike,
+      id: BigNumberish,
+      amount: BigNumberish,
+      data: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -973,18 +1059,9 @@ export interface Article extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    tokenURI(
-      tokenId: BigNumberish,
+    uri(
+      id: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    transferFrom(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
   };
 }
