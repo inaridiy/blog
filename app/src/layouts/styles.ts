@@ -26,3 +26,10 @@ export const StyledNavContainer = styled("nav", {
     },
   },
 });
+
+export const StyledIconContainer = styled("div", {
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "flex-end",
+  gap: "0.5rem",
+});

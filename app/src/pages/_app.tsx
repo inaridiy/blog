@@ -4,8 +4,22 @@ import type { AppProps } from "next/app";
 import { Web3Provider } from "../components/Web3Provider";
 import "../styles/globals.css";
 
-const lightTheme = createTheme({ type: "light", theme: {} });
-const darkTheme = createTheme({ type: "dark", theme: {} });
+const lightTheme = createTheme({
+  type: "light",
+  theme: {
+    colors: {
+      subtext: "$gray600",
+    },
+  },
+});
+const darkTheme = createTheme({
+  type: "dark",
+  theme: {
+    colors: {
+      subtext: "$gray200",
+    },
+  },
+});
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
