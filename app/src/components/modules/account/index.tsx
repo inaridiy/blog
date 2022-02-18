@@ -50,7 +50,8 @@ export const AccountInfo: React.FC<{
       <Avatar
         src={avatarSrc}
         text={avatarText}
-        size="md"
+        color="gradient"
+        bordered
         css={{ p: "$0" }}
       ></Avatar>
       <Text
