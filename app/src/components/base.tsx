@@ -24,5 +24,5 @@ export const FullLoading: React.FC<Partial<LoadingProps>> = (props) => {
 export const VerticalDivider = styled(Box, {
   width: "1px",
   height: "1.5em",
-  backgroundColor: "black",
+  backgroundColor: "$text",
 });
