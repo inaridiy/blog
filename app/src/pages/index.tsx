@@ -1,7 +1,7 @@
+import DefaultLayout from "@/components/layouts/default";
+import { useWeb3 } from "@/hooks/useWeb3";
 import { Button, Text } from "@nextui-org/react";
 import type { NextPage } from "next";
-import { useWeb3 } from "../hooks/useWeb3";
-import DefaultLayout from "../layouts/default";
 
 const Home: NextPage = () => {
   const { connectWallet, account } = useWeb3();
