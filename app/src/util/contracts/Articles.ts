@@ -34,8 +34,8 @@ export declare namespace Articles {
   };
 }
 
-export interface ArticleInterface extends utils.Interface {
-  contractName: "Article";
+export interface ArticlesInterface extends utils.Interface {
+  contractName: "Articles";
   functions: {
     "DEFAULT_ADMIN_ROLE()": FunctionFragment;
     "EDITOR_ROLE()": FunctionFragment;
@@ -302,13 +302,13 @@ export type URIEvent = TypedEvent<
 
 export type URIEventFilter = TypedEventFilter<URIEvent>;
 
-export interface Article extends BaseContract {
-  contractName: "Article";
+export interface Articles extends BaseContract {
+  contractName: "Articles";
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: ArticleInterface;
+  interface: ArticlesInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
