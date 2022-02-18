@@ -1,5 +1,5 @@
+import { useContent } from "@/hooks/useContent";
 import { Col, Text } from "@nextui-org/react";
-import { useContent } from "../../hooks/useContent";
 
 type Props = {
   size?: string;

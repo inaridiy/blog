@@ -1,8 +1,8 @@
-import { Button, Text, Tooltip } from "@nextui-org/react";
+import { useContent } from "@/hooks/useContent";
+import { Button, Link, Text, Tooltip } from "@nextui-org/react";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 import { IoLanguageSharp } from "react-icons/io5";
-import { useContent } from "../../hooks/useContent";
 import { StyledIconButton } from "./styles";
 
 const SelectLocale = () => {
@@ -13,12 +13,16 @@ const SelectLocale = () => {
     <Button.Group color="gradient" bordered css={{ m: 0 }}>
       <Button>
         <NextLink href={pathname} locale="ja">
-          <Text weight="bold">{selectLocale.ja}</Text>
+          <Link>
+            <Text weight="bold">{selectLocale.ja}</Text>
+          </Link>
         </NextLink>
       </Button>
       <Button>
         <NextLink href={pathname} locale="en">
-          <Text weight="bold">{selectLocale.en}</Text>
+          <Link>
+            <Text weight="bold">{selectLocale.en}</Text>
+          </Link>
         </NextLink>
       </Button>
     </Button.Group>

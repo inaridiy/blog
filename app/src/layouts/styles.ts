@@ -31,5 +31,8 @@ export const StyledIconContainer = styled("div", {
   display: "flex",
   alignItems: "center",
   justifyContent: "flex-end",
-  gap: "0.5em",
+  gap: "0.75em",
+  "@xsMax": {
+    gap: "0.5em",
+  },
 });

@@ -1,7 +1,7 @@
-import { Account } from "@/components/account";
 import { VerticalDivider } from "@/components/base";
-import { ToggleLocale, ToggleTheme } from "@/components/buttons";
-import { Logo } from "@/components/logo";
+import { Account } from "@/components/modules/account";
+import { ToggleLocale, ToggleTheme } from "@/components/modules/buttons";
+import { Logo } from "@/components/modules/logo";
 import { Col, Container, Link } from "@nextui-org/react";
 import NextLink from "next/link";
 import { StyledIconContainer, StyledNavContainer } from "./styles";
