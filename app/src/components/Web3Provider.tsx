@@ -4,16 +4,18 @@ import {
   checkIsTargetChain,
   getAccount,
   getAccountByIds,
+  getChainId,
   getWeb3Provider,
-} from "../util/webeUtil";
+} from "../util/web3Util";
 
 type Interface = Web3ContextInterface;
 
 const getDefaultContextValue = (): Web3ContextInterface => ({
-  isLoading: true,
   provider: null,
   account: null,
   chainId: null,
+  isLoading: true,
+  isMetaMask: false,
   isTargetChain: false,
   error: "",
   connectWallet: async () => {},
@@ -32,6 +34,7 @@ export const Web3Provider: React.FC<React.PropsWithChildren<{}>> = ({
   const [account, setAccount] = useState<Interface["account"]>(null);
   const [chainId, setChainId] = useState<Interface["chainId"]>(null);
   const [isLoading, setIsLoading] = useState<Interface["isLoading"]>(false);
+  const [isMetaMask, setIsMetaMask] = useState<Interface["isMetaMask"]>(false);
   const [isTargetChain, setIsTargetChain] =
     useState<Interface["isTargetChain"]>(false);
 
@@ -39,9 +42,17 @@ export const Web3Provider: React.FC<React.PropsWithChildren<{}>> = ({
     try {
       setIsLoading(true);
       const [instance, _provider] = await getWeb3Provider();
-      setProvider(_provider);
-      setAccount(await getAccount(_provider));
+      setIsMetaMask(instance.isMetaMask);
       instance.on("accountsChanged", handleAccountsChanged);
+      instance.on("chainChanged", handleChainChanged);
+      instance.on("disconnect", resetWeb3);
+      const accountPromise = async () =>
+        setAccount(await getAccount(_provider));
+      const providerPromise = async () => {
+        setIsTargetChain(checkIsTargetChain(await getChainId(_provider)));
+        setProvider(_provider);
+      };
+      await Promise.all([accountPromise(), providerPromise()]);
     } catch (e) {
       console.error(e);
     } finally {
@@ -53,12 +64,14 @@ export const Web3Provider: React.FC<React.PropsWithChildren<{}>> = ({
     setProvider(null);
     setAccount(null);
     setChainId(null);
+    setIsTargetChain(false);
   };
 
   const handleAccountsChanged = async (_accountIds: string[]) => {
     try {
       setIsLoading(true);
       setAccount(await getAccountByIds(_accountIds));
+      !_accountIds.length && resetWeb3();
     } catch (e) {
       console.error(e);
     } finally {
@@ -82,6 +95,7 @@ export const Web3Provider: React.FC<React.PropsWithChildren<{}>> = ({
         account,
         chainId,
         isLoading,
+        isMetaMask,
         isTargetChain,
         connectWallet,
       }}

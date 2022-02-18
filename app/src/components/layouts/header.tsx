@@ -4,6 +4,7 @@ import { ToggleLocale, ToggleTheme } from "@/components/modules/buttons";
 import { Logo } from "@/components/modules/logo";
 import { Col, Container, Link } from "@nextui-org/react";
 import NextLink from "next/link";
+import { ToggleChain } from "../modules/buttons/ToggleChain";
 import { StyledIconContainer, StyledNavContainer } from "./styles";
 
 const Header: React.FC = () => {
@@ -18,14 +19,11 @@ const Header: React.FC = () => {
           </NextLink>
         </Col>
 
-        <Col
-          css={{
-            maxW: 360,
-          }}
-        >
+        <Col>
           <StyledIconContainer>
             <Account />
             <VerticalDivider />
+            <ToggleChain />
             <ToggleTheme />
             <ToggleLocale />
           </StyledIconContainer>

@@ -5,8 +5,8 @@ import { BiWallet } from "react-icons/bi";
 
 export const Account: React.FC = () => {
   const { account, isLoading, connectWallet } = useWeb3();
-  const handleClick = () => {
-    connectWallet();
+  const handleClick = async () => {
+    await connectWallet();
   };
 
   if (account) {

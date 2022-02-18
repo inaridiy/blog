@@ -7,6 +7,7 @@ const en = {
     ja: "日本語",
     en: "English",
   },
+  chainDiffMsg: "The chain is different.",
 };
 const ja = {
   title: "無名開発",
@@ -15,6 +16,7 @@ const ja = {
     ja: "日本語",
     en: "English",
   },
+  chainDiffMsg: "チェーンが違います",
 };
 const getContent = (locale: string | undefined) => {
   switch (locale) {

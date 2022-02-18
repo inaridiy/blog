@@ -87,13 +87,13 @@ contract Articles is ERC1155, AccessControlEnumerable {
         bool isAdmin = hasRole(DEFAULT_ADMIN_ROLE, user);
         bool isEditor = hasRole(EDITOR_ROLE, user);
         uint256 articleCount = 0;
-        for (uint256 i = 0; i <= _tokenIds.current(); i++) {
+        for (uint256 i = 1; i <= _tokenIds.current(); i++) {
             if (isAdmin || isEditor || articles[i].writer == user) {
                 articleCount++;
             }
         }
         Article[] memory _articles = new Article[](articleCount);
-        for (uint256 i = 0; i <= _tokenIds.current(); i++) {
+        for (uint256 i = 1; i <= _tokenIds.current(); i++) {
             Article memory _article = articles[i];
             if (isAdmin || isEditor || _article.writer == user) {
                 _articles[i].writer = _article.writer;

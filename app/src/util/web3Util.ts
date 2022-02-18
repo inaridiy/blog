@@ -24,11 +24,10 @@ export const getWeb3Provider = async (): Promise<
   [any, ethers.providers.Web3Provider]
 > => {
   const web3Modal = new Web3Modal({
-    cacheProvider: true,
     providerOptions: await providerOptions(),
   });
   const instance = await web3Modal.connect();
-  const provider = new ethers.providers.Web3Provider(instance);
+  const provider = new ethers.providers.Web3Provider(instance, "any");
   return [instance, provider];
 };
 
@@ -64,3 +63,43 @@ export const getChainId = (
 
 export const checkIsTargetChain = (chainId: string | number) =>
   Number(chainId) === Number(process.env.NEXT_PUBLIC_TARGET_CHAIN_ID);
+
+export const switchChain = async (
+  provider: ethers.providers.Web3Provider,
+  chainId = process.env.NEXT_PUBLIC_TARGET_CHAIN_ID || ""
+) => {
+  if (chainId in chainParameters) {
+    const chainParameter =
+      chainParameters[chainId as keyof typeof chainParameters];
+    if (!chainParameter) new Error("chain parameter not found");
+    await provider.send("wallet_addEthereumChain", [chainParameter]);
+    await provider.send("wallet_switchEthereumChain", [{ chainId }]);
+  }
+};
+
+export const chainParameters = {
+  "0x89": {
+    chainId: "0x89",
+    blockExplorerUrls: ["https://polygonscan.com/"],
+    chainName: "Polygon Mainnet",
+    iconUrls: [],
+    nativeCurrency: {
+      decimals: 18,
+      name: "MATIC",
+      symbol: "MATIC",
+    },
+    rpcUrls: ["https://polygon-rpc.com/"],
+  },
+  "0x13881": {
+    chainId: "0x13881",
+    blockExplorerUrls: ["https://mumbai.polygonscan.com/"],
+    chainName: "Matic Mumbai",
+    iconUrls: [],
+    nativeCurrency: {
+      decimals: 18,
+      name: "MATIC",
+      symbol: "MATIC",
+    },
+    rpcUrls: ["https://rpc-mumbai.maticvigil.com/"],
+  },
+};

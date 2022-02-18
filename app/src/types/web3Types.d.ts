@@ -10,6 +10,7 @@ export interface Web3ContextInterface {
   provider: ethers.providers.Web3Provider | null;
   account: Account | null;
   chainId: string | null;
+  isMetaMask: boolean;
   isLoading: boolean;
   isTargetChain: boolean;
   error: string;
