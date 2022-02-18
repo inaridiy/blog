@@ -17,7 +17,7 @@ const DefaultLayout: React.FC<React.PropsWithChildren<Props>> = ({
         className="main-container"
         css={{
           position: "relative",
-          minHeight: "90vh",
+          minHeight: "80vh",
           flexDirection: "column",
           "@mdMax": {
             overflowX: "hidden",

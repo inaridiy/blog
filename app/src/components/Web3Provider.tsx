@@ -31,7 +31,7 @@ export const Web3Provider: React.FC<React.PropsWithChildren<{}>> = ({
   const [provider, setProvider] = useState<Interface["provider"]>(null);
   const [account, setAccount] = useState<Interface["account"]>(null);
   const [chainId, setChainId] = useState<Interface["chainId"]>(null);
-  const [isLoading, setIsLoading] = useState<Interface["isLoading"]>(true);
+  const [isLoading, setIsLoading] = useState<Interface["isLoading"]>(false);
   const [isTargetChain, setIsTargetChain] =
     useState<Interface["isTargetChain"]>(false);
 

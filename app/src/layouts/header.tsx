@@ -1,8 +1,9 @@
-import { Card, Col, Container, Link } from "@nextui-org/react";
+import { Account } from "@/components/account";
+import { VerticalDivider } from "@/components/base";
+import { ToggleLocale, ToggleTheme } from "@/components/buttons";
+import { Logo } from "@/components/logo";
+import { Col, Container, Link } from "@nextui-org/react";
 import NextLink from "next/link";
-import { ToggleLocale } from "../components/buttons/ToggleLocale";
-import { ToggleTheme } from "../components/buttons/ToggleTheme";
-import { Logo } from "../components/logo";
 import { StyledIconContainer, StyledNavContainer } from "./styles";
 
 const Header: React.FC = () => {
@@ -12,21 +13,22 @@ const Header: React.FC = () => {
         <Col>
           <NextLink href="/">
             <Link>
-              <Logo subtitle />
+              <Logo />
             </Link>
           </NextLink>
         </Col>
+
         <Col
           css={{
             maxW: 360,
           }}
         >
-          <Card color="gradient">
-            <StyledIconContainer>
-              <ToggleTheme />
-              <ToggleLocale />
-            </StyledIconContainer>
-          </Card>
+          <StyledIconContainer>
+            <Account />
+            <VerticalDivider />
+            <ToggleTheme />
+            <ToggleLocale />
+          </StyledIconContainer>
         </Col>
       </Container>
     </StyledNavContainer>
