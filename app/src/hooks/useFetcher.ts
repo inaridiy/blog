@@ -1,24 +1,16 @@
 import { Contract } from "ethers";
-import { useEffect, useState } from "react";
+import useSWR from "swr";
 
 export const useContractFetcher = <T extends Contract, S>(
   contract: T | null,
+  key: string,
   fetcher: (contract: T) => Promise<S>
 ) => {
-  const [data, setData] = useState<S | null>(null);
-  const [error, setError] = useState<any | null>(null);
-  const _fetcher = async (contract: T) => {
-    try {
-      const _data = await fetcher(contract);
-      setData(_data);
-    } catch (e) {
-      setError(e);
-    }
-  };
-
-  useEffect(() => {
-    contract && _fetcher(contract);
-  }, [contract]);
+  const _fetcher = async () => await fetcher(contract as T);
+  const { data, error } = useSWR(
+    contract ? `contractFetch/${key}` : null,
+    _fetcher
+  );
 
   return { data, error };
 };

@@ -1,8 +1,7 @@
 import { Box, FullLoading } from "@/components/base";
 import { AccountInfo } from "@/components/modules/account";
 import { StyledIconButton } from "@/components/modules/buttons/styles";
-import { useContent, useContract, useWeb3 } from "@/hooks";
-import { useContractFetcher } from "@/hooks/useFetcher";
+import { useContent, useContract, useContractFetcher, useWeb3 } from "@/hooks";
 import { Account } from "@/types/web3Types";
 import { getMembers } from "@/util/AdminUtil";
 import {
@@ -14,6 +13,7 @@ import {
   Spacer,
   Text,
 } from "@nextui-org/react";
+import { useCallback } from "react";
 import { BsPlus } from "react-icons/bs";
 
 const AdminPage: React.FC = () => {
@@ -83,24 +83,36 @@ const AdminArticles: React.FC = () => {
 };
 
 const AdminMembers: React.FC = () => {
+  const { account } = useWeb3();
   const contract = useContract();
-  const { data } = useContractFetcher(contract, getMembers);
+  const { data: members } = useContractFetcher(contract, "members", getMembers);
+  const isAdmin = useCallback(
+    () =>
+      account &&
+      members &&
+      members.admin.some(
+        (member) => member.id.toLowerCase() === account.id.toLowerCase()
+      ),
+    [account, members]
+  );
   return (
     <Card>
       <Row justify="space-between" align="center">
         <Text size={30} b>
           メンバー一覧
-          {!data && <Loading />}
+          {!members && <Loading />}
         </Text>
-        <StyledIconButton>
-          <BsPlus size="3em" />
-        </StyledIconButton>
+        {isAdmin() && (
+          <StyledIconButton>
+            <BsPlus size="3em" />
+          </StyledIconButton>
+        )}
       </Row>
-      {data && (
+      {members && (
         <>
-          <AdminShowMembers text="Admin" accounts={data.admin} />
-          <AdminShowMembers text="Editor" accounts={data.editor} />
-          <AdminShowMembers text="Writer" accounts={data.writer} />
+          <AdminShowMembers text="Admin" accounts={members.admin} />
+          <AdminShowMembers text="Editor" accounts={members.editor} />
+          <AdminShowMembers text="Writer" accounts={members.writer} />
         </>
       )}
     </Card>
@@ -117,7 +129,7 @@ const AdminShowMembers: React.FC<{
         {text}
       </Text>
       {accounts.map((account) => (
-        <AccountInfo account={account} size="large" />
+        <AccountInfo account={account} size="large" key={text + account.id} />
       ))}
     </Container>
   ) : (

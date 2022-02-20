@@ -20,8 +20,10 @@
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-icons": "^4.3.1",
+    "react-split-mde": "^0.3.5",
     "swr": "^1.2.1",
-    "web3modal": "^1.9.5"
+    "web3modal": "^1.9.5",
+    "zenn-markdown-html": "^0.1.107"
   },
   "devDependencies": {
     "@typechain/ethers-v5": "^9.0.0",
