@@ -18,7 +18,7 @@ const Editor: React.FC = () => {
   const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
-      setText(`${text}\n![*](${file.name})`);
+      setText(`${text}\n![*](${URL.createObjectURL(file)})`);
       setImages([...images, file]);
     }
   };
