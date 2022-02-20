@@ -46,6 +46,7 @@ export const Web3Provider: React.FC<React.PropsWithChildren<{}>> = ({
       instance.on("accountsChanged", handleAccountsChanged);
       instance.on("chainChanged", handleChainChanged);
       instance.on("disconnect", resetWeb3);
+      localStorage.setItem("auto_connect", "yes");
       const accountPromise = async () =>
         setAccount(await getAccount(_provider));
       const providerPromise = async () => {
@@ -85,6 +86,7 @@ export const Web3Provider: React.FC<React.PropsWithChildren<{}>> = ({
   };
 
   useEffect(() => {
+    localStorage.getItem("auto_connect") === "yes" && connectWallet();
     return resetWeb3;
   }, []);
   return (
