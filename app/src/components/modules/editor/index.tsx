@@ -1,3 +1,4 @@
+import { ArticleMetaType } from "@/types/articleTypes";
 import {
   Card,
   Grid,
@@ -7,12 +8,26 @@ import {
   Text,
   Textarea,
 } from "@nextui-org/react";
-import React, { memo, useState } from "react";
+import React, { memo } from "react";
 import { BsPlus } from "react-icons/bs";
 
-const Editor: React.FC = () => {
-  const [text, setText] = useState("");
-  const [images, setImages] = useState<File[]>([]);
+type Props = {
+  setText: (text: string) => void;
+  text: string;
+  setImages: (images: File[]) => void;
+  images: File[];
+  setMetaData: (data: ArticleMetaType) => void;
+  metaData: ArticleMetaType;
+};
+
+const Editor: React.FC<Props> = ({
+  setText,
+  text,
+  setImages,
+  images,
+  metaData,
+  setMetaData,
+}) => {
   const onTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) =>
     setText(e.target.value);
   const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -22,13 +37,38 @@ const Editor: React.FC = () => {
       setImages([...images, file]);
     }
   };
+  const handleChangeAny =
+    (key: string) =>
+    (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) =>
+      setMetaData({ ...metaData, [key]: e.target.value });
+
+  const handleCategory = (
+    e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+  ) => setMetaData({ ...metaData, category: e.target.value.split(" ") });
+
   return (
-    <Card>
-      <Input underlined labelLeft="Title" size="xl" />
+    <>
+      <Input
+        underlined
+        labelLeft="Title"
+        size="xl"
+        value={metaData.title}
+        onChange={handleChangeAny("title")}
+      />
       <Spacer y={1} />
-      <Input underlined labelLeft="Slug" />
+      <Input
+        underlined
+        labelLeft="Slug"
+        value={metaData.slug}
+        onChange={handleChangeAny("slug")}
+      />
       <Spacer y={1} />
-      <Input underlined labelLeft="Category" />
+      <Input
+        underlined
+        labelLeft="Category"
+        value={metaData.category.join(" ")}
+        onChange={handleCategory}
+      />
       <Spacer y={1} />
       <Grid.Container gap={1}>
         <Images images={images} />
@@ -59,7 +99,7 @@ const Editor: React.FC = () => {
         value={text}
         onChange={onTextChange as any}
       />
-    </Card>
+    </>
   );
 };
 
