@@ -1,3 +1,5 @@
+import { ByContract } from "@/types/articleTypes";
+import { getArticleData } from "@/util/ArticleUtil";
 import { Contract } from "ethers";
 import useSWR from "swr";
 
@@ -13,4 +15,13 @@ export const useContractFetcher = <T extends Contract, S>(
   );
 
   return { data, error };
+};
+
+export const useArticleFetcher = (data: ByContract) => {
+  const _fetcher = () => getArticleData(data);
+  const { data: article, error } = useSWR(
+    `article/${data.ownerOnly},${data.tokenURI}`,
+    _fetcher
+  );
+  return { article, error };
 };

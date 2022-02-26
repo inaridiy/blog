@@ -143,27 +143,22 @@ const metaConverter = (meta) => {
 
 export default async (req, res) => {
   try {
-    if (req.method === "POST") {
-      const viewport = { width: 1200, height: 630 };
-      const browser = await playwright.launchChromium({ headless: true });
-      const page = await browser.newPage({ viewport });
-      const markup = ReactDOM.renderToStaticMarkup(
-        <Content {...metaConverter({ ...defaultMeta, ...req.body })} />
-      );
-      const html = `<!doctype html>${markup}`;
-      await page.setContent(html, { waitUntil: "networkidle" });
-      const image = await page.screenshot({
-        type: "png",
-        omitBackground: true,
-      });
-      await browser.close();
-      res.setHeader(
-        "Cache-Control",
-        "s-maxage=31536000, stale-while-revalidate"
-      );
-      res.setHeader("Content-Type", "image/png");
-      res.end(image);
-    }
+    const viewport = { width: 1200, height: 630 };
+    const browser = await playwright.launchChromium({ headless: true });
+    const page = await browser.newPage({ viewport });
+    const markup = ReactDOM.renderToStaticMarkup(
+      <Content {...metaConverter({ ...defaultMeta, ...req.query })} />
+    );
+    const html = `<!doctype html>${markup}`;
+    await page.setContent(html, { waitUntil: "networkidle" });
+    const image = await page.screenshot({
+      type: "png",
+      omitBackground: true,
+    });
+    await browser.close();
+    res.setHeader("Cache-Control", "s-maxage=31536000, stale-while-revalidate");
+    res.setHeader("Content-Type", "image/png");
+    res.end(image);
   } catch (e) {
     console.error(e);
     res.status(500);

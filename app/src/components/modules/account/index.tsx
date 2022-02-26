@@ -40,11 +40,11 @@ export const Account: React.FC = () => {
 };
 
 export const AccountInfo: React.FC<{
-  account: AccountType;
+  account?: AccountType;
   size?: "auto" | "small" | "large";
 }> = ({ account, size = "auto" }) => {
-  const avatarSrc = account.avatar || undefined;
-  const avatarText = account.ethName || account.id;
+  const avatarSrc = account?.avatar || undefined;
+  const avatarText = account?.ethName || account?.id;
   return (
     <Row css={{ width: "fit-content" }} align="center" gap={0.5}>
       <Avatar

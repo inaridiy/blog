@@ -4,5 +4,7 @@
   "editor.codeActionsOnSave": {
     "source.organizeImports": true,
     "source.fixAll.eslint": true
-  }
+  },
+  "eslint.workingDirectories": ["./app"],
+  "solidity.packageDefaultDependenciesDirectory": "contract/node_modules"
 }

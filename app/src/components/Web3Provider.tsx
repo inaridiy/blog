@@ -18,18 +18,24 @@ const getDefaultContextValue = (): Web3ContextInterface => ({
   isMetaMask: false,
   isTargetChain: false,
   error: "",
-  connectWallet: async () => {},
-  disconnect: () => {},
-  switchToTargetChain: async () => {},
+  connectWallet: async () => {
+    /*初期化前用 */
+  },
+  disconnect: () => {
+    /*初期化前用 */
+  },
+  switchToTargetChain: async () => {
+    /*初期化前用 */
+  },
 });
 
 export const Web3Context = createContext<Web3ContextInterface>(
   getDefaultContextValue()
 );
 
-export const Web3Provider: React.FC<React.PropsWithChildren<{}>> = ({
-  children,
-}) => {
+export const Web3Provider: React.FC<
+  React.PropsWithChildren<Record<string, never>>
+> = ({ children }) => {
   const [provider, setProvider] = useState<Interface["provider"]>(null);
   const [account, setAccount] = useState<Interface["account"]>(null);
   const [chainId, setChainId] = useState<Interface["chainId"]>(null);

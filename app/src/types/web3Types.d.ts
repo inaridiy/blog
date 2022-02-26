@@ -1,5 +1,17 @@
 import { ethers } from "ethers";
 
+type providerEvents = {
+  accountsChanged: (ids: string[]) => void;
+  chainChanged: (chainId: string) => void;
+  disconnect: () => void;
+};
+
+export interface Web3ProviderInterface
+  extends ethers.providers.ExternalProvider {
+  isMetaMask: boolean;
+  on: <T extends string>(event: T, callback: providerEvents[T]) => void;
+}
+
 export interface Account {
   id: string;
   abbreviatedId: string;

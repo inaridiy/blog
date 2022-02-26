@@ -1,13 +1,15 @@
 import { ethers } from "ethers";
 import Web3Modal from "web3modal";
-import { Account } from "../types/web3Types";
+import { Account, Web3ProviderInterface } from "../types/web3Types";
 
 const providerOptions = async () => ({
   walletconnect: {
     package: (await import("@walletconnect/web3-provider")).default,
     options: {
       rpc: {
-        1: `https://mainnet.infura.io/v3/${process.env.NEXT_PUBLIC_INFURA_PROJECT_ID}`,
+        1: `https://mainnet.infura.io/v3/${
+          process.env.NEXT_PUBLIC_INFURA_PROJECT_ID || ""
+        }`,
         80001: `https://rpc-mumbai.matic.today`,
       },
     },
@@ -21,20 +23,20 @@ export const getInfuraProvider = () =>
   );
 
 export const getWeb3Provider = async (): Promise<
-  [any, ethers.providers.Web3Provider]
+  [Web3ProviderInterface, ethers.providers.Web3Provider]
 > => {
   const web3Modal = new Web3Modal({
     providerOptions: await providerOptions(),
     cacheProvider: true,
   });
-  const instance = await web3Modal.connect();
+  const instance = (await web3Modal.connect()) as Web3ProviderInterface;
   const provider = new ethers.providers.Web3Provider(instance, "any");
   return [instance, provider];
 };
 
 export const getAccountIds = (
   provider: ethers.providers.Web3Provider
-): Promise<string[]> => provider.send("eth_accounts", []);
+): Promise<string[]> => provider.send("eth_accounts", []) as Promise<string[]>;
 
 export const convertAccount = async (id: string): Promise<Account> => {
   const provider = getInfuraProvider();
@@ -60,7 +62,7 @@ export const getAccountByIds = async (ids: string[]): Promise<Account | null> =>
 
 export const getChainId = (
   provider: ethers.providers.Web3Provider
-): Promise<string> => provider.send("eth_chainId", []);
+): Promise<string> => provider.send("eth_chainId", []) as Promise<string>;
 
 export const checkIsTargetChain = (chainId: string | number) =>
   Number(chainId) === Number(process.env.NEXT_PUBLIC_TARGET_CHAIN_ID);

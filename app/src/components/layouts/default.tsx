@@ -1,7 +1,7 @@
 import { Container } from "@nextui-org/react";
 import Header from "./header";
 
-type Props = {};
+type Props = unknown;
 
 const DefaultLayout: React.FC<React.PropsWithChildren<Props>> = ({
   children,

@@ -84,23 +84,15 @@ contract Articles is ERC1155, AccessControlEnumerable {
     }
 
     function getArticles(address user) public view returns (Article[] memory) {
-        bool isAdmin = hasRole(DEFAULT_ADMIN_ROLE, user);
-        bool isEditor = hasRole(EDITOR_ROLE, user);
-        uint256 articleCount = 0;
+        require(
+            hasRole(WRITER_ROLE, user) ||
+                hasRole(EDITOR_ROLE, user) ||
+                hasRole(DEFAULT_ADMIN_ROLE, user),
+            "No authority."
+        );
+        Article[] memory _articles = new Article[](_tokenIds.current());
         for (uint256 i = 1; i <= _tokenIds.current(); i++) {
-            if (isAdmin || isEditor || articles[i].writer == user) {
-                articleCount++;
-            }
-        }
-        Article[] memory _articles = new Article[](articleCount);
-        for (uint256 i = 1; i <= _tokenIds.current(); i++) {
-            Article memory _article = articles[i];
-            if (isAdmin || isEditor || _article.writer == user) {
-                _articles[i].writer = _article.writer;
-                _articles[i].price = _article.price;
-                _articles[i].uri = _article.uri;
-                _articles[i].ownerOnly = _article.ownerOnly;
-            }
+            _articles[i - 1] = articles[i];
         }
         return _articles;
     }

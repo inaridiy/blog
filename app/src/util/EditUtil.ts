@@ -1,4 +1,4 @@
-import { ArticleMetaType } from "@/types/articleTypes";
+import { ArticleMetaType, OGPImageOpt } from "@/types/articleTypes";
 import imageCompression from "browser-image-compression";
 
 const compressOption = {
@@ -9,9 +9,69 @@ const compressOption = {
   initialQuality: 0.75,
 };
 
-export const submit = async (meta: ArticleMetaType) => {};
+export const getOgpImage = (opt: OGPImageOpt) => {
+  const query = Object.entries(opt)
+    .map(([key, value]) => `${key}=${value}`)
+    .join("&");
+  return `${process.env.NEXT_PUBLIC_PATH}/api/generateImage?${query}`;
+};
 
-export const compressionImages = (files: File[]) => {
+export const submit = async (
+  meta: ArticleMetaType,
+  body: string,
+  images: File[]
+) => {
+  const ogpImageBlob = await (
+    await fetch(getOgpImage({ title: meta.title }))
+  ).blob();
+  const [compressedOgp, ...compressedImages] = await compressImages([
+    new File([ogpImageBlob], "ogp.png", { type: "image/png" }),
+    ...images,
+  ]);
+  const { ogpHash, ...otherHash } = await uploadFiles(
+    Object.assign(
+      {},
+      { ogpHash: compressedOgp },
+      ...compressedImages.map((image, i) => ({ [i]: image }))
+    )
+  );
+  const replacedBody = images.reduce((a, b, i) => {
+    return a.replaceAll(b.name, hashToURL(otherHash[i].IpfsHash));
+  }, body);
+
+  const metadataStandards = {
+    image: `ipfs://${ogpHash.IpfsHash}`,
+    external_url: `${process.env.NEXT_PUBLIC_PATH}/post/${
+      meta.slug || meta.title
+    }`,
+    description: `Anon dev's article titled "${meta.title}"`,
+    name: `${meta.title}`,
+    attributes: [
+      { trait_type: "Title", value: meta.title },
+      { trait_type: "Slug", value: meta.slug },
+      { trait_type: "Body", value: replacedBody },
+      {
+        display_type: "date",
+        trait_type: "uploadedAt",
+        value: new Date().valueOf(),
+      },
+    ],
+    meta,
+    body: replacedBody,
+  };
+
+  const { metaHash } = await uploadFiles({
+    metaHash: new Blob([JSON.stringify(metadataStandards)], {
+      type: "application/json",
+    }),
+  });
+  return metaHash;
+};
+
+export const hashToURL = (hash: string) =>
+  `https://gateway.pinata.cloud/ipfs/${hash.replace("ipfs://", "")}`;
+
+export const compressImages = (files: File[]) => {
   const compressPromises = files.map((file) =>
     imageCompression(file, compressOption)
   );
@@ -19,7 +79,7 @@ export const compressionImages = (files: File[]) => {
 };
 
 export const uploadFiles = async (files: {
-  [id in string]: File;
+  [id in string]: Blob;
 }) => {
   const formData = new FormData();
   for (const [id, file] of Object.entries(files)) formData.append(id, file);

@@ -1,20 +1,29 @@
 import { Box, FullLoading } from "@/components/base";
 import { AccountInfo } from "@/components/modules/account";
 import { StyledIconButton } from "@/components/modules/buttons/styles";
-import { useContent, useContract, useContractFetcher, useWeb3 } from "@/hooks";
+import {
+  useArticleFetcher,
+  useContent,
+  useContract,
+  useContractFetcher,
+  useWeb3,
+} from "@/hooks";
+import { ByContract } from "@/types/articleTypes";
 import { Account } from "@/types/web3Types";
-import { getMembers } from "@/util/AdminUtil";
+import { getArticles, getMembers } from "@/util/AdminUtil";
 import {
   Button,
   Card,
   Container,
+  Grid,
   Loading,
   Row,
   Spacer,
   Text,
 } from "@nextui-org/react";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { BsPlus } from "react-icons/bs";
+import { PostArticleModal } from "./modal";
 
 const AdminPage: React.FC = () => {
   const { isLoading, connectWallet, isTargetChain, account } = useWeb3();
@@ -68,17 +77,60 @@ const AdminPage: React.FC = () => {
 export default AdminPage;
 
 const AdminArticles: React.FC = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const contract = useContract();
+  const { data: articles } = useContractFetcher(
+    contract,
+    "articles",
+    getArticles
+  );
+
+  const handler = (bool: boolean) => () => setIsOpen(bool);
+
   return (
-    <Card>
-      <Row justify="space-between" align="center">
-        <Text size={30} b>
-          投稿一覧
-        </Text>
-        <StyledIconButton>
-          <BsPlus size="3em" />
-        </StyledIconButton>
-      </Row>
-    </Card>
+    <>
+      <Card>
+        <Row justify="space-between" align="center">
+          <Text size={30} b>
+            投稿一覧
+          </Text>
+          <StyledIconButton onClick={handler(true)}>
+            <BsPlus size="3em" />
+          </StyledIconButton>
+        </Row>
+        <Grid.Container>
+          <Grid>
+            {articles?.map((article) => (
+              <AdminArticleCard contractData={article} key={article.tokenURI} />
+            ))}
+          </Grid>
+        </Grid.Container>
+      </Card>
+      <PostArticleModal open={isOpen} onClose={handler(false)} />
+    </>
+  );
+};
+
+const AdminArticleCard: React.FC<{ contractData: ByContract }> = ({
+  contractData,
+}) => {
+  const { article } = useArticleFetcher(contractData);
+  const writer = article?.writer.ethName || article?.writer.abbreviatedId;
+
+  return (
+    <>
+      {article && (
+        <Card clickable>
+          <Text size={20} b>
+            {article?.meta.title}
+          </Text>
+          <Row>
+            <Text>{article?.contract.price} Matic</Text>
+          </Row>
+          <Text>{writer}</Text>
+        </Card>
+      )}
+    </>
   );
 };
 

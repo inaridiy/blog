@@ -28,12 +28,13 @@ const Editor: React.FC<Props> = ({
   metaData,
   setMetaData,
 }) => {
-  const onTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) =>
-    setText(e.target.value);
+  const onTextChange = (
+    e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+  ) => setText(e.target.value);
   const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
-      setText(`${text}\n![*](${URL.createObjectURL(file)})`);
+      setText(`${text}\n![*](${file.name})`);
       setImages([...images, file]);
     }
   };
@@ -77,7 +78,7 @@ const Editor: React.FC<Props> = ({
             <BsPlus size="2em" />
             <StyledInput
               type="file"
-              onChange={onFileChange as any}
+              onChange={onFileChange}
               css={{
                 position: "absolute",
                 opacity: 0,
@@ -97,7 +98,7 @@ const Editor: React.FC<Props> = ({
         bordered
         fullWidth
         value={text}
-        onChange={onTextChange as any}
+        onChange={onTextChange}
       />
     </>
   );
@@ -105,7 +106,7 @@ const Editor: React.FC<Props> = ({
 
 export default Editor;
 
-const Images: React.FC<{ images: File[] }> = memo(({ images }) => {
+const Images: React.FC<{ images: File[] }> = memo(function Images({ images }) {
   return (
     <>
       {URL.createObjectURL &&

@@ -1,10 +1,33 @@
+import { ByContract, ForContract } from "@/types/articleTypes";
+import { ethers } from "ethers";
 import { Articles } from "./contracts";
 import { convertAccount } from "./web3Util";
 
-export const getArticles = async (contract: Articles) => {
+export const postArticle = async (
+  contract: Articles,
+  { tokenURI, ownerOnly, quantity, price }: ForContract
+) => {
+  await contract.post(
+    tokenURI,
+    ownerOnly,
+    quantity,
+    ethers.utils.parseEther(price)
+  );
+};
+
+export const getArticles = async (
+  contract: Articles
+): Promise<ByContract[]> => {
   const signerAddress = await contract.signer.getAddress();
-  const res = await contract.WRITER_ROLE();
-  console.log(res);
+  const res = await contract.getArticles(signerAddress);
+  const articles = res.map(({ ownerOnly, price, uri, writer }, index) => ({
+    id: index + 1,
+    ownerOnly,
+    price: ethers.utils.formatEther(price),
+    tokenURI: uri,
+    writer,
+  }));
+  return articles;
 };
 
 export const getMembers = async (contract: Articles) => {
@@ -16,7 +39,6 @@ export const getMembers = async (contract: Articles) => {
     (async () =>
       await getRoleMembers(contract, await contract.WRITER_ROLE()))(),
   ]);
-  console.log({ admin, editor, writer });
   return { admin, editor, writer };
 };
 
