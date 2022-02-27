@@ -13,7 +13,9 @@ export const getOgpImage = (opt: OGPImageOpt) => {
   const query = Object.entries(opt)
     .map(([key, value]) => `${key}=${value}`)
     .join("&");
-  return `${process.env.NEXT_PUBLIC_PATH}/api/generateImage?${query}`;
+  return `${
+    process.env.NEXT_PUBLIC_PATH || "http://localhost:3000"
+  }/api/generateImage?${query}`;
 };
 
 export const submit = async (
@@ -28,22 +30,24 @@ export const submit = async (
     new File([ogpImageBlob], "ogp.png", { type: "image/png" }),
     ...images,
   ]);
+  /* eslint-disable */
   const { ogpHash, ...otherHash } = await uploadFiles(
     Object.assign(
       {},
       { ogpHash: compressedOgp },
-      ...compressedImages.map((image, i) => ({ [i]: image }))
+      ...compressedImages.map((image, i) => ({ [String(i)]: image }))
     )
   );
+  /* eslint-enable */
   const replacedBody = images.reduce((a, b, i) => {
     return a.replaceAll(b.name, hashToURL(otherHash[i].IpfsHash));
   }, body);
 
   const metadataStandards = {
     image: `ipfs://${ogpHash.IpfsHash}`,
-    external_url: `${process.env.NEXT_PUBLIC_PATH}/post/${
-      meta.slug || meta.title
-    }`,
+    external_url: `${
+      process.env.NEXT_PUBLIC_PATH || "http://localhost:3000"
+    }/post/${meta.slug || meta.title}`,
     description: `Anon dev's article titled "${meta.title}"`,
     name: `${meta.title}`,
     attributes: [

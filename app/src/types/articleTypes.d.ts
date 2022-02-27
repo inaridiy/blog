@@ -29,7 +29,7 @@ export type ByContract = {
 };
 
 export type Article = {
-  contract: { tokenURI: string; ownerOnly: string; price: string };
+  contract: { id: number; tokenURI: string; ownerOnly: string; price: string };
   writer: Account;
   image: string;
   meta: ArticleMetaType;
@@ -39,4 +39,11 @@ export type Article = {
     meta: ArticleMetaType;
     body: string;
   };
+};
+
+export type ForEdit = {
+  id: number;
+  tokenURI: string;
+  ownerOnly: string;
+  price: string;
 };

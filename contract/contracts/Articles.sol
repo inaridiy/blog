@@ -10,6 +10,7 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 contract Articles is ERC1155, AccessControlEnumerable {
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
+    string public name = "Anon Dev Articles";
     bytes32 public constant WRITER_ROLE = keccak256("Writer");
     bytes32 public constant EDITOR_ROLE = keccak256("Editor");
 

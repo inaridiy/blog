@@ -1,13 +1,16 @@
 import EditorLayout from "@/components/layouts/editorLayout";
 import Editor from "@/components/modules/editor";
+import { useStorageState } from "@/hooks";
 import { ArticleMetaType } from "@/types/articleTypes";
-import { hashToURL, submit } from "@/util/EditUtil";
+import { fetchArticleHash } from "@/util/ArticleUtil";
+import { submit } from "@/util/EditUtil";
 import { Card } from "@nextui-org/react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 const EditPage = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [hashes, setHashes] = useStorageState<string[]>("articleHashes", []);
   const [text, setText] = useState("");
   const [hash, setHash] = useState("");
   const [images, setImages] = useState<File[]>([]);
@@ -23,6 +26,7 @@ const EditPage = () => {
       if (text && metaData.title) {
         setIsLoading(true);
         const { IpfsHash } = await submit(metaData, text, images);
+        setHashes([IpfsHash, ...hashes]);
         await router.push(`/admin/edit?hash=${IpfsHash}`);
         setHash(String(IpfsHash));
       }
@@ -35,11 +39,7 @@ const EditPage = () => {
   const loadArticle = async (hash: string) => {
     try {
       setIsLoading(true);
-      const data = await fetch(hashToURL(hash));
-      const { meta, body } = (await data.json()) as {
-        meta: ArticleMetaType;
-        body: string;
-      };
+      const { meta, body } = await fetchArticleHash(hash);
       setMetaData(meta);
       setText(body);
     } catch (e) {

@@ -21,14 +21,7 @@ const EditorLayout: React.FC<React.PropsWithChildren<Props>> = ({
   hash,
 }) => {
   const copyHash = () => {
-    navigator.clipboard.writeText(hash || "").then(
-      function () {
-        console.log("Async: Copying to clipboard was successful!");
-      },
-      function (err) {
-        console.error("Async: Could not copy text: ", err);
-      }
-    );
+    void navigator.clipboard.writeText(hash || "");
   };
   const abbreviatedHash = `${hash?.slice(0, 4) || ""}.....${
     hash?.slice(-4) || ""

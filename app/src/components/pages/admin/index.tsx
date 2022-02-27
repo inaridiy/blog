@@ -6,6 +6,8 @@ import {
   useContent,
   useContract,
   useContractFetcher,
+  useHashFetcher,
+  useStorageState,
   useWeb3,
 } from "@/hooks";
 import { ByContract } from "@/types/articleTypes";
@@ -15,15 +17,18 @@ import {
   Button,
   Card,
   Container,
-  Grid,
+  Input,
   Loading,
   Row,
   Spacer,
   Text,
+  Tooltip,
 } from "@nextui-org/react";
+import NextLink from "next/link";
+import { useRouter } from "next/router";
 import { useCallback, useState } from "react";
 import { BsPlus } from "react-icons/bs";
-import { PostArticleModal } from "./modal";
+import { EditArticleModal, PostArticleModal } from "./modal";
 
 const AdminPage: React.FC = () => {
   const { isLoading, connectWallet, isTargetChain, account } = useWeb3();
@@ -34,6 +39,8 @@ const AdminPage: React.FC = () => {
   if (contract) {
     return (
       <>
+        <AdminEditorHistory />
+        <Spacer y={2} />
         <AdminArticles />
         <Spacer y={2} />
         <AdminMembers />
@@ -76,6 +83,119 @@ const AdminPage: React.FC = () => {
 
 export default AdminPage;
 
+const AdminEditorHistory: React.FC = () => {
+  const [input, setInput] = useState("");
+  const [hashes, setHashes] = useStorageState<string[]>("articleHashes", []);
+  const router = useRouter();
+
+  const inputHandler = (
+    e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+  ) => {
+    setInput(e.target.value);
+  };
+  const openHandler = async () => {
+    if (input) {
+      setHashes(Array.from(new Set([input, ...hashes])));
+      await router.push(`/admin/edit?hash=${input}`);
+    }
+  };
+
+  return (
+    <Card>
+      <Row justify="space-between" align="center">
+        <Text size={30} b>
+          編集履歴
+        </Text>
+        <NextLink href="/admin/edit">
+          <StyledIconButton>
+            <BsPlus size="3em" />
+          </StyledIconButton>
+        </NextLink>
+      </Row>
+      <Box css={{ display: "flex", flexDirection: "column", gap: "$6" }}>
+        <Row>
+          <Input
+            placeholder="ipfs hash"
+            width="100%"
+            value={input}
+            onChange={inputHandler}
+          />
+          <Spacer />
+          <Button auto onClick={openHandler}>
+            Open
+          </Button>
+        </Row>
+        {hashes.map((hash) => (
+          <AdminHashItem hash={hash} key={hash} />
+        ))}
+      </Box>
+    </Card>
+  );
+};
+
+const AdminHashItem: React.FC<{ hash: string }> = ({ hash }) => {
+  const { article } = useHashFetcher(hash);
+  const [isCopied, setIsCopied] = useState(false);
+  const [hided, setIsHided] = useState(false);
+  const [hashes, setHashes] = useStorageState<string[]>("articleHashes", []);
+  const router = useRouter();
+  const copyURI = () => {
+    void navigator.clipboard.writeText(hash ? `ipfs://${hash}` : "");
+    setIsCopied(true);
+    setTimeout(() => setIsCopied(false), 1000);
+  };
+  const abbreviatedHash = `${hash?.slice(0, 4) || ""}.....${
+    hash?.slice(-4) || ""
+  }`;
+  const hide = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.stopPropagation();
+    setHashes(hashes.filter((v) => v !== hash));
+    setIsHided(true);
+  };
+  const edit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.stopPropagation();
+    void router.push(`/admin/edit?hash=${hash}`);
+  };
+
+  return (
+    <Box
+      css={{
+        maxW: "100%",
+        overflow: "hidden",
+        display: hided ? "none" : "block",
+      }}
+    >
+      <Tooltip content={isCopied ? "Copied!!" : "Click To Copy IPFS URI"}>
+        <Card
+          clickable
+          bordered
+          shadow={false}
+          onClick={copyURI}
+          css={{
+            overflowWrap: "break-word",
+          }}
+        >
+          <Text size={20} b>
+            {article ? article.meta.title : "Loading"}
+          </Text>
+          <Text css={{ "@xs": { display: "none" } }}>
+            ipfs://{abbreviatedHash}
+          </Text>
+          <Text css={{ "@xsMax": { display: "none" } }}>ipfs://{hash}</Text>
+          <Row justify="flex-end">
+            <Button auto color="error" light onClick={hide}>
+              Hide
+            </Button>
+            <Button shadow auto onClick={edit}>
+              Edit
+            </Button>
+          </Row>
+        </Card>
+      </Tooltip>
+    </Box>
+  );
+};
+
 const AdminArticles: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const contract = useContract();
@@ -92,19 +212,17 @@ const AdminArticles: React.FC = () => {
       <Card>
         <Row justify="space-between" align="center">
           <Text size={30} b>
-            投稿一覧
+            NFT一覧
           </Text>
           <StyledIconButton onClick={handler(true)}>
             <BsPlus size="3em" />
           </StyledIconButton>
         </Row>
-        <Grid.Container>
-          <Grid>
-            {articles?.map((article) => (
-              <AdminArticleCard contractData={article} key={article.tokenURI} />
-            ))}
-          </Grid>
-        </Grid.Container>
+        <Box css={{ display: "flex", flexDirection: "column", gap: "$6" }}>
+          {articles?.map((article) => (
+            <AdminArticleCard contractData={article} key={article.tokenURI} />
+          ))}
+        </Box>
       </Card>
       <PostArticleModal open={isOpen} onClose={handler(false)} />
     </>
@@ -115,20 +233,40 @@ const AdminArticleCard: React.FC<{ contractData: ByContract }> = ({
   contractData,
 }) => {
   const { article } = useArticleFetcher(contractData);
+  const [isOpen, setIsOpen] = useState(false);
+
   const writer = article?.writer.ethName || article?.writer.abbreviatedId;
+  const handler = (bool: boolean) => () => setIsOpen(bool);
 
   return (
     <>
+      <Card
+        clickable
+        bordered
+        shadow={false}
+        onClick={handler(true)}
+        css={{ height: "fit-content", width: "fit-content" }}
+      >
+        {article ? (
+          <>
+            <Text size={20} b>
+              {article?.meta.title}
+            </Text>
+            <Row>
+              <Text>{article?.contract.price} Matic</Text>
+            </Row>
+            <Text>{writer}</Text>
+          </>
+        ) : (
+          <FullLoading />
+        )}
+      </Card>
       {article && (
-        <Card clickable>
-          <Text size={20} b>
-            {article?.meta.title}
-          </Text>
-          <Row>
-            <Text>{article?.contract.price} Matic</Text>
-          </Row>
-          <Text>{writer}</Text>
-        </Card>
+        <EditArticleModal
+          article={article}
+          open={isOpen}
+          onClose={handler(false)}
+        />
       )}
     </>
   );

@@ -1,19 +1,18 @@
-import { ByContract, ForContract } from "@/types/articleTypes";
+import { ByContract, ForContract, ForEdit } from "@/types/articleTypes";
 import { ethers } from "ethers";
 import { Articles } from "./contracts";
 import { convertAccount } from "./web3Util";
 
-export const postArticle = async (
+export const postArticle = (
   contract: Articles,
   { tokenURI, ownerOnly, quantity, price }: ForContract
-) => {
-  await contract.post(
-    tokenURI,
-    ownerOnly,
-    quantity,
-    ethers.utils.parseEther(price)
-  );
-};
+) =>
+  contract.post(tokenURI, ownerOnly, quantity, ethers.utils.parseEther(price));
+
+export const editArticle = (
+  contract: Articles,
+  { id, tokenURI, ownerOnly, price }: ForEdit
+) => contract.edit(id, tokenURI, ownerOnly, ethers.utils.parseEther(price));
 
 export const getArticles = async (
   contract: Articles
