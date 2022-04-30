@@ -34,7 +34,7 @@ export const Web3Context = createContext<Web3ContextInterface>(
 );
 
 export const Web3Provider: React.FC<
-  React.PropsWithChildren<Record<string, never>>
+  React.PropsWithChildren<{ key?: string }>
 > = ({ children }) => {
   const [provider, setProvider] = useState<Interface["provider"]>(null);
   const [account, setAccount] = useState<Interface["account"]>(null);

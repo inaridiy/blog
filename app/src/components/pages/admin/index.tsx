@@ -85,8 +85,11 @@ export default AdminPage;
 
 const AdminEditorHistory: React.FC = () => {
   const [input, setInput] = useState("");
-  const [hashes, setHashes] = useStorageState<string[]>("articleHashes", []);
+  const [hashes, _setHashes] = useStorageState<string[]>("articleHashes", []);
   const router = useRouter();
+
+  const setHashes = (s: string[]) =>
+    _setHashes(Array.from(new Set([input, ...hashes])));
 
   const inputHandler = (
     e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
@@ -95,7 +98,7 @@ const AdminEditorHistory: React.FC = () => {
   };
   const openHandler = async () => {
     if (input) {
-      setHashes(Array.from(new Set([input, ...hashes])));
+      setHashes([input, ...hashes]);
       await router.push(`/admin/edit?hash=${input}`);
     }
   };

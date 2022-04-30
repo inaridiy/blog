@@ -21,7 +21,8 @@ export const getOgpImage = (opt: OGPImageOpt) => {
 export const submit = async (
   meta: ArticleMetaType,
   body: string,
-  images: File[]
+  images: File[],
+  pwd: string
 ) => {
   const ogpImageBlob = await (
     await fetch(getOgpImage({ title: meta.title }))
@@ -36,7 +37,8 @@ export const submit = async (
       {},
       { ogpHash: compressedOgp },
       ...compressedImages.map((image, i) => ({ [String(i)]: image }))
-    )
+    ),
+    pwd
   );
   /* eslint-enable */
   const replacedBody = images.reduce((a, b, i) => {
@@ -54,21 +56,19 @@ export const submit = async (
       { trait_type: "Title", value: meta.title },
       { trait_type: "Slug", value: meta.slug },
       { trait_type: "Body", value: replacedBody },
-      {
-        display_type: "date",
-        trait_type: "uploadedAt",
-        value: new Date().valueOf(),
-      },
     ],
     meta,
     body: replacedBody,
   };
 
-  const { metaHash } = await uploadFiles({
-    metaHash: new Blob([JSON.stringify(metadataStandards)], {
-      type: "application/json",
-    }),
-  });
+  const { metaHash } = await uploadFiles(
+    {
+      metaHash: new Blob([JSON.stringify(metadataStandards)], {
+        type: "application/json",
+      }),
+    },
+    pwd
+  );
   return metaHash;
 };
 
@@ -82,11 +82,15 @@ export const compressImages = (files: File[]) => {
   return Promise.all(compressPromises);
 };
 
-export const uploadFiles = async (files: {
-  [id in string]: Blob;
-}) => {
+export const uploadFiles = async (
+  files: {
+    [id in string]: Blob;
+  },
+  pwd: string
+) => {
   const formData = new FormData();
   for (const [id, file] of Object.entries(files)) formData.append(id, file);
+  formData.append("auth", pwd);
   const res = await fetch("/api/uploadToIpfs", {
     method: "POST",
     body: formData,

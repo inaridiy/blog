@@ -9,6 +9,7 @@ const DefaultLayout: React.FC<React.PropsWithChildren<Props>> = ({
   return (
     <>
       <Header />
+
       <Container
         lg={true}
         display="flex"

@@ -9,13 +9,14 @@ const pinata = pinataSDK(
 export default async (req, res) => {
   try {
     if (!req.method === "POST") throw new Error("must be post");
-    const { files } = await new Promise((resolve, reject) => {
+    const { files, fields } = await new Promise((resolve, reject) => {
       const form = new formidable.IncomingForm();
       form.parse(req, (err, fields, files) => {
         if (err) return reject(err);
         resolve({ fields, files });
       });
     });
+    if (process.env.PASSWORD !== fields.auth) throw new Error("AUTH ERROR");
     const pinataPromises = Object.entries(files).map(async ([id, file]) => {
       const pinataResult = await pinata.pinFromFS(file.filepath);
       return { [id]: pinataResult };

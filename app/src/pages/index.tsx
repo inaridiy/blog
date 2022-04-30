@@ -1,20 +1,14 @@
 import DefaultLayout from "@/components/layouts/default";
 import { useWeb3 } from "@/hooks/useWeb3";
-import { Button, Text } from "@nextui-org/react";
+import { Text } from "@nextui-org/react";
 import type { NextPage } from "next";
 
 const Home: NextPage = () => {
   const { connectWallet, account } = useWeb3();
-  const handleClick = async () => {
-    console.log("on click");
-    await connectWallet();
-  };
+
   return (
     <DefaultLayout>
-      <Button onClick={handleClick} shadow>
-        Connect Wallet
-      </Button>
-      <Text>{String(account?.ethName || account?.abbreviatedId)}</Text>
+      <Text h2>Hello World</Text>
     </DefaultLayout>
   );
 };
